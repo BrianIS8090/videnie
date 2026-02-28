@@ -1,0 +1,363 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter+Tight:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom pulse animation for loading dots */
+@keyframes pulse-dot {
+  0%, 100% {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+}
+
+.animate-pulse-dot {
+  animation: pulse-dot 1.4s ease-in-out infinite;
+}
+
+@layer base {
+  :root {
+    /* Warm Golden Theme */
+    --background: 40 30% 8%;
+    --foreground: 40 20% 95%;
+    --card: 40 25% 12%;
+    --card-foreground: 40 20% 95%;
+    --popover: 40 25% 10%;
+    --popover-foreground: 40 20% 95%;
+    
+    /* Primary: Warm Amber */
+    --primary: 40 90% 55%;
+    --primary-foreground: 40 20% 98%;
+    
+    /* Secondary: Soft Cream */
+    --secondary: 40 20% 20%;
+    --secondary-foreground: 40 20% 95%;
+    
+    /* Muted: Warm Gray */
+    --muted: 40 15% 18%;
+    --muted-foreground: 40 10% 55%;
+    
+    /* Accent: Golden Glow */
+    --accent: 45 95% 60%;
+    --accent-foreground: 40 20% 10%;
+    
+    /* Destructive: Warm Red */
+    --destructive: 10 70% 55%;
+    --destructive-foreground: 40 20% 98%;
+    
+    /* Borders & Inputs */
+    --border: 40 20% 25%;
+    --input: 40 20% 25%;
+    --ring: 40 90% 55%;
+    --radius: 0.75rem;
+    
+    /* Custom Properties */
+    --glow-soft: 40 100% 70%;
+    --glow-strong: 45 100% 80%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter Tight', -apple-system, sans-serif;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+}
+
+/* Glassmorphism с warm tones */
+.glass {
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(48px);
+  -webkit-backdrop-filter: blur(48px);
+  border: 1px solid rgba(255, 220, 150, 0.08);
+}
+
+.glass-strong {
+  background: rgba(255, 245, 230, 0.06);
+  backdrop-filter: blur(32px);
+  -webkit-backdrop-filter: blur(32px);
+  border: 1px solid rgba(255, 220, 150, 0.08);
+  box-shadow: 0 8px 32px rgba(255, 180, 50, 0.06);
+}
+
+/* Warm Gradient Mesh */
+.gradient-mesh {
+  background: 
+    radial-gradient(at 15% 50%, hsla(40, 100%, 60%, 0.12) 0px, transparent 60%),
+    radial-gradient(at 85% 30%, hsla(45, 100%, 70%, 0.08) 0px, transparent 50%),
+    radial-gradient(at 50% 90%, hsla(35, 100%, 50%, 0.1) 0px, transparent 55%),
+    radial-gradient(at 80% 80%, hsla(30, 90%, 40%, 0.06) 0px, transparent 40%);
+}
+
+/* Grain Texture Overlay */
+.grain-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' /%3E%3C/svg%3E");
+}
+
+/* Warm Glow Effects */
+.glow-soft {
+  box-shadow: 0 0 40px rgba(255, 180, 50, 0.15);
+}
+
+.glow-strong {
+  box-shadow: 0 0 60px rgba(255, 200, 80, 0.25);
+}
+
+/* Warm Focus Ring */
+*:focus-visible {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 2px;
+  box-shadow: 0 0 20px rgba(255, 180, 50, 0.2);
+}
+
+/* Custom Scrollbar с warm tones */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--muted));
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    to bottom,
+    hsl(var(--primary)),
+    hsl(35, 85%, 45%)
+  );
+  border-radius: 5px;
+  border: 2px solid hsl(var(--muted));
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    to bottom,
+    hsl(var(--accent)),
+    hsl(40, 90%, 50%)
+  );
+}
+
+/* Staggered Animation for Gallery */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.stagger-fade > * {
+  animation: fadeInUp 0.5s ease-out;
+  animation-fill-mode: both;
+}
+
+.stagger-fade > *:nth-child(1) { animation-delay: 0.05s; }
+.stagger-fade > *:nth-child(2) { animation-delay: 0.1s; }
+.stagger-fade > *:nth-child(3) { animation-delay: 0.15s; }
+.stagger-fade > *:nth-child(4) { animation-delay: 0.2s; }
+.stagger-fade > *:nth-child(5) { animation-delay: 0.25s; }
+.stagger-fade > *:nth-child(6) { animation-delay: 0.3s; }
+.stagger-fade > *:nth-child(7) { animation-delay: 0.35s; }
+.stagger-fade > *:nth-child(8) { animation-delay: 0.4s; }
+
+/* Hover Parallax Effect */
+.hover-parallax {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-parallax:hover {
+  transform: translateY(-4px) scale(1.02);
+}
+
+/* Decorative Border */
+.border-glow {
+  position: relative;
+}
+
+.border-glow::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    hsl(var(--primary) / 0.5),
+    transparent 50%,
+    hsl(var(--accent) / 0.3)
+  );
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.border-glow:hover::before {
+  opacity: 1;
+}
+
+/* Warm Button Styles */
+button[type="submit"],
+button:not([type="button"]) {
+  position: relative;
+  overflow: hidden;
+}
+
+button[type="submit"]::before,
+button:not([type="button"])::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+
+button[type="submit"]:hover::before,
+button:not([type="button"]):hover::before {
+  transform: translateX(100%);
+}
+
+/* Range Input с warm styling */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: 3px;
+  background: linear-gradient(
+    to right,
+    hsl(var(--primary)),
+    hsl(var(--accent))
+  );
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+input[type="range"]:hover {
+  opacity: 1;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: hsl(var(--primary));
+  cursor: pointer;
+  box-shadow: 0 0 15px rgba(255, 180, 50, 0.4);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(255, 180, 50, 0.6);
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: hsl(var(--primary));
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 0 15px rgba(255, 180, 50, 0.4);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+input[type="range"]::-moz-range-thumb:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(255, 180, 50, 0.6);
+}
+
+/* Loading Animation */
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(255, 180, 50, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(255, 180, 50, 0.5);
+  }
+}
+
+.loading-pulse {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Custom Selection */
+::selection {
+  background: hsl(var(--primary) / 0.3);
+  color: hsl(var(--foreground));
+}
+
+/* Smooth Transitions для всех интерактивных элементов */
+button,
+a,
+input,
+select,
+textarea {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Improve Text Rendering */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Better Image Rendering */
+img {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+/* Monochrome Icons */
+svg {
+  color: hsl(var(--foreground));
+  fill: currentColor;
+  stroke: currentColor;
+}
+
+/* Preserve primary color for special icons */
+.text-primary svg,
+.glow-soft svg,
+button[type="submit"] svg {
+  color: inherit;
+}
