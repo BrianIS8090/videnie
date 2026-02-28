@@ -14,6 +14,8 @@
  • [⭐ Features](#-features) • [📦 Installation](#-installation) • [🎨 Usage](#-usage)
 
 
+![Screenshot_20260228_223640_Yandex Browser](https://github.com/user-attachments/assets/cffdabd9-af6c-436e-9c07-f91a5fecf27b)
+
 </div>
 
 ---
