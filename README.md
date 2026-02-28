@@ -11,9 +11,8 @@
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.0-06B6D4?logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
 [![Vite](https://img.shields.io/badge/Vite-5.0-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
 
-[🚀 Demo](http://claud.group7lamp.ru/image/) • [⭐ Features](#-features) • [📦 Installation](#-installation) • [🎨 Usage](#-usage)
+ • [⭐ Features](#-features) • [📦 Installation](#-installation) • [🎨 Usage](#-usage)
 
-<img src="public/logo.jpg" alt="Видение Logo" width="200"/>
 
 </div>
 
