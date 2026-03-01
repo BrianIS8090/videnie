@@ -1,3 +1,32 @@
-<svg width="40" height="40" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-  <rect width="40" height="40" fill="#FFB800" rx="4" />
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <!-- Логотип для названия - точно как favicon но может быть адаптирован для больших размеров -->
+  <defs>
+    <linearGradient id="videnieLogo" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8B5CF6"/>
+      <stop offset="50%" style="stop-color:#A855F7"/>
+      <stop offset="100%" style="stop-color:#D946EF"/>
+    </linearGradient>
+    
+    <filter id="logoShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="10"/>
+      <feOffset dx="0" dy="5" result="offsetblur"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.3"/>
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Квадрат с закруглёнными углами -->
+  <rect width="512" height="512" rx="96" ry="96" fill="url(#videnieLogo)" filter="url(#logoShadow)"/>
+  
+  <!-- Иконка глаза Font Awesome (fa-eye) -->
+  <g transform="translate(256, 256)" fill="#FFFFFF">
+    <path d="M256 128C144.34 128 49.28 197.73 0 256c49.28 58.27 144.34 128 256 128s206.72-69.73 256-128c-49.28-58.27-144.34-128-256-128zm0 208c-44.18 0-80-35.82-80-80s35.82-80 80-80 80 35.82 80 80-35.82 80-80 80zm0-128c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48z" 
+          transform="scale(0.4) translate(-256, -256)"
+          opacity="0.95"/>
+  </g>
 </svg>
