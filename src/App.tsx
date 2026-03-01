@@ -44,6 +44,10 @@ interface GeneratedImage {
     completion: number
     total: number
   } | null
+  aspectRatio?: string | null
+  imageSize?: string | null
+  temperature?: number | null
+  thinkingLevel?: string | null
 }
 
 interface SourceImage {
@@ -198,6 +202,10 @@ function App() {
     generationId?: string | null
     model?: string | null
     tokens?: { prompt: number; completion: number; total: number } | null
+    aspectRatio?: string | null
+    imageSize?: string | null
+    temperature?: number | null
+    thinkingLevel?: string | null
   }) => {
     const newImage: GeneratedImage = {
       id: Math.random().toString(36).substr(2, 9),
@@ -207,7 +215,11 @@ function App() {
       cost: imageData.cost,
       generationId: imageData.generationId,
       model: imageData.model,
-      tokens: imageData.tokens
+      tokens: imageData.tokens,
+      aspectRatio: imageData.aspectRatio,
+      imageSize: imageData.imageSize,
+      temperature: imageData.temperature,
+      thinkingLevel: imageData.thinkingLevel
     }
 
     // Добавить в state (в начало массива)
@@ -388,22 +400,22 @@ function App() {
 
       if (data.choices?.[0]?.message?.images?.[0]?.image_url?.url) {
         const imageUrl = data.choices[0].message.images[0].image_url.url
-        await addGeneratedImage({ url: imageUrl, prompt, cost, generationId, model: selectedModel, tokens })
+        await addGeneratedImage({ url: imageUrl, prompt, cost, generationId, model: selectedModel, tokens, aspectRatio, imageSize, temperature, thinkingLevel })
       } else if (data.choices?.[0]?.message?.images?.[0]) {
         const imageUrl = data.choices[0].message.images[0]
-        await addGeneratedImage({ url: imageUrl, prompt, cost, generationId, model: selectedModel, tokens })
+        await addGeneratedImage({ url: imageUrl, prompt, cost, generationId, model: selectedModel, tokens, aspectRatio, imageSize, temperature, thinkingLevel })
       } else if (data.choices?.[0]?.message?.content) {
         const content = data.choices[0].message.content
         if (typeof content === 'string' && content.startsWith('data:image')) {
-          await addGeneratedImage({ url: content, prompt, cost, generationId, model: selectedModel, tokens })
+          await addGeneratedImage({ url: content, prompt, cost, generationId, model: selectedModel, tokens, aspectRatio, imageSize, temperature, thinkingLevel })
         } else if (Array.isArray(content)) {
           for (const item of content) {
             if (item.type === 'image_url' && item.image_url?.url) {
               const imageUrl = item.image_url.url
-              await addGeneratedImage({ url: imageUrl, prompt, cost, generationId, model: selectedModel, tokens })
+              await addGeneratedImage({ url: imageUrl, prompt, cost, generationId, model: selectedModel, tokens, aspectRatio, imageSize, temperature, thinkingLevel })
               break
             } else if (typeof item === 'string' && item.startsWith('data:image')) {
-              await addGeneratedImage({ url: item, prompt, cost, generationId, model: selectedModel, tokens })
+              await addGeneratedImage({ url: item, prompt, cost, generationId, model: selectedModel, tokens, aspectRatio, imageSize, temperature, thinkingLevel })
               break
             }
           }
@@ -730,6 +742,20 @@ function App() {
                               {MODELS.find(m => m.id === img.model)?.name || img.model}
                             </p>
                           )}
+                          <div className="flex flex-wrap gap-1 text-[10px] text-muted-foreground/50">
+                            {img.aspectRatio && (
+                              <span className="bg-white/10 px-1.5 py-0.5 rounded">{img.aspectRatio}</span>
+                            )}
+                            {img.imageSize && (
+                              <span className="bg-white/10 px-1.5 py-0.5 rounded">{img.imageSize}</span>
+                            )}
+                            {img.temperature !== undefined && img.temperature !== null && (
+                              <span className="bg-white/10 px-1.5 py-0.5 rounded">T:{img.temperature.toFixed(1)}</span>
+                            )}
+                            {img.thinkingLevel && (
+                              <span className="bg-white/10 px-1.5 py-0.5 rounded">{img.thinkingLevel === 'minimal' ? '⚡' : '🧠'}</span>
+                            )}
+                          </div>
                           {img.cost !== undefined && img.cost !== null && (
                             <p className="text-xs text-muted-foreground/70">
                               ${img.cost.toFixed(4)}
@@ -933,6 +959,20 @@ function App() {
                         {MODELS.find(m => m.id === selectedImage.model)?.name || selectedImage.model}
                       </p>
                     )}
+                    <div className="flex flex-wrap gap-1">
+                      {selectedImage.aspectRatio && (
+                        <span className="bg-white/10 px-1.5 py-0.5 rounded">{selectedImage.aspectRatio}</span>
+                      )}
+                      {selectedImage.imageSize && (
+                        <span className="bg-white/10 px-1.5 py-0.5 rounded">{selectedImage.imageSize}</span>
+                      )}
+                      {selectedImage.temperature !== undefined && selectedImage.temperature !== null && (
+                        <span className="bg-white/10 px-1.5 py-0.5 rounded">T:{selectedImage.temperature.toFixed(1)}</span>
+                      )}
+                      {selectedImage.thinkingLevel && (
+                        <span className="bg-white/10 px-1.5 py-0.5 rounded">{selectedImage.thinkingLevel === 'minimal' ? '⚡' : '🧠'}</span>
+                      )}
+                    </div>
                     {selectedImage.cost !== undefined && selectedImage.cost !== null && (
                       <p className="text-muted-foreground">
                         ${selectedImage.cost.toFixed(4)}
