@@ -15,6 +15,10 @@ export interface StoredImage {
     completion: number
     total: number
   } | null
+  aspectRatio?: string | null
+  imageSize?: string | null
+  temperature?: number | null
+  thinkingLevel?: string | null
 }
 
 // Открыть/создать базу данных
