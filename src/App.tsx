@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 import { Download, ImagePlus, X, Loader2, ImageIcon, Settings, Menu, Send, Plus, Trash2 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { saveImage, getAllImages, clearAllImages, getImagesCount, getTotalCost, deleteImage } from './utils/imageDB'
@@ -20,7 +20,6 @@ const ASPECT_RATIOS = [
 ]
 
 const IMAGE_SIZES = [
-  { id: '0.5K', name: '0.5K — Быстро (512px)' },
   { id: '1K', name: '1K — Стандарт' },
   { id: '2K', name: '2K — Высокое' },
   { id: '4K', name: '4K — Максимум' },
@@ -30,6 +29,47 @@ const THINKING_LEVELS = [
   { id: 'minimal', name: 'Minimal — Быстро' },
   { id: 'high', name: 'High — Качество' },
 ]
+
+interface ModelCapabilities {
+  imageSizes: string[]
+  aspectRatios: string[]
+  supportsThinkingLevel: boolean
+}
+
+const DEFAULT_MODEL_CAPABILITIES: ModelCapabilities = {
+  imageSizes: ['1K', '2K', '4K'],
+  aspectRatios: ASPECT_RATIOS.map((ratio) => ratio.id),
+  supportsThinkingLevel: false,
+}
+
+const MODEL_CAPABILITIES: Record<string, ModelCapabilities> = {
+  // OpenRouter docs по image_config: доступны 1K/2K/4K, 0.5K не документирован
+  // OpenRouter model metadata: reasoning есть у 3-pro и 3.1-flash-image-preview
+  'google/gemini-3-pro-image-preview': {
+    imageSizes: ['1K', '2K', '4K'],
+    aspectRatios: ASPECT_RATIOS.map((ratio) => ratio.id),
+    supportsThinkingLevel: true,
+  },
+  'google/gemini-3.1-flash-image-preview': {
+    imageSizes: ['1K', '2K', '4K'],
+    aspectRatios: ASPECT_RATIOS.map((ratio) => ratio.id),
+    supportsThinkingLevel: true,
+  },
+  'google/gemini-2.5-flash-image': {
+    imageSizes: ['1K', '2K', '4K'],
+    aspectRatios: ASPECT_RATIOS.map((ratio) => ratio.id),
+    supportsThinkingLevel: false,
+  },
+}
+
+type MessageContentPart =
+  | { type: 'image_url'; image_url: { url: string } }
+  | { type: 'text'; text: string }
+
+interface OpenRouterMessage {
+  role: 'user'
+  content: string | MessageContentPart[]
+}
 
 interface GeneratedImage {
   id: string
@@ -76,7 +116,15 @@ function App() {
   const [tempApiKey, setTempApiKey] = useState('')
   const fileInputRef = useRef<HTMLInputElement>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
+  const previousImageUrlsRef = useRef<Map<string, string>>(new Map())
   const [prompt, setPrompt] = useState('')
+  const currentModelCapabilities = MODEL_CAPABILITIES[selectedModel] ?? DEFAULT_MODEL_CAPABILITIES
+
+  const revokeObjectUrl = (url: string) => {
+    if (url.startsWith('blob:')) {
+      URL.revokeObjectURL(url)
+    }
+  }
 
   // Загрузка API ключа из localStorage при старте
   useEffect(() => {
@@ -100,6 +148,43 @@ function App() {
     loadInitialImages()
   }, [])
 
+  useEffect(() => {
+    if (!currentModelCapabilities.imageSizes.includes(imageSize)) {
+      setImageSize(currentModelCapabilities.imageSizes[0] ?? '1K')
+    }
+
+    if (!currentModelCapabilities.aspectRatios.includes(aspectRatio)) {
+      setAspectRatio(currentModelCapabilities.aspectRatios[0] ?? '1:1')
+    }
+
+    if (!currentModelCapabilities.supportsThinkingLevel && thinkingLevel !== 'minimal') {
+      setThinkingLevel('minimal')
+    }
+  }, [selectedModel, imageSize, aspectRatio, thinkingLevel, currentModelCapabilities])
+
+  useEffect(() => {
+    const previousMap = previousImageUrlsRef.current
+    const nextMap = new Map(generatedImages.map((img) => [img.id, img.url]))
+
+    previousMap.forEach((url, id) => {
+      const nextUrl = nextMap.get(id)
+      if (!nextUrl || nextUrl !== url) {
+        revokeObjectUrl(url)
+      }
+    })
+
+    previousImageUrlsRef.current = nextMap
+  }, [generatedImages])
+
+  useEffect(() => {
+    return () => {
+      previousImageUrlsRef.current.forEach((url) => {
+        revokeObjectUrl(url)
+      })
+      previousImageUrlsRef.current.clear()
+    }
+  }, [])
+
   // Загрузить первые изображения
   const loadInitialImages = async () => {
     try {
@@ -121,7 +206,7 @@ function App() {
   }
 
   // Загрузить следующую порцию изображений
-  const loadMoreImages = async () => {
+  const loadMoreImages = useCallback(async () => {
     if (isLoadingImages || !hasMoreImages) return
 
     try {
@@ -136,7 +221,7 @@ function App() {
     } finally {
       setIsLoadingImages(false)
     }
-  }
+  }, [isLoadingImages, hasMoreImages, generatedImages.length, totalImagesCount])
 
   // Обработчик скролла для бесконечной ленты
   useEffect(() => {
@@ -153,7 +238,7 @@ function App() {
 
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [isLoadingImages, hasMoreImages, generatedImages.length])
+  }, [isLoadingImages, hasMoreImages, generatedImages.length, loadMoreImages])
 
   // Очистить всю историю
   const handleClearHistory = async () => {
@@ -163,7 +248,10 @@ function App() {
 
     try {
       await clearAllImages()
-      setGeneratedImages([])
+      setGeneratedImages((prev) => {
+        prev.forEach((img) => revokeObjectUrl(img.url))
+        return []
+      })
       setTotalImagesCount(0)
       setTotalCost(0)
       setHasMoreImages(false)
@@ -179,6 +267,8 @@ function App() {
     try {
       // Удалить из IndexedDB
       await deleteImage(img.id)
+
+      revokeObjectUrl(img.url)
       
       // Удалить из state
       setGeneratedImages(prev => prev.filter(i => i.id !== img.id))
@@ -291,6 +381,15 @@ function App() {
     document.body.removeChild(a)
   }
 
+  const fileToDataUrl = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader()
+      reader.onload = () => resolve(String(reader.result ?? ''))
+      reader.onerror = () => reject(reader.error)
+      reader.readAsDataURL(file)
+    })
+  }
+
   const handleSaveApiKey = () => {
     if (tempApiKey.trim()) {
       setApiKey(tempApiKey.trim())
@@ -318,18 +417,41 @@ function App() {
     setIsGenerating(true)
 
     try {
-      const messages: any[] = []
+      const messages: OpenRouterMessage[] = []
+      const resolvedAspectRatio = currentModelCapabilities.aspectRatios.includes(aspectRatio)
+        ? aspectRatio
+        : currentModelCapabilities.aspectRatios[0] ?? '1:1'
+      const resolvedImageSize = currentModelCapabilities.imageSizes.includes(imageSize)
+        ? imageSize
+        : currentModelCapabilities.imageSizes[0] ?? '1K'
+      const resolvedThinkingLevel = currentModelCapabilities.supportsThinkingLevel
+        ? thinkingLevel
+        : 'minimal'
+      const imageConfig: {
+        aspect_ratio: string
+        image_size: string
+        temperature: number
+        thinking_level?: string
+      } = {
+        aspect_ratio: resolvedAspectRatio,
+        image_size: resolvedImageSize,
+        temperature,
+      }
+
+      if (currentModelCapabilities.supportsThinkingLevel) {
+        imageConfig.thinking_level = resolvedThinkingLevel
+      }
 
       // Добавляем префикс для гарантии генерации изображения
       const enhancedPrompt = `Generate an image: ${prompt}`
 
       if (sourceImages.length > 0) {
-        const imageContents = await Promise.all(
+        const imageContents: MessageContentPart[] = await Promise.all(
           sourceImages.map(async (img) => {
-            const base64 = img.preview.split(',')[1]
+            const dataUrl = await fileToDataUrl(img.file)
             return {
-              type: 'image_url',
-              image_url: { url: `data:${img.file.type};base64,${base64}` }
+              type: 'image_url' as const,
+              image_url: { url: dataUrl }
             }
           })
         )
@@ -338,7 +460,7 @@ function App() {
           role: 'user',
           content: [
             ...imageContents,
-            { type: 'text', text: enhancedPrompt }
+            { type: 'text' as const, text: enhancedPrompt }
           ]
         })
       } else {
@@ -348,26 +470,54 @@ function App() {
         })
       }
 
-      const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${apiKey}`
-        },
-        body: JSON.stringify({
-          model: selectedModel,
-          messages,
-          modalities: ['image', 'text'],
-          image_config: {
-            aspect_ratio: aspectRatio,
-            image_size: imageSize,
-            temperature,
-            thinking_level: thinkingLevel
-          }
+      const requestImageGeneration = async (requestedImageSize: string) => {
+        const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${apiKey}`
+          },
+          body: JSON.stringify({
+            model: selectedModel,
+            messages,
+            modalities: ['image', 'text'],
+            image_config: {
+              ...imageConfig,
+              image_size: requestedImageSize,
+            },
+          })
         })
-      })
 
-      const data = await response.json()
+        return await response.json()
+      }
+
+      let effectiveImageSize = resolvedImageSize
+      let data = await requestImageGeneration(effectiveImageSize)
+      let wasFallbackTo2K = false
+
+      if (data.error && effectiveImageSize === '4K' && currentModelCapabilities.imageSizes.includes('2K')) {
+        const errorText = `${data.error?.message ?? ''} ${data.error?.metadata?.raw ?? ''}`.toLowerCase()
+        const isSizeRelatedError =
+          errorText.includes('image_size') ||
+          errorText.includes('4k') ||
+          errorText.includes('resolution') ||
+          errorText.includes('aspect_ratio') ||
+          errorText.includes('invalid')
+
+        if (isSizeRelatedError) {
+          const fallbackData = await requestImageGeneration('2K')
+          if (!fallbackData.error) {
+            data = fallbackData
+            effectiveImageSize = '2K'
+            wasFallbackTo2K = true
+            setImageSize('2K')
+          }
+        }
+      }
+
+      if (wasFallbackTo2K) {
+        alert('4K недоступен для выбранной модели/формата. Использовано 2K.')
+      }
 
       console.log('=== API Response ===')
       console.log('Full response:', JSON.stringify(data, null, 2))
@@ -400,22 +550,22 @@ function App() {
 
       if (data.choices?.[0]?.message?.images?.[0]?.image_url?.url) {
         const imageUrl = data.choices[0].message.images[0].image_url.url
-        await addGeneratedImage({ url: imageUrl, prompt, cost, generationId, model: selectedModel, tokens, aspectRatio, imageSize, temperature, thinkingLevel })
+        await addGeneratedImage({ url: imageUrl, prompt, cost, generationId, model: selectedModel, tokens, aspectRatio: resolvedAspectRatio, imageSize: effectiveImageSize, temperature, thinkingLevel: resolvedThinkingLevel })
       } else if (data.choices?.[0]?.message?.images?.[0]) {
         const imageUrl = data.choices[0].message.images[0]
-        await addGeneratedImage({ url: imageUrl, prompt, cost, generationId, model: selectedModel, tokens, aspectRatio, imageSize, temperature, thinkingLevel })
+        await addGeneratedImage({ url: imageUrl, prompt, cost, generationId, model: selectedModel, tokens, aspectRatio: resolvedAspectRatio, imageSize: effectiveImageSize, temperature, thinkingLevel: resolvedThinkingLevel })
       } else if (data.choices?.[0]?.message?.content) {
         const content = data.choices[0].message.content
         if (typeof content === 'string' && content.startsWith('data:image')) {
-          await addGeneratedImage({ url: content, prompt, cost, generationId, model: selectedModel, tokens, aspectRatio, imageSize, temperature, thinkingLevel })
+          await addGeneratedImage({ url: content, prompt, cost, generationId, model: selectedModel, tokens, aspectRatio: resolvedAspectRatio, imageSize: effectiveImageSize, temperature, thinkingLevel: resolvedThinkingLevel })
         } else if (Array.isArray(content)) {
           for (const item of content) {
             if (item.type === 'image_url' && item.image_url?.url) {
               const imageUrl = item.image_url.url
-              await addGeneratedImage({ url: imageUrl, prompt, cost, generationId, model: selectedModel, tokens, aspectRatio, imageSize, temperature, thinkingLevel })
+              await addGeneratedImage({ url: imageUrl, prompt, cost, generationId, model: selectedModel, tokens, aspectRatio: resolvedAspectRatio, imageSize: effectiveImageSize, temperature, thinkingLevel: resolvedThinkingLevel })
               break
             } else if (typeof item === 'string' && item.startsWith('data:image')) {
-              await addGeneratedImage({ url: item, prompt, cost, generationId, model: selectedModel, tokens, aspectRatio, imageSize, temperature, thinkingLevel })
+              await addGeneratedImage({ url: item, prompt, cost, generationId, model: selectedModel, tokens, aspectRatio: resolvedAspectRatio, imageSize: effectiveImageSize, temperature, thinkingLevel: resolvedThinkingLevel })
               break
             }
           }
@@ -580,7 +730,12 @@ function App() {
                 className="w-full bg-black/30 border border-white/20 rounded-lg px-2 md:px-3 py-1.5 md:py-2 focus:outline-none focus:ring-2 focus:ring-primary text-xs md:text-sm"
               >
                 {ASPECT_RATIOS.map((ratio) => (
-                  <option key={ratio.id} value={ratio.id} className="bg-black">
+                  <option
+                    key={ratio.id}
+                    value={ratio.id}
+                    className="bg-black"
+                    disabled={!currentModelCapabilities.aspectRatios.includes(ratio.id)}
+                  >
                     {ratio.name}
                   </option>
                 ))}
@@ -596,7 +751,12 @@ function App() {
                 className="w-full bg-black/30 border border-white/20 rounded-lg px-2 md:px-3 py-1.5 md:py-2 focus:outline-none focus:ring-2 focus:ring-primary text-xs md:text-sm"
               >
                 {IMAGE_SIZES.map((size) => (
-                  <option key={size.id} value={size.id} className="bg-black">
+                  <option
+                    key={size.id}
+                    value={size.id}
+                    className="bg-black"
+                    disabled={!currentModelCapabilities.imageSizes.includes(size.id)}
+                  >
                     {size.name}
                   </option>
                 ))}
@@ -629,7 +789,8 @@ function App() {
               <select
                 value={thinkingLevel}
                 onChange={(e) => setThinkingLevel(e.target.value)}
-                className="w-full bg-black/30 border border-white/20 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary text-sm"
+                disabled={!currentModelCapabilities.supportsThinkingLevel}
+                className="w-full bg-black/30 border border-white/20 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary text-sm disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {THINKING_LEVELS.map((level) => (
                   <option key={level.id} value={level.id} className="bg-black">
@@ -637,6 +798,11 @@ function App() {
                   </option>
                 ))}
               </select>
+              {!currentModelCapabilities.supportsThinkingLevel && (
+                <p className="text-[10px] md:text-xs text-muted-foreground mt-1">
+                  Для этой модели уровень размышления отключен.
+                </p>
+              )}
             </div>
           </div>
 
