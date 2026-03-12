@@ -54,7 +54,7 @@
     --border: 40 20% 25%;
     --input: 40 20% 25%;
     --ring: 40 90% 55%;
-    --radius: 0.75rem;
+    --radius: 1.5rem;
     
     /* Custom Properties */
     --glow-soft: 40 100% 70%;
@@ -141,7 +141,7 @@
 
 ::-webkit-scrollbar-track {
   background: hsl(var(--muted));
-  border-radius: 5px;
+  border-radius: 999px;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -150,7 +150,7 @@
     hsl(var(--primary)),
     hsl(35, 85%, 45%)
   );
-  border-radius: 5px;
+  border-radius: 999px;
   border: 2px solid hsl(var(--muted));
 }
 
@@ -348,16 +348,15 @@ img {
   image-rendering: crisp-edges;
 }
 
-/* Monochrome Icons */
+/* Lucide иконки — контурные (stroke), fill не нужен */
 svg {
   color: hsl(var(--foreground));
-  fill: currentColor;
+  fill: none;
   stroke: currentColor;
 }
 
-/* Preserve primary color for special icons */
+/* Наследование цвета от родителя */
 .text-primary svg,
-.glow-soft svg,
-button[type="submit"] svg {
+button svg {
   color: inherit;
 }

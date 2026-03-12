@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
-import { Download, ImagePlus, X, Loader2, ImageIcon, Settings, Menu, Send, Plus, Trash2 } from 'lucide-react'
+import { ArrowDownToLine, ImagePlus, X, LoaderCircle, KeyRound, SendHorizontal, Paperclip, Trash2, ChevronDown, WandSparkles } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { saveImage, getAllImages, clearAllImages, getImagesCount, getTotalCost, deleteImage } from './utils/imageDB'
 import './index.css'
@@ -43,8 +43,6 @@ const DEFAULT_MODEL_CAPABILITIES: ModelCapabilities = {
 }
 
 const MODEL_CAPABILITIES: Record<string, ModelCapabilities> = {
-  // OpenRouter docs по image_config: доступны 1K/2K/4K, 0.5K не документирован
-  // OpenRouter model metadata: reasoning есть у 3-pro и 3.1-flash-image-preview
   'google/gemini-3-pro-image-preview': {
     imageSizes: ['1K', '2K', '4K'],
     aspectRatios: ASPECT_RATIOS.map((ratio) => ratio.id),
@@ -96,6 +94,14 @@ interface SourceImage {
   preview: string
 }
 
+// Примеры промтов для пустого состояния
+const PROMPT_EXAMPLES = [
+  { icon: '💡', text: 'Designer lamp with black body, two glowing rings in gold color, warm light, studio lighting' },
+  { icon: '🎨', text: 'Professional portrait of a woman, soft studio lighting, warm skin tones, blurred background' },
+  { icon: '🌲', text: 'Mystical forest with glowing mushrooms, fog, bioluminescent plants, fantasy style' },
+  { icon: '📦', text: 'Product photography of modern headphones on gradient background, commercial style' },
+]
+
 function App() {
   const [selectedModel, setSelectedModel] = useState(MODELS[0].id)
   const [aspectRatio, setAspectRatio] = useState('1:1')
@@ -109,11 +115,11 @@ function App() {
   const [totalImagesCount, setTotalImagesCount] = useState(0)
   const [hasMoreImages, setHasMoreImages] = useState(true)
   const [totalCost, setTotalCost] = useState(0)
-  const [isSettingsPanelOpen, setIsSettingsPanelOpen] = useState(false)
   const [showSettingsModal, setShowSettingsModal] = useState(false)
   const [selectedImage, setSelectedImage] = useState<GeneratedImage | null>(null)
   const [apiKey, setApiKey] = useState('')
   const [tempApiKey, setTempApiKey] = useState('')
+  const [showParams, setShowParams] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const previousImageUrlsRef = useRef<Map<string, string>>(new Map())
@@ -185,16 +191,15 @@ function App() {
     }
   }, [])
 
-  // Загрузить первые изображения
   const loadInitialImages = async () => {
     try {
       setIsLoadingImages(true)
       const count = await getImagesCount()
       setTotalImagesCount(count)
-      
+
       const cost = await getTotalCost()
       setTotalCost(cost)
-      
+
       const images = await getAllImages(20, 0)
       setGeneratedImages(images)
       setHasMoreImages(images.length < count)
@@ -205,7 +210,6 @@ function App() {
     }
   }
 
-  // Загрузить следующую порцию изображений
   const loadMoreImages = useCallback(async () => {
     if (isLoadingImages || !hasMoreImages) return
 
@@ -213,7 +217,7 @@ function App() {
       setIsLoadingImages(true)
       const offset = generatedImages.length
       const images = await getAllImages(20, offset)
-      
+
       setGeneratedImages(prev => [...prev, ...images])
       setHasMoreImages(generatedImages.length + images.length < totalImagesCount)
     } catch (error) {
@@ -223,10 +227,8 @@ function App() {
     }
   }, [isLoadingImages, hasMoreImages, generatedImages.length, totalImagesCount])
 
-  // Обработчик скролла для бесконечной ленты
   useEffect(() => {
     const handleScroll = () => {
-      // Проверяем достигли ли низа страницы
       const scrollHeight = document.documentElement.scrollHeight
       const scrollTop = document.documentElement.scrollTop
       const clientHeight = document.documentElement.clientHeight
@@ -240,7 +242,6 @@ function App() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [isLoadingImages, hasMoreImages, generatedImages.length, loadMoreImages])
 
-  // Очистить всю историю
   const handleClearHistory = async () => {
     if (!confirm('Удалить все сгенерированные изображения? Это действие нельзя отменить.')) {
       return
@@ -262,19 +263,15 @@ function App() {
     }
   }
 
-  // Удалить одно изображение
   const handleDeleteImage = async (img: GeneratedImage) => {
     try {
-      // Удалить из IndexedDB
       await deleteImage(img.id)
 
       revokeObjectUrl(img.url)
-      
-      // Удалить из state
+
       setGeneratedImages(prev => prev.filter(i => i.id !== img.id))
       setTotalImagesCount(prev => prev - 1)
-      
-      // Обновить общую стоимость
+
       if (img.cost !== undefined && img.cost !== null) {
         setTotalCost(prev => prev - img.cost!)
       }
@@ -284,7 +281,6 @@ function App() {
     }
   }
 
-  // Добавить сгенерированное изображение (в state и IndexedDB)
   const addGeneratedImage = async (imageData: {
     url: string
     prompt: string
@@ -312,16 +308,13 @@ function App() {
       thinkingLevel: imageData.thinkingLevel
     }
 
-    // Добавить в state (в начало массива)
     setGeneratedImages(prev => [newImage, ...prev])
     setTotalImagesCount(prev => prev + 1)
-    
-    // Обновить общую стоимость
+
     if (imageData.cost !== undefined && imageData.cost !== null) {
       setTotalCost(prev => prev + imageData.cost!)
     }
 
-    // Сохранить в IndexedDB
     try {
       await saveImage(newImage)
     } catch (error) {
@@ -359,7 +352,7 @@ function App() {
 
   const addToNextGeneration = (imageUrl: string) => {
     if (sourceImages.length >= 4) return
-    
+
     fetch(imageUrl)
       .then(res => res.blob())
       .then(blob => {
@@ -406,11 +399,21 @@ function App() {
     localStorage.removeItem('openrouter_api_key')
   }
 
+  // Обработка Enter для отправки (Shift+Enter — перенос строки)
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault()
+      if (prompt.trim() && !isGenerating) {
+        generateImage()
+      }
+    }
+  }
+
   const generateImage = async () => {
     if (!prompt.trim()) return
-    
+
     if (!apiKey.trim()) {
-      alert('❌ API ключ не установлен\n\nНажмите на ⚙️ в левом верхнем углу и введите свой OpenRouter API ключ.\n\nПолучить ключ: https://openrouter.ai/settings/keys')
+      setShowSettingsModal(true)
       return
     }
 
@@ -442,7 +445,6 @@ function App() {
         imageConfig.thinking_level = resolvedThinkingLevel
       }
 
-      // Добавляем префикс для гарантии генерации изображения
       const enhancedPrompt = `Generate an image: ${prompt}`
 
       if (sourceImages.length > 0) {
@@ -521,11 +523,11 @@ function App() {
 
       console.log('=== API Response ===')
       console.log('Full response:', JSON.stringify(data, null, 2))
-      
+
       let cost = null
       let generationId = null
       let tokens = null
-      
+
       if (data.usage?.cost !== undefined) {
         cost = data.usage.cost
       } else if (data.usage?.total_cost !== undefined) {
@@ -533,13 +535,13 @@ function App() {
       } else if (data.cost !== undefined) {
         cost = data.cost
       }
-      
+
       if (data.id) {
         generationId = data.id
       } else if (data.choices?.[0]?.generation_id) {
         generationId = data.choices[0].generation_id
       }
-      
+
       if (data.usage) {
         tokens = {
           prompt: data.usage.prompt_tokens || 0,
@@ -574,15 +576,15 @@ function App() {
         console.error('API Error:', data.error)
         const errorMsg = data.error.message || 'Неизвестная ошибка'
         const errorDetails = data.error.metadata?.raw || ''
-        
+
         if (data.error.code === 429 || errorMsg.includes('rate-limited')) {
-          alert(`⏱️ Rate Limit\n\n${errorMsg}\n\n💡 Попробуй:\n- Переключить модель на Nano Banana Pro\n- Подождать 1-2 минуты\n\n${errorDetails}`)
+          alert(`Rate Limit\n\n${errorMsg}\n\nПопробуйте переключить модель или подождать 1-2 минуты.\n\n${errorDetails}`)
         } else {
-          alert(`❌ Ошибка API\n\n${errorMsg}\n\n${errorDetails}`)
+          alert(`Ошибка API\n\n${errorMsg}\n\n${errorDetails}`)
         }
       } else {
         console.error('Unexpected response format:', data)
-        alert(`Ошибка генерации: неожиданный формат ответа`)
+        alert('Ошибка генерации: неожиданный формат ответа')
       }
     } catch (error) {
       console.error('Generation error:', error)
@@ -593,417 +595,407 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-background gradient-mesh">
-      {/* Grain Texture Overlay */}
+    <div className="min-h-screen bg-background gradient-mesh flex flex-col">
+      {/* Текстурный оверлей */}
       <div className="grain-overlay" />
-      {/* Sidebar Settings Panel - СЛЕВА */}
-      <div className={`
-        fixed top-0 left-0 z-50 h-screen w-[280px] md:w-80
-        glass transform transition-transform duration-300 ease-out
-        ${isSettingsPanelOpen ? 'translate-x-0' : '-translate-x-full'}
-      `}>
-        <div className="p-3 md:p-6 h-full flex flex-col overflow-y-auto">
-          {/* Header */}
-          <div className="flex items-center justify-between mb-3 md:mb-6">
-            <span className="font-semibold text-sm md:text-base">Параметры изображения</span>
-            <button
-              onClick={() => setIsSettingsPanelOpen(false)}
-              className="w-7 h-7 md:w-8 md:h-8 rounded-lg bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors"
-              title="Закрыть"
-            >
-              <X className="w-3.5 h-3.5 md:w-4 md:h-4" />
-            </button>
-          </div>
 
-          {/* API Key Status */}
-          <div className="mb-3 md:mb-6 space-y-1.5 md:space-y-2">
+      {/* Шапка */}
+      <header className="sticky top-0 z-30 glass border-b border-white/10">
+        <div className="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
+          <h1 className="text-xl font-bold bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent tracking-tight">
+            ВИДЕНИЕ
+          </h1>
+          <div className="flex items-center gap-2">
+            {totalCost > 0 && (
+              <span className="text-xs text-muted-foreground bg-white/5 px-2.5 py-1 rounded-full">
+                ${totalCost.toFixed(4)}
+              </span>
+            )}
+            {totalImagesCount > 0 && (
+              <button
+                onClick={handleClearHistory}
+                className="text-xs text-muted-foreground hover:text-destructive bg-white/5 hover:bg-destructive/10 px-2.5 py-1 rounded-full transition-colors flex items-center gap-1"
+                title="Очистить историю"
+              >
+                <Trash2 className="w-3 h-3" />
+                <span>{totalImagesCount}</span>
+              </button>
+            )}
             <button
               onClick={() => setShowSettingsModal(true)}
-              className={`w-full py-1.5 md:py-2 px-3 md:px-4 rounded-lg cursor-pointer transition-colors text-xs md:text-sm ${apiKey ? 'bg-green-500/20 hover:bg-green-500/30' : 'bg-destructive/20 hover:bg-destructive/30'}`}
+              className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors ${apiKey ? 'bg-green-500/20 hover:bg-green-500/30 text-green-400' : 'bg-destructive/20 hover:bg-destructive/30 text-destructive'}`}
+              title={apiKey ? 'API ключ установлен' : 'Установить API ключ'}
             >
-              {apiKey ? 'API ключ установлен' : 'API ключ не установлен'}
+              <KeyRound className="w-4 h-4" />
             </button>
-
-            {/* Clear History Button */}
-            <button
-              onClick={handleClearHistory}
-              className="w-full py-1.5 md:py-2 px-3 md:px-4 rounded-lg cursor-pointer transition-colors bg-destructive/20 hover:bg-destructive/30 flex items-center justify-center gap-1.5 md:gap-2 text-xs md:text-sm"
-              title="Очистить всю историю сгенерированных изображений"
-            >
-              <Trash2 className="w-3.5 h-3.5 md:w-4 md:h-4" />
-              <span>Очистить историю ({totalImagesCount})</span>
-            </button>
-            
-            {/* Total Cost Display */}
-            {totalCost > 0 && (
-              <div className="w-full py-1.5 md:py-2 px-3 md:px-4 rounded-lg bg-primary/10 border border-primary/20 text-center">
-                <div className="text-[10px] md:text-xs text-foreground mb-0.5 md:mb-1">Общие затраты</div>
-                <div className="text-base md:text-lg font-semibold text-foreground">
-                  ${totalCost.toFixed(4)}
-                </div>
-              </div>
-            )}
           </div>
+        </div>
+      </header>
 
-          {/* Source Images */}
-          {sourceImages.length > 0 && (
-            <div className="mb-6">
-              <h3 className="text-sm font-medium text-muted-foreground mb-3">
-                Исходные изображения ({sourceImages.length}/4)
-              </h3>
-              <div className="grid grid-cols-4 gap-2">
-                {sourceImages.map((img) => (
-                  <div key={img.id} className="relative group">
-                    <img
-                      src={img.preview}
-                      alt="Source"
-                      className="w-full aspect-square object-cover rounded-lg border-2 border-border"
-                    />
-                    <button
-                      onClick={() => removeSourceImage(img.id)}
-                      className="absolute -top-1 -right-1 p-1 bg-destructive rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+      {/* Основная область с галереей */}
+      <main className="flex-1 pb-48">
+        <div className="max-w-6xl mx-auto px-4 py-6">
+          {generatedImages.length > 0 ? (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+            >
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+                <AnimatePresence>
+                  {generatedImages.map((img) => (
+                    <motion.div
+                      key={img.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.95 }}
+                      className="group relative rounded-3xl overflow-hidden bg-white/[0.03] border border-white/[0.06] hover:border-white/15 transition-all duration-200"
                     >
-                      <X className="w-3 h-3" />
-                    </button>
-                  </div>
+                      {/* Изображение */}
+                      <div
+                        className="relative aspect-square bg-black/20 cursor-pointer overflow-hidden"
+                        onClick={() => setSelectedImage(img)}
+                      >
+                        <img
+                          src={img.url}
+                          alt={img.prompt}
+                          className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-[1.02]"
+                        />
+                        {/* Оверлей действий при наведении */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                          <div className="absolute bottom-2 right-2 flex gap-1.5">
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation()
+                                downloadImage(img.url, `lumigen-${img.id}.jpg`)
+                              }}
+                              className="p-2 bg-white/20 hover:bg-primary/80 backdrop-blur-sm rounded-full transition-colors"
+                              title="Скачать"
+                            >
+                              <ArrowDownToLine className="w-4 h-4" />
+                            </button>
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation()
+                                addToNextGeneration(img.url)
+                              }}
+                              disabled={sourceImages.length >= 4}
+                              className="p-2 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full transition-colors disabled:opacity-50"
+                              title="Использовать в генерации"
+                            >
+                              <ImagePlus className="w-4 h-4" />
+                            </button>
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation()
+                                handleDeleteImage(img)
+                              }}
+                              className="p-2 bg-white/20 hover:bg-destructive/80 backdrop-blur-sm rounded-full transition-colors"
+                              title="Удалить"
+                            >
+                              <X className="w-4 h-4" />
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Информация под изображением */}
+                      <div className="p-3">
+                        <p className="text-xs text-foreground/80 line-clamp-2 leading-relaxed">
+                          {img.prompt}
+                        </p>
+                        {img.model && (
+                          <p className="text-[10px] text-muted-foreground/50 mt-1.5 truncate">
+                            {MODELS.find(m => m.id === img.model)?.name || img.model}
+                          </p>
+                        )}
+                        <div className="flex items-center gap-1.5 mt-1.5 flex-wrap">
+                          {img.aspectRatio && (
+                            <span className="text-[10px] text-muted-foreground/60 bg-white/5 px-2 py-0.5 rounded-full">
+                              {img.aspectRatio}
+                            </span>
+                          )}
+                          {img.imageSize && (
+                            <span className="text-[10px] text-muted-foreground/60 bg-white/5 px-2 py-0.5 rounded-full">
+                              {img.imageSize}
+                            </span>
+                          )}
+                          {img.temperature !== undefined && img.temperature !== null && (
+                            <span className="text-[10px] text-muted-foreground/60 bg-white/5 px-2 py-0.5 rounded-full">
+                              T:{img.temperature.toFixed(1)}
+                            </span>
+                          )}
+                          {img.thinkingLevel && (
+                            <span className="text-[10px] text-muted-foreground/60 bg-white/5 px-2 py-0.5 rounded-full">
+                              {img.thinkingLevel === 'minimal' ? 'Fast' : 'Think'}
+                            </span>
+                          )}
+                        </div>
+                        <div className="flex items-center gap-2 mt-1.5">
+                          {img.cost !== undefined && img.cost !== null && (
+                            <span className="text-[10px] text-muted-foreground/50">
+                              ${img.cost.toFixed(4)}
+                            </span>
+                          )}
+                          {img.tokens && (
+                            <span className="text-[10px] text-muted-foreground/50">
+                              {img.tokens.total} tokens
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                </AnimatePresence>
+              </div>
+
+              {/* Индикатор загрузки для бесконечной ленты */}
+              {isLoadingImages && (
+                <div className="flex justify-center items-center py-8">
+                  <LoaderCircle className="w-6 h-6 animate-spin text-primary" />
+                  <span className="ml-2 text-sm text-muted-foreground">Загрузка...</span>
+                </div>
+              )}
+
+              {!hasMoreImages && generatedImages.length > 0 && (
+                <div className="text-center py-6 text-muted-foreground/50 text-xs">
+                  Все изображения загружены ({totalImagesCount})
+                </div>
+              )}
+            </motion.div>
+          ) : (
+            /* Пустое состояние — в стиле LLM-чатов */
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="flex flex-col items-center justify-center min-h-[calc(100vh-16rem)]"
+            >
+              <div className="w-16 h-16 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center mb-6">
+                <WandSparkles className="w-8 h-8 text-primary" />
+              </div>
+              <h2 className="text-2xl font-semibold mb-2">Чем могу помочь?</h2>
+              <p className="text-muted-foreground mb-8 text-center max-w-md">
+                Опишите изображение, которое хотите создать, или выберите пример ниже
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-lg w-full">
+                {PROMPT_EXAMPLES.map((example, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setPrompt(example.text)}
+                    className="text-left p-4 rounded-2xl bg-white/[0.03] border border-white/[0.06] hover:border-white/15 hover:bg-white/[0.06] transition-all text-sm text-muted-foreground leading-relaxed"
+                  >
+                    <span className="mr-2">{example.icon}</span>
+                    <span className="line-clamp-2">{example.text}</span>
+                  </button>
                 ))}
               </div>
-            </div>
+            </motion.div>
           )}
+        </div>
+      </main>
 
-          {/* Prompt Input */}
-          <div className="mb-3 md:mb-6 relative">
-            <input
-              type="file"
-              ref={fileInputRef}
-              onChange={handleFileSelect}
-              accept="image/*"
-              multiple
-              className="hidden"
-            />
-            <div className="flex gap-2 md:gap-3 items-start">
-              <button
-                onClick={() => fileInputRef.current?.click()}
-                disabled={sourceImages.length >= 4}
-                className="glass-strong rounded-full p-2 md:p-3 hover:bg-white/15 transition-all glow-soft border-glow flex-shrink-0 group"
-                title="Добавить изображение"
-              >
-                <Plus className="w-6 h-6 md:w-8 md:h-8 group-hover:rotate-90 transition-transform duration-300" />
-              </button>
-              <div className="relative bg-black/30 border border-white/20 rounded-lg md:rounded-xl overflow-hidden flex-1">
+      {/* Фиксированная нижняя панель ввода */}
+      <div className="fixed bottom-0 left-0 right-0 z-40">
+        <div className="bg-gradient-to-t from-background via-background/95 to-transparent pt-6 pb-4">
+          <div className="max-w-6xl mx-auto px-4">
+            {/* Превью исходных изображений */}
+            <AnimatePresence>
+              {sourceImages.length > 0 && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  className="flex gap-2 mb-3 overflow-hidden"
+                >
+                  {sourceImages.map((img) => (
+                    <div key={img.id} className="relative w-16 h-16 rounded-2xl overflow-hidden border border-white/10 flex-shrink-0">
+                      <img
+                        src={img.preview}
+                        alt="Исходное"
+                        className="w-full h-full object-cover"
+                      />
+                      <button
+                        onClick={() => removeSourceImage(img.id)}
+                        className="absolute -top-0.5 -right-0.5 w-5 h-5 bg-destructive rounded-full flex items-center justify-center"
+                      >
+                        <X className="w-3 h-3" />
+                      </button>
+                    </div>
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* Основное поле ввода */}
+            <div className="glass-strong rounded-[2rem] border border-white/10 overflow-hidden">
+              <div className="flex items-end gap-2 p-3">
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  onChange={handleFileSelect}
+                  accept="image/*"
+                  multiple
+                  className="hidden"
+                />
+                <button
+                  onClick={() => fileInputRef.current?.click()}
+                  disabled={sourceImages.length >= 4}
+                  className="w-9 h-9 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center transition-colors flex-shrink-0 disabled:opacity-30"
+                  title="Прикрепить изображение"
+                >
+                  <Paperclip className="w-5 h-5 text-muted-foreground" />
+                </button>
                 <textarea
                   ref={textareaRef}
                   value={prompt}
                   onChange={(e) => setPrompt(e.target.value)}
-                  placeholder="Опишите изображение, которое хотите создать..."
-                  className="w-full bg-transparent text-foreground placeholder:text-muted-foreground focus:outline-none resize-none text-xs md:text-sm overflow-hidden py-2 md:py-3 pr-2 md:pr-3 pl-2 md:pl-3"
+                  onKeyDown={handleKeyDown}
+                  placeholder="Опишите изображение..."
+                  className="flex-1 bg-white/[0.04] rounded-2xl text-foreground placeholder:text-muted-foreground/50 focus:outline-none resize-none text-sm max-h-32 py-2.5 px-4 leading-relaxed"
                   rows={1}
                 />
+                <button
+                  onClick={generateImage}
+                  disabled={isGenerating || !prompt.trim()}
+                  className="w-9 h-9 rounded-full bg-primary hover:bg-primary/90 disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center transition-all flex-shrink-0"
+                  title="Сгенерировать"
+                >
+                  {isGenerating ? (
+                    <LoaderCircle className="w-4 h-4 animate-spin text-primary-foreground" />
+                  ) : (
+                    <SendHorizontal className="w-4 h-4 text-primary-foreground" />
+                  )}
+                </button>
+              </div>
+
+              {/* Компактная панель параметров */}
+              <div className="border-t border-white/[0.06]">
+                <button
+                  onClick={() => setShowParams(!showParams)}
+                  className="w-full flex items-center justify-center gap-1 py-1.5 text-[11px] text-muted-foreground/50 hover:text-muted-foreground/80 transition-colors"
+                >
+                  <span>{MODELS.find(m => m.id === selectedModel)?.name?.split(' (')[0]} / {aspectRatio} / {imageSize}</span>
+                  <ChevronDown className={`w-3 h-3 transition-transform ${showParams ? 'rotate-180' : ''}`} />
+                </button>
+
+                <AnimatePresence>
+                  {showParams && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      className="overflow-hidden"
+                    >
+                      <div className="px-3 pb-3 space-y-2.5">
+                        {/* Модель */}
+                        <div className="flex items-center gap-2">
+                          <label className="text-[11px] text-muted-foreground/60 w-20 flex-shrink-0">Модель</label>
+                          <select
+                            value={selectedModel}
+                            onChange={(e) => setSelectedModel(e.target.value)}
+                            className="flex-1 bg-white/5 border border-white/10 rounded-full px-3 py-1.5 text-xs focus:outline-none focus:ring-1 focus:ring-primary/50"
+                          >
+                            {MODELS.map((model) => (
+                              <option key={model.id} value={model.id} className="bg-[hsl(40,30%,10%)]">
+                                {model.name}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+
+                        {/* Формат и Разрешение в одну строку */}
+                        <div className="flex items-center gap-2">
+                          <label className="text-[11px] text-muted-foreground/60 w-20 flex-shrink-0">Формат</label>
+                          <select
+                            value={aspectRatio}
+                            onChange={(e) => setAspectRatio(e.target.value)}
+                            className="flex-1 bg-white/5 border border-white/10 rounded-full px-3 py-1.5 text-xs focus:outline-none focus:ring-1 focus:ring-primary/50"
+                          >
+                            {ASPECT_RATIOS.map((ratio) => (
+                              <option
+                                key={ratio.id}
+                                value={ratio.id}
+                                className="bg-[hsl(40,30%,10%)]"
+                                disabled={!currentModelCapabilities.aspectRatios.includes(ratio.id)}
+                              >
+                                {ratio.name}
+                              </option>
+                            ))}
+                          </select>
+                          <select
+                            value={imageSize}
+                            onChange={(e) => setImageSize(e.target.value)}
+                            className="w-40 bg-white/5 border border-white/10 rounded-full px-3 py-1.5 text-xs focus:outline-none focus:ring-1 focus:ring-primary/50"
+                          >
+                            {IMAGE_SIZES.map((size) => (
+                              <option
+                                key={size.id}
+                                value={size.id}
+                                className="bg-[hsl(40,30%,10%)]"
+                                disabled={!currentModelCapabilities.imageSizes.includes(size.id)}
+                              >
+                                {size.name}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+
+                        {/* Температура */}
+                        <div className="flex items-center gap-2">
+                          <label className="text-[11px] text-muted-foreground/60 w-20 flex-shrink-0">
+                            T: {temperature.toFixed(1)}
+                          </label>
+                          <input
+                            type="range"
+                            min="0"
+                            max="2"
+                            step="0.1"
+                            value={temperature}
+                            onChange={(e) => setTemperature(parseFloat(e.target.value))}
+                            className="flex-1 accent-primary h-1"
+                          />
+                          <div className="flex text-[10px] text-muted-foreground/40 gap-2 w-28 justify-between">
+                            <span>Строгий</span>
+                            <span>Креативный</span>
+                          </div>
+                        </div>
+
+                        {/* Уровень размышления */}
+                        {currentModelCapabilities.supportsThinkingLevel && (
+                          <div className="flex items-center gap-2">
+                            <label className="text-[11px] text-muted-foreground/60 w-20 flex-shrink-0">Thinking</label>
+                            <div className="flex gap-1.5">
+                              {THINKING_LEVELS.map((level) => (
+                                <button
+                                  key={level.id}
+                                  onClick={() => setThinkingLevel(level.id)}
+                                  className={`px-3 py-1 rounded-full text-xs transition-colors ${
+                                    thinkingLevel === level.id
+                                      ? 'bg-primary/20 text-primary border border-primary/30'
+                                      : 'bg-white/5 text-muted-foreground/60 border border-white/10 hover:bg-white/10'
+                                  }`}
+                                >
+                                  {level.name}
+                                </button>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             </div>
-          </div>
 
-          {/* Parameters */}
-          <div className="space-y-2 md:space-y-4 mb-3 md:mb-6">
-            {/* Model */}
-            <div>
-              <label className="block text-[10px] md:text-sm font-medium text-muted-foreground mb-1 md:mb-2">Модель</label>
-              <select
-                value={selectedModel}
-                onChange={(e) => setSelectedModel(e.target.value)}
-                className="w-full bg-black/30 border border-white/20 rounded-lg px-2 md:px-3 py-1.5 md:py-2 focus:outline-none focus:ring-2 focus:ring-primary text-xs md:text-sm"
-              >
-                {MODELS.map((model) => (
-                  <option key={model.id} value={model.id} className="bg-black">
-                    {model.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            {/* Aspect Ratio */}
-            <div>
-              <label className="block text-[10px] md:text-sm font-medium text-muted-foreground mb-1 md:mb-2">Формат</label>
-              <select
-                value={aspectRatio}
-                onChange={(e) => setAspectRatio(e.target.value)}
-                className="w-full bg-black/30 border border-white/20 rounded-lg px-2 md:px-3 py-1.5 md:py-2 focus:outline-none focus:ring-2 focus:ring-primary text-xs md:text-sm"
-              >
-                {ASPECT_RATIOS.map((ratio) => (
-                  <option
-                    key={ratio.id}
-                    value={ratio.id}
-                    className="bg-black"
-                    disabled={!currentModelCapabilities.aspectRatios.includes(ratio.id)}
-                  >
-                    {ratio.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            {/* Image Size */}
-            <div>
-              <label className="block text-[10px] md:text-sm font-medium text-muted-foreground mb-1 md:mb-2">Разрешение</label>
-              <select
-                value={imageSize}
-                onChange={(e) => setImageSize(e.target.value)}
-                className="w-full bg-black/30 border border-white/20 rounded-lg px-2 md:px-3 py-1.5 md:py-2 focus:outline-none focus:ring-2 focus:ring-primary text-xs md:text-sm"
-              >
-                {IMAGE_SIZES.map((size) => (
-                  <option
-                    key={size.id}
-                    value={size.id}
-                    className="bg-black"
-                    disabled={!currentModelCapabilities.imageSizes.includes(size.id)}
-                  >
-                    {size.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            {/* Temperature */}
-            <div>
-              <label className="block text-sm font-medium text-muted-foreground mb-2">
-                Температура: {temperature.toFixed(1)}
-              </label>
-              <input
-                type="range"
-                min="0"
-                max="2"
-                step="0.1"
-                value={temperature}
-                onChange={(e) => setTemperature(parseFloat(e.target.value))}
-                className="w-full accent-primary"
-              />
-              <div className="flex justify-between text-xs text-muted-foreground mt-1">
-                <span>Строгий</span>
-                <span>Креативный</span>
-              </div>
-            </div>
-
-            {/* Thinking Level */}
-            <div>
-              <label className="block text-sm font-medium text-muted-foreground mb-2">Уровень размышления</label>
-              <select
-                value={thinkingLevel}
-                onChange={(e) => setThinkingLevel(e.target.value)}
-                disabled={!currentModelCapabilities.supportsThinkingLevel}
-                className="w-full bg-black/30 border border-white/20 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary text-sm disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {THINKING_LEVELS.map((level) => (
-                  <option key={level.id} value={level.id} className="bg-black">
-                    {level.name}
-                  </option>
-                ))}
-              </select>
-              {!currentModelCapabilities.supportsThinkingLevel && (
-                <p className="text-[10px] md:text-xs text-muted-foreground mt-1">
-                  Для этой модели уровень размышления отключен.
-                </p>
-              )}
-            </div>
-          </div>
-
-          {/* Generate Button */}
-          <button
-            onClick={generateImage}
-            disabled={isGenerating || !prompt.trim()}
-            className="w-full bg-primary hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed text-primary-foreground font-semibold py-3 md:py-4 px-4 md:px-6 rounded-lg md:rounded-xl transition-all flex items-center justify-center gap-2 glow-strong loading-pulse text-sm md:text-base"
-          >
-            {isGenerating ? (
-              <>
-                <div className="flex gap-1.5 items-center">
-                  <div className="w-2 h-2 rounded-full bg-white animate-pulse-dot" style={{ animationDelay: '0s' }}></div>
-                  <div className="w-2 h-2 rounded-full bg-white animate-pulse-dot" style={{ animationDelay: '0.2s' }}></div>
-                  <div className="w-2 h-2 rounded-full bg-white animate-pulse-dot" style={{ animationDelay: '0.4s' }}></div>
-                </div>
-                <span>Генерация...</span>
-              </>
-            ) : (
-              <>
-                <Send className="w-4 h-4 md:w-5 md:h-5" />
-                Сгенерировать
-              </>
-            )}
-          </button>
-
-          {/* Footer */}
-          <div className="pt-4 border-t border-white/10 mt-auto">
-            <div className="text-[10px] md:text-xs text-muted-foreground/50 text-center">
-              ВИДЕНИЕ v1.2.0
-            </div>
+            {/* Подпись */}
+            <p className="text-center text-[10px] text-muted-foreground/30 mt-2">
+              Nano Banana (Gemini) via OpenRouter &middot; ВИДЕНИЕ v1.4.0
+            </p>
           </div>
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="container mx-auto px-4 py-8">
-        {/* Header */}
-        <motion.div 
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mb-8 flex items-center justify-between"
-        >
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => setIsSettingsPanelOpen(!isSettingsPanelOpen)}
-              className="p-3 glass-strong rounded-xl hover:bg-white/10 transition-all glow-soft"
-              title="Настройки"
-            >
-              <Menu className="w-6 h-6" />
-            </button>
-            <h1 className="text-5xl font-bold bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
-              ВИДЕНИЕ
-            </h1>
-          </div>
-        </motion.div>
-
-        {/* Gallery */}
-        {generatedImages.length > 0 ? (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="min-h-[calc(100vh-200px)] stagger-fade"
-          >
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-              <AnimatePresence>
-                {generatedImages.map((img) => (
-                  <motion.div
-                    key={img.id}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.9 }}
-                    className="glass-strong rounded-xl p-3 group hover-parallax border-glow"
-                  >
-                    <div 
-                      className="relative aspect-square rounded-lg overflow-hidden mb-3 bg-black/20 cursor-pointer"
-                      onClick={() => setSelectedImage(img)}
-                    >
-                      <img
-                        src={img.url}
-                        alt={img.prompt}
-                        className="w-full h-full object-contain"
-                      />
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation()
-                          handleDeleteImage(img)
-                        }}
-                        className="absolute top-2 right-2 p-1.5 bg-destructive/90 hover:bg-destructive rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                        title="Удалить"
-                      >
-                        <X className="w-4 h-4" />
-                      </button>
-                    </div>
-                    <p className="text-sm text-muted-foreground line-clamp-2 mb-2">
-                      {img.prompt}
-                    </p>
-                    <div className="space-y-1">
-                      <div className="flex items-center justify-between gap-2">
-                        <div className="flex flex-col gap-0.5 min-w-0 flex-1">
-                          {img.model && (
-                            <p className="text-xs text-muted-foreground/60 truncate">
-                              {MODELS.find(m => m.id === img.model)?.name || img.model}
-                            </p>
-                          )}
-                          <div className="flex flex-wrap gap-1 text-[10px] text-muted-foreground/50">
-                            {img.aspectRatio && (
-                              <span className="bg-white/10 px-1.5 py-0.5 rounded">{img.aspectRatio}</span>
-                            )}
-                            {img.imageSize && (
-                              <span className="bg-white/10 px-1.5 py-0.5 rounded">{img.imageSize}</span>
-                            )}
-                            {img.temperature !== undefined && img.temperature !== null && (
-                              <span className="bg-white/10 px-1.5 py-0.5 rounded">T:{img.temperature.toFixed(1)}</span>
-                            )}
-                            {img.thinkingLevel && (
-                              <span className="bg-white/10 px-1.5 py-0.5 rounded">{img.thinkingLevel === 'minimal' ? '⚡' : '🧠'}</span>
-                            )}
-                          </div>
-                          {img.cost !== undefined && img.cost !== null && (
-                            <p className="text-xs text-muted-foreground/70">
-                              ${img.cost.toFixed(4)}
-                            </p>
-                          )}
-                        </div>
-                        <div className="flex gap-1 flex-shrink-0">
-                          <button
-                            onClick={() => downloadImage(img.url, `lumigen-${img.id}.jpg`)}
-                            className="p-1.5 bg-primary/90 hover:bg-primary rounded-lg transition-colors"
-                            title="Скачать"
-                          >
-                            <Download className="w-4 h-4" />
-                          </button>
-                          <button
-                            onClick={() => addToNextGeneration(img.url)}
-                            disabled={sourceImages.length >= 4}
-                            className="p-1.5 bg-secondary/90 hover:bg-secondary rounded-lg transition-colors disabled:opacity-50"
-                            title="Добавить в следующую генерацию"
-                          >
-                            <ImagePlus className="w-4 h-4" />
-                          </button>
-                        </div>
-                      </div>
-                      {img.tokens && (
-                        <p className="text-xs text-muted-foreground/60">
-                          Tokens: {img.tokens.total}
-                        </p>
-                      )}
-                    </div>
-                  </motion.div>
-                ))}
-              </AnimatePresence>
-            </div>
-            
-            {/* Loading indicator for infinite scroll */}
-            {isLoadingImages && (
-              <div className="flex justify-center items-center py-8">
-                <Loader2 className="w-8 h-8 animate-spin text-primary" />
-                <span className="ml-3 text-muted-foreground">Загрузка изображений...</span>
-              </div>
-            )}
-            
-            {/* End of list indicator */}
-            {!hasMoreImages && generatedImages.length > 0 && (
-              <div className="text-center py-8 text-muted-foreground text-sm">
-                Все изображения загружены ({totalImagesCount} шт.)
-              </div>
-            )}
-          </motion.div>
-        ) : (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="flex flex-col items-center justify-center min-h-[calc(100vh-200px)]"
-          >
-            <div className="text-center">
-              <ImageIcon className="w-24 h-24 text-muted-foreground/30 mx-auto mb-4" />
-              <h2 className="text-2xl font-semibold mb-2">Нет изображений</h2>
-              <p className="text-muted-foreground mb-6">
-                Нажмите на кнопку слева и сгенерируйте первое изображение
-              </p>
-              <div className="flex items-center justify-center gap-2 text-muted-foreground/70">
-                <Menu className="w-5 h-5" />
-                <span>Откройте боковую панель</span>
-              </div>
-            </div>
-          </motion.div>
-        )}
-
-        {/* Footer */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.4 }}
-          className="text-center mt-8 text-muted-foreground text-sm"
-        >
-          <p>Powered by Nano Banana (Google Gemini) via OpenRouter</p>
-        </motion.div>
-      </div>
-
-      {/* API Key Modal */}
+      {/* Модальное окно API ключа */}
       <AnimatePresence>
         {showSettingsModal && (
           <motion.div
@@ -1014,70 +1006,60 @@ function App() {
             onClick={() => setShowSettingsModal(false)}
           >
             <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
+              initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
+              exit={{ scale: 0.95, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
-              className="glass-strong rounded-2xl p-6 max-w-lg w-full"
+              className="glass-strong rounded-3xl p-6 max-w-md w-full"
             >
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold flex items-center gap-2">
-                  <Settings className="w-6 h-6" />
+              <div className="flex items-center justify-between mb-5">
+                <h2 className="text-lg font-semibold flex items-center gap-2">
+                  <KeyRound className="w-5 h-5" />
                   API ключ OpenRouter
                 </h2>
                 <button
                   onClick={() => setShowSettingsModal(false)}
-                  className="p-2 hover:bg-white/10 rounded-lg transition-colors"
+                  className="p-1.5 hover:bg-white/10 rounded-full transition-colors"
                 >
-                  <X className="w-5 h-5" />
+                  <X className="w-4 h-4" />
                 </button>
               </div>
 
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium mb-2">
-                    OpenRouter API ключ
-                  </label>
                   <input
                     type="text"
                     value={tempApiKey}
                     onChange={(e) => setTempApiKey(e.target.value)}
                     placeholder="sk-or-v1-..."
-                    className="w-full bg-black/30 border border-white/20 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary font-mono text-sm"
+                    className="w-full bg-black/30 border border-white/15 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary/50 font-mono text-sm"
                   />
-                  <p className="text-xs text-muted-foreground mt-2">
-                    Ключ хранится локально в вашем браузере.
-                  </p>
-                </div>
-
-                <div className="flex gap-2">
-                  <button
-                    onClick={handleSaveApiKey}
-                    className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-3 px-6 rounded-lg transition-colors"
-                  >
-                    Сохранить
-                  </button>
-                  <button
-                    onClick={handleClearKey}
-                    className="px-6 py-3 bg-secondary hover:bg-secondary/80 rounded-lg transition-colors"
-                    title="Очистить"
-                  >
-                    Очистить
-                  </button>
-                </div>
-
-                <div className="pt-4 border-t border-white/10">
-                  <p className="text-xs text-muted-foreground">
-                    💡 Получить API ключ можно на{' '}
+                  <p className="text-[11px] text-muted-foreground/50 mt-2">
+                    Ключ хранится локально в вашем браузере. Получить ключ:{' '}
                     <a
                       href="https://openrouter.ai/settings/keys"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-primary hover:underline"
                     >
-                      openrouter.ai/settings/keys
+                      openrouter.ai
                     </a>
                   </p>
+                </div>
+
+                <div className="flex gap-2">
+                  <button
+                    onClick={handleSaveApiKey}
+                    className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground font-medium py-2.5 px-6 rounded-full transition-colors text-sm"
+                  >
+                    Сохранить
+                  </button>
+                  <button
+                    onClick={handleClearKey}
+                    className="px-4 py-2.5 bg-white/5 hover:bg-white/10 rounded-full transition-colors text-sm"
+                  >
+                    Очистить
+                  </button>
                 </div>
               </div>
             </motion.div>
@@ -1085,7 +1067,7 @@ function App() {
         )}
       </AnimatePresence>
 
-      {/* Image Viewer Modal */}
+      {/* Модальное окно просмотра изображения */}
       <AnimatePresence>
         {selectedImage && (
           <motion.div
@@ -1096,15 +1078,15 @@ function App() {
             onClick={() => setSelectedImage(null)}
           >
             <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
+              initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
+              exit={{ scale: 0.95, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
               className="w-[95vw] md:w-auto md:max-w-5xl max-h-[85vh] md:max-h-[90vh] relative"
             >
               <button
                 onClick={() => setSelectedImage(null)}
-                className="absolute -top-12 right-0 p-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors"
+                className="absolute -top-12 right-0 p-2 bg-white/10 hover:bg-white/20 rounded-full transition-colors"
                 title="Закрыть"
               >
                 <X className="w-5 h-5 md:w-6 md:h-6" />
@@ -1112,53 +1094,44 @@ function App() {
               <img
                 src={selectedImage.url}
                 alt={selectedImage.prompt}
-                className="max-w-full max-h-[60vh] md:max-h-[75vh] object-contain rounded-lg mx-auto"
+                className="max-w-full max-h-[60vh] md:max-h-[75vh] object-contain rounded-3xl mx-auto"
               />
-              <div className="mt-3 md:mt-4 glass-strong rounded-xl p-3 md:p-4">
-                <p className="text-xs md:text-sm text-foreground mb-2 md:mb-3 line-clamp-3">
+              <div className="mt-3 glass-strong rounded-3xl p-5">
+                <p className="text-sm text-foreground/90 mb-3 line-clamp-3 leading-relaxed">
                   {selectedImage.prompt}
                 </p>
-                <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 md:gap-4">
-                  <div className="flex flex-wrap items-center gap-2 md:gap-4 text-[10px] md:text-xs">
+                <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
+                  <div className="flex flex-wrap items-center gap-2 text-xs">
                     {selectedImage.model && (
-                      <p className="text-muted-foreground/70">
+                      <span className="text-muted-foreground/60">
                         {MODELS.find(m => m.id === selectedImage.model)?.name || selectedImage.model}
-                      </p>
+                      </span>
                     )}
-                    <div className="flex flex-wrap gap-1">
-                      {selectedImage.aspectRatio && (
-                        <span className="bg-white/10 px-1.5 py-0.5 rounded">{selectedImage.aspectRatio}</span>
-                      )}
-                      {selectedImage.imageSize && (
-                        <span className="bg-white/10 px-1.5 py-0.5 rounded">{selectedImage.imageSize}</span>
-                      )}
-                      {selectedImage.temperature !== undefined && selectedImage.temperature !== null && (
-                        <span className="bg-white/10 px-1.5 py-0.5 rounded">T:{selectedImage.temperature.toFixed(1)}</span>
-                      )}
-                      {selectedImage.thinkingLevel && (
-                        <span className="bg-white/10 px-1.5 py-0.5 rounded">{selectedImage.thinkingLevel === 'minimal' ? '⚡' : '🧠'}</span>
-                      )}
-                    </div>
+                    {selectedImage.aspectRatio && (
+                      <span className="bg-white/5 px-2 py-0.5 rounded-full text-muted-foreground/50">{selectedImage.aspectRatio}</span>
+                    )}
+                    {selectedImage.imageSize && (
+                      <span className="bg-white/5 px-2 py-0.5 rounded-full text-muted-foreground/50">{selectedImage.imageSize}</span>
+                    )}
+                    {selectedImage.temperature !== undefined && selectedImage.temperature !== null && (
+                      <span className="bg-white/5 px-2 py-0.5 rounded-full text-muted-foreground/50">T:{selectedImage.temperature.toFixed(1)}</span>
+                    )}
                     {selectedImage.cost !== undefined && selectedImage.cost !== null && (
-                      <p className="text-muted-foreground">
-                        ${selectedImage.cost.toFixed(4)}
-                      </p>
+                      <span className="text-muted-foreground/60">${selectedImage.cost.toFixed(4)}</span>
                     )}
                     {selectedImage.tokens && (
-                      <p className="text-muted-foreground">
-                        Tokens: {selectedImage.tokens.total}
-                      </p>
+                      <span className="text-muted-foreground/60">Tokens: {selectedImage.tokens.total}</span>
                     )}
                   </div>
-                  <div className="flex flex-col md:flex-row gap-2 w-full md:w-auto">
+                  <div className="flex gap-2 w-full md:w-auto">
                     <button
                       onClick={() => {
                         handleDeleteImage(selectedImage)
                         setSelectedImage(null)
                       }}
-                      className="flex items-center justify-center gap-2 bg-destructive hover:bg-destructive/90 text-primary-foreground px-4 py-2.5 md:py-2 rounded-lg transition-colors text-sm md:text-base"
+                      className="flex items-center justify-center gap-2 bg-destructive/20 hover:bg-destructive/30 text-destructive px-5 py-2 rounded-full transition-colors text-sm flex-1 md:flex-none"
                     >
-                      <Trash2 className="w-4 h-4 md:w-5 md:h-5" />
+                      <Trash2 className="w-4 h-4" />
                       <span>Удалить</span>
                     </button>
                     <button
@@ -1166,9 +1139,9 @@ function App() {
                         downloadImage(selectedImage.url, `lumigen-${selectedImage.id}.jpg`)
                         setSelectedImage(null)
                       }}
-                      className="flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground px-4 py-2.5 md:py-2 rounded-lg transition-colors text-sm md:text-base"
+                      className="flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground px-5 py-2 rounded-full transition-colors text-sm flex-1 md:flex-none"
                     >
-                      <Download className="w-4 h-4 md:w-5 md:h-5" />
+                      <ArrowDownToLine className="w-4 h-4" />
                       <span>Скачать</span>
                     </button>
                     <button
@@ -1177,9 +1150,9 @@ function App() {
                         setSelectedImage(null)
                       }}
                       disabled={sourceImages.length >= 4}
-                      className="flex items-center justify-center gap-2 bg-secondary hover:bg-secondary/90 px-4 py-2 rounded-lg transition-colors disabled:opacity-50"
+                      className="flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 px-5 py-2 rounded-full transition-colors text-sm disabled:opacity-50 flex-1 md:flex-none"
                     >
-                      <ImagePlus className="w-5 h-5" />
+                      <ImagePlus className="w-4 h-4" />
                       <span>Добавить</span>
                     </button>
                   </div>
