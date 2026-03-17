@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
-import { ArrowDownToLine, ImagePlus, X, LoaderCircle, KeyRound, SendHorizontal, Paperclip, Trash2, ChevronDown, WandSparkles } from 'lucide-react'
+import { ArrowDownToLine, ImagePlus, X, LoaderCircle, KeyRound, SendHorizontal, Paperclip, Trash2, ChevronDown, WandSparkles, Cpu, Ratio, Maximize, Thermometer, Check, Sun, Moon } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { saveImage, getAllImages, clearAllImages, getImagesCount, getTotalCost, deleteImage } from './utils/imageDB'
 import './index.css'
@@ -120,11 +120,36 @@ function App() {
   const [apiKey, setApiKey] = useState('')
   const [tempApiKey, setTempApiKey] = useState('')
   const [showParams, setShowParams] = useState(false)
+  const [openDropdown, setOpenDropdown] = useState<'model' | 'ratio' | 'size' | 'temp' | null>(null)
+  const [theme, setTheme] = useState<'dark' | 'light'>(() => {
+    return (localStorage.getItem('videnie_theme') as 'dark' | 'light') || 'dark'
+  })
+  const dropdownAreaRef = useRef<HTMLDivElement>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const previousImageUrlsRef = useRef<Map<string, string>>(new Map())
   const [prompt, setPrompt] = useState('')
   const currentModelCapabilities = MODEL_CAPABILITIES[selectedModel] ?? DEFAULT_MODEL_CAPABILITIES
+
+  // Применение темы
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme)
+    localStorage.setItem('videnie_theme', theme)
+  }, [theme])
+
+  const toggleTheme = () => setTheme(t => t === 'dark' ? 'light' : 'dark')
+
+  // Закрытие дропдауна при клике вне области
+  useEffect(() => {
+    if (!openDropdown) return
+    const handler = (e: MouseEvent) => {
+      if (dropdownAreaRef.current && !dropdownAreaRef.current.contains(e.target as Node)) {
+        setOpenDropdown(null)
+      }
+    }
+    document.addEventListener('mousedown', handler)
+    return () => document.removeEventListener('mousedown', handler)
+  }, [openDropdown])
 
   const revokeObjectUrl = (url: string) => {
     if (url.startsWith('blob:')) {
@@ -400,13 +425,8 @@ function App() {
   }
 
   // Обработка Enter для отправки (Shift+Enter — перенос строки)
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault()
-      if (prompt.trim() && !isGenerating) {
-        generateImage()
-      }
-    }
+  const handleKeyDown = (_e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    // Enter не запускает генерацию — только кнопка
   }
 
   const generateImage = async () => {
@@ -572,6 +592,14 @@ function App() {
             }
           }
         }
+      } else if (data.choices?.[0]?.native_finish_reason) {
+        const reason = data.choices[0].native_finish_reason
+        const reasonMessages: Record<string, string> = {
+          'IMAGE_PROHIBITED_CONTENT': 'Контент запрещён модерацией. Измените промт и попробуйте снова.',
+          'SAFETY': 'Запрос отклонён фильтром безопасности.',
+          'RECITATION': 'Запрос отклонён из-за авторских прав.',
+        }
+        alert(reasonMessages[reason] || `Генерация не удалась: ${reason}`)
       } else if (data.error) {
         console.error('API Error:', data.error)
         const errorMsg = data.error.message || 'Неизвестная ошибка'
@@ -600,47 +628,69 @@ function App() {
       <div className="grain-overlay" />
 
       {/* Шапка */}
-      <header className="sticky top-0 z-30 glass border-b border-white/10">
-        <div className="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
-          <h1 className="text-xl font-bold bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent tracking-tight">
+      <header className="sticky top-0 z-30 glass border-b" style={{ borderColor: 'var(--header-border)' }}>
+        <div className="max-w-6xl mx-auto px-5 sm:px-12 h-[56px] flex items-center justify-between">
+          <h1 className="text-[22px] font-bold bg-clip-text text-transparent tracking-tight" style={{ backgroundImage: `linear-gradient(to right, var(--logo-from), var(--logo-via), var(--logo-to))` }}>
             ВИДЕНИЕ
           </h1>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             {totalCost > 0 && (
-              <span className="text-xs text-muted-foreground bg-white/5 px-2.5 py-1 rounded-full">
-                ${totalCost.toFixed(4)}
+              <span className="text-xs font-semibold text-primary px-3.5 py-1.5 rounded-full flex items-center gap-1.5" style={{ background: 'var(--badge-cost-bg)', border: '1px solid var(--badge-cost-border)' }}>
+                <svg className="w-3.5 h-3.5 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="8"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                ${totalCost.toFixed(3)}
               </span>
             )}
             {totalImagesCount > 0 && (
-              <button
-                onClick={handleClearHistory}
-                className="text-xs text-muted-foreground hover:text-destructive bg-white/5 hover:bg-destructive/10 px-2.5 py-1 rounded-full transition-colors flex items-center gap-1"
-                title="Очистить историю"
-              >
-                <Trash2 className="w-3 h-3" />
-                <span>{totalImagesCount}</span>
-              </button>
+              <span className="text-xs text-foreground/60 px-3 py-1.5 rounded-full flex items-center gap-1.5" style={{ background: 'var(--chip-bg)', border: '1px solid var(--chip-border)' }}>
+                <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+                {totalImagesCount} изобр.
+              </span>
             )}
+            {/* Переключатель темы */}
+            <button
+              onClick={toggleTheme}
+              className="w-9 h-9 rounded-xl flex items-center justify-center transition-colors" style={{ background: 'var(--chip-bg)', border: '1px solid var(--chip-border)' }}
+              title={theme === 'dark' ? 'Светлая тема' : 'Тёмная тема'}
+            >
+              {theme === 'dark' ? <Sun className="w-4 h-4 text-foreground/60" /> : <Moon className="w-4 h-4 text-foreground/60" />}
+            </button>
             <button
               onClick={() => setShowSettingsModal(true)}
-              className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors ${apiKey ? 'bg-green-500/20 hover:bg-green-500/30 text-green-400' : 'bg-destructive/20 hover:bg-destructive/30 text-destructive'}`}
+              className="text-[13px] text-foreground/60 hover:text-foreground/80 px-4 py-1.5 rounded-xl transition-colors flex items-center gap-2" style={{ background: 'var(--chip-bg)', border: '1px solid var(--chip-border)' }}
               title={apiKey ? 'API ключ установлен' : 'Установить API ключ'}
             >
               <KeyRound className="w-4 h-4" />
+              <span className="hidden sm:inline">Настройки</span>
             </button>
           </div>
         </div>
       </header>
 
       {/* Основная область с галереей */}
-      <main className="flex-1 pb-48">
-        <div className="max-w-6xl mx-auto px-4 py-6">
+      <main className="flex-1 pb-52">
+        <div className="max-w-6xl mx-auto px-5 sm:px-12 py-8">
           {generatedImages.length > 0 ? (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
             >
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+              {/* Заголовок секции — как в макете */}
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-[26px] font-bold bg-clip-text text-transparent" style={{ backgroundImage: `linear-gradient(to right, var(--title-from), var(--title-to))` }}>
+                  Галерея
+                </h2>
+                {totalImagesCount > 0 && (
+                  <button
+                    onClick={handleClearHistory}
+                    className="text-[13px] text-destructive hover:brightness-110 px-4 py-2 rounded-xl transition-colors flex items-center gap-1.5" style={{ background: 'var(--clear-bg)', border: '1px solid var(--clear-border)' }}
+                  >
+                    <Trash2 className="w-[15px] h-[15px]" />
+                    <span>Очистить</span>
+                  </button>
+                )}
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 <AnimatePresence>
                   {generatedImages.map((img) => (
                     <motion.div
@@ -648,7 +698,7 @@ function App() {
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, scale: 0.95 }}
-                      className="group relative rounded-3xl overflow-hidden bg-white/[0.03] border border-white/[0.06] hover:border-white/15 transition-all duration-200"
+                      className="group relative rounded-[18px] overflow-hidden bg-card transition-all duration-200" style={{ border: '1px solid var(--card-border)', boxShadow: 'var(--card-shadow)' }}
                     >
                       {/* Изображение */}
                       <div
@@ -661,14 +711,14 @@ function App() {
                           className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-[1.02]"
                         />
                         {/* Оверлей действий при наведении */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                           <div className="absolute bottom-2 right-2 flex gap-1.5">
                             <button
                               onClick={(e) => {
                                 e.stopPropagation()
                                 downloadImage(img.url, `lumigen-${img.id}.jpg`)
                               }}
-                              className="p-2 bg-white/20 hover:bg-primary/80 backdrop-blur-sm rounded-full transition-colors"
+                              className="p-2 bg-white/70 hover:bg-white/90 backdrop-blur-sm rounded-full transition-colors text-black/70 hover:text-black"
                               title="Скачать"
                             >
                               <ArrowDownToLine className="w-4 h-4" />
@@ -679,7 +729,7 @@ function App() {
                                 addToNextGeneration(img.url)
                               }}
                               disabled={sourceImages.length >= 4}
-                              className="p-2 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full transition-colors disabled:opacity-50"
+                              className="p-2 bg-white/70 hover:bg-white/90 backdrop-blur-sm rounded-full transition-colors disabled:opacity-50 text-black/70 hover:text-black"
                               title="Использовать в генерации"
                             >
                               <ImagePlus className="w-4 h-4" />
@@ -689,7 +739,7 @@ function App() {
                                 e.stopPropagation()
                                 handleDeleteImage(img)
                               }}
-                              className="p-2 bg-white/20 hover:bg-destructive/80 backdrop-blur-sm rounded-full transition-colors"
+                              className="p-2 bg-white/70 hover:bg-destructive/90 backdrop-blur-sm rounded-full transition-colors text-black/70 hover:text-white"
                               title="Удалить"
                             >
                               <X className="w-4 h-4" />
@@ -699,46 +749,41 @@ function App() {
                       </div>
 
                       {/* Информация под изображением */}
-                      <div className="p-3">
-                        <p className="text-xs text-foreground/80 line-clamp-2 leading-relaxed">
+                      <div className="p-3.5 space-y-2">
+                        <p className="text-[13px] text-foreground/80 line-clamp-2 leading-[1.3]">
                           {img.prompt}
                         </p>
-                        {img.model && (
-                          <p className="text-[10px] text-muted-foreground/50 mt-1.5 truncate">
-                            {MODELS.find(m => m.id === img.model)?.name || img.model}
-                          </p>
-                        )}
-                        <div className="flex items-center gap-1.5 mt-1.5 flex-wrap">
+                        <div className="flex items-center gap-1.5 flex-wrap">
                           {img.aspectRatio && (
-                            <span className="text-[10px] text-muted-foreground/60 bg-white/5 px-2 py-0.5 rounded-full">
+                            <span className="text-[10px] text-muted-foreground/60 bg-white/[0.06] px-2 py-0.5 rounded-full">
                               {img.aspectRatio}
                             </span>
                           )}
                           {img.imageSize && (
-                            <span className="text-[10px] text-muted-foreground/60 bg-white/5 px-2 py-0.5 rounded-full">
+                            <span className="text-[10px] text-muted-foreground/60 bg-white/[0.06] px-2 py-0.5 rounded-full">
                               {img.imageSize}
                             </span>
                           )}
                           {img.temperature !== undefined && img.temperature !== null && (
-                            <span className="text-[10px] text-muted-foreground/60 bg-white/5 px-2 py-0.5 rounded-full">
+                            <span className="text-[10px] text-muted-foreground/60 bg-white/[0.06] px-2 py-0.5 rounded-full">
                               T:{img.temperature.toFixed(1)}
                             </span>
                           )}
                           {img.thinkingLevel && (
-                            <span className="text-[10px] text-muted-foreground/60 bg-white/5 px-2 py-0.5 rounded-full">
+                            <span className="text-[10px] text-muted-foreground/60 bg-white/[0.06] px-2 py-0.5 rounded-full">
                               {img.thinkingLevel === 'minimal' ? 'Fast' : 'Think'}
                             </span>
                           )}
                         </div>
-                        <div className="flex items-center gap-2 mt-1.5">
-                          {img.cost !== undefined && img.cost !== null && (
-                            <span className="text-[10px] text-muted-foreground/50">
-                              ${img.cost.toFixed(4)}
+                        <div className="flex items-center justify-between">
+                          {img.model && (
+                            <span className="text-[11px] text-muted-foreground/50 truncate">
+                              {MODELS.find(m => m.id === img.model)?.name?.split(' (')[0] || img.model}
                             </span>
                           )}
-                          {img.tokens && (
-                            <span className="text-[10px] text-muted-foreground/50">
-                              {img.tokens.total} tokens
+                          {img.cost !== undefined && img.cost !== null && (
+                            <span className="text-[11px] font-medium text-primary">
+                              ${img.cost.toFixed(3)}
                             </span>
                           )}
                         </div>
@@ -769,10 +814,10 @@ function App() {
               animate={{ opacity: 1, y: 0 }}
               className="flex flex-col items-center justify-center min-h-[calc(100vh-16rem)]"
             >
-              <div className="w-16 h-16 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center mb-6">
+              <div className="w-16 h-16 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center mb-6 shadow-[0_0_30px_rgba(212,168,37,0.15)]">
                 <WandSparkles className="w-8 h-8 text-primary" />
               </div>
-              <h2 className="text-2xl font-semibold mb-2">Чем могу помочь?</h2>
+              <h2 className="text-2xl font-bold mb-2 bg-clip-text text-transparent" style={{ backgroundImage: `linear-gradient(to right, var(--title-from), var(--title-to))` }}>Чем могу помочь?</h2>
               <p className="text-muted-foreground mb-8 text-center max-w-md">
                 Опишите изображение, которое хотите создать, или выберите пример ниже
               </p>
@@ -781,7 +826,7 @@ function App() {
                   <button
                     key={idx}
                     onClick={() => setPrompt(example.text)}
-                    className="text-left p-4 rounded-2xl bg-white/[0.03] border border-white/[0.06] hover:border-white/15 hover:bg-white/[0.06] transition-all text-sm text-muted-foreground leading-relaxed"
+                    className="text-left p-4 rounded-2xl transition-all text-sm text-muted-foreground leading-relaxed dropdown-opt" style={{ border: '1px solid var(--card-border)' }}
                   >
                     <span className="mr-2">{example.icon}</span>
                     <span className="line-clamp-2">{example.text}</span>
@@ -793,10 +838,10 @@ function App() {
         </div>
       </main>
 
-      {/* Фиксированная нижняя панель ввода */}
+      {/* Фиксированная нижняя панель — как в макете */}
       <div className="fixed bottom-0 left-0 right-0 z-40">
-        <div className="bg-gradient-to-t from-background via-background/95 to-transparent pt-6 pb-4">
-          <div className="max-w-6xl mx-auto px-4">
+        <div className="py-4 space-y-3" style={{ background: 'var(--panel-bg)', borderTop: '1px solid var(--panel-border)' }}>
+          <div className="max-w-6xl mx-auto px-5 sm:px-12 space-y-3 relative">
             {/* Превью исходных изображений */}
             <AnimatePresence>
               {sourceImages.length > 0 && (
@@ -804,20 +849,24 @@ function App() {
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: 'auto' }}
                   exit={{ opacity: 0, height: 0 }}
-                  className="flex gap-2 mb-3 overflow-hidden"
+                  className="flex gap-2 overflow-hidden"
                 >
                   {sourceImages.map((img) => (
-                    <div key={img.id} className="relative w-16 h-16 rounded-2xl overflow-hidden border border-white/10 flex-shrink-0">
-                      <img
-                        src={img.preview}
-                        alt="Исходное"
-                        className="w-full h-full object-cover"
-                      />
+                    <div key={img.id} className="relative w-16 h-16 flex-shrink-0">
+                      <div className="w-full h-full rounded-2xl overflow-hidden border border-white/10">
+                        <img
+                          src={img.preview}
+                          alt="Исходное"
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
                       <button
-                        onClick={() => removeSourceImage(img.id)}
-                        className="absolute -top-0.5 -right-0.5 w-5 h-5 bg-destructive rounded-full flex items-center justify-center"
+                        type="button"
+                        onClick={(e) => { e.stopPropagation(); removeSourceImage(img.id) }}
+                        className="absolute top-0.5 right-0.5 w-5 h-5 rounded-full flex items-center justify-center z-20"
+                        style={{ background: '#D44A4A' }}
                       >
-                        <X className="w-3 h-3" />
+                        <span className="text-white text-[10px] font-bold leading-none">✕</span>
                       </button>
                     </div>
                   ))}
@@ -825,172 +874,247 @@ function App() {
               )}
             </AnimatePresence>
 
-            {/* Основное поле ввода */}
-            <div className="glass-strong rounded-[2rem] border border-white/10 overflow-hidden">
-              <div className="flex items-end gap-2 p-3">
-                <input
-                  type="file"
-                  ref={fileInputRef}
-                  onChange={handleFileSelect}
-                  accept="image/*"
-                  multiple
-                  className="hidden"
-                />
+            {/* Ряд чипов параметров — как в макете */}
+            <div ref={dropdownAreaRef} className="flex items-center gap-2 flex-wrap">
+              {/* Чип модели */}
+              <div className="relative">
                 <button
-                  onClick={() => fileInputRef.current?.click()}
-                  disabled={sourceImages.length >= 4}
-                  className="w-9 h-9 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center transition-colors flex-shrink-0 disabled:opacity-30"
-                  title="Прикрепить изображение"
+                  onClick={() => setOpenDropdown(openDropdown === 'model' ? null : 'model')}
+                  className={`flex items-center gap-1.5 rounded-full px-3.5 py-2 text-[13px] font-medium transition-colors ${openDropdown === 'model' ? 'text-primary' : 'text-foreground/80'}`}
+                  style={{ background: openDropdown === 'model' ? 'var(--chip-active-bg)' : 'var(--chip-bg)', border: `1px solid ${openDropdown === 'model' ? 'var(--chip-active-border)' : 'var(--chip-border)'}` }}
                 >
-                  <Paperclip className="w-5 h-5 text-muted-foreground" />
+                  <span>{MODELS.find(m => m.id === selectedModel)?.name.split(' (')[0]}</span>
+                  <ChevronDown className="w-3 h-3" />
                 </button>
-                <textarea
-                  ref={textareaRef}
-                  value={prompt}
-                  onChange={(e) => setPrompt(e.target.value)}
-                  onKeyDown={handleKeyDown}
-                  placeholder="Опишите изображение..."
-                  className="flex-1 bg-white/[0.04] rounded-2xl text-foreground placeholder:text-muted-foreground/50 focus:outline-none resize-none text-sm max-h-32 py-2.5 px-4 leading-relaxed"
-                  rows={1}
-                />
-                <button
-                  onClick={generateImage}
-                  disabled={isGenerating || !prompt.trim()}
-                  className="w-9 h-9 rounded-full bg-primary hover:bg-primary/90 disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center transition-all flex-shrink-0"
-                  title="Сгенерировать"
-                >
-                  {isGenerating ? (
-                    <LoaderCircle className="w-4 h-4 animate-spin text-primary-foreground" />
-                  ) : (
-                    <SendHorizontal className="w-4 h-4 text-primary-foreground" />
-                  )}
-                </button>
-              </div>
-
-              {/* Компактная панель параметров */}
-              <div className="border-t border-white/[0.06]">
-                <button
-                  onClick={() => setShowParams(!showParams)}
-                  className="w-full flex items-center justify-center gap-1 py-1.5 text-[11px] text-muted-foreground/50 hover:text-muted-foreground/80 transition-colors"
-                >
-                  <span>{MODELS.find(m => m.id === selectedModel)?.name?.split(' (')[0]} / {aspectRatio} / {imageSize}</span>
-                  <ChevronDown className={`w-3 h-3 transition-transform ${showParams ? 'rotate-180' : ''}`} />
-                </button>
-
                 <AnimatePresence>
-                  {showParams && (
+                  {openDropdown === 'model' && (
                     <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: 'auto', opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      className="overflow-hidden"
+                      initial={{ opacity: 0, y: 6 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 6 }}
+                      className="absolute bottom-full left-0 mb-2 z-50 w-[260px] rounded-[18px] border border-[rgba(255,204,51,0.13)] p-[14px_18px] space-y-2.5 shadow-[0_-6px_32px_rgba(0,0,0,0.38)]"
+                      style={{ background: 'var(--dropdown-bg)' }}
                     >
-                      <div className="px-3 pb-3 space-y-2.5">
-                        {/* Модель */}
+                      <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
-                          <label className="text-[11px] text-muted-foreground/60 w-20 flex-shrink-0">Модель</label>
-                          <select
-                            value={selectedModel}
-                            onChange={(e) => setSelectedModel(e.target.value)}
-                            className="flex-1 bg-white/5 border border-white/10 rounded-full px-3 py-1.5 text-xs focus:outline-none focus:ring-1 focus:ring-primary/50"
-                          >
-                            {MODELS.map((model) => (
-                              <option key={model.id} value={model.id} className="bg-[hsl(40,30%,10%)]">
-                                {model.name}
-                              </option>
-                            ))}
-                          </select>
+                          <Cpu className="w-3.5 h-3.5 text-primary" />
+                          <span className="text-xs font-semibold text-foreground">Модель</span>
                         </div>
-
-                        {/* Формат и Разрешение в одну строку */}
-                        <div className="flex items-center gap-2">
-                          <label className="text-[11px] text-muted-foreground/60 w-20 flex-shrink-0">Формат</label>
-                          <select
-                            value={aspectRatio}
-                            onChange={(e) => setAspectRatio(e.target.value)}
-                            className="flex-1 bg-white/5 border border-white/10 rounded-full px-3 py-1.5 text-xs focus:outline-none focus:ring-1 focus:ring-primary/50"
+                        <span className="text-[10px] text-muted-foreground">{MODELS.length} доступно</span>
+                      </div>
+                      <div className="space-y-1">
+                        {MODELS.map((model) => (
+                          <button
+                            key={model.id}
+                            onClick={() => { setSelectedModel(model.id); setOpenDropdown(null) }}
+                            className={`w-full flex items-center justify-between rounded-[10px] px-3.5 py-2.5 text-xs font-medium transition-colors ${selectedModel === model.id ? 'dropdown-opt-active text-primary' : 'dropdown-opt text-foreground'}`}
                           >
-                            {ASPECT_RATIOS.map((ratio) => (
-                              <option
-                                key={ratio.id}
-                                value={ratio.id}
-                                className="bg-[hsl(40,30%,10%)]"
-                                disabled={!currentModelCapabilities.aspectRatios.includes(ratio.id)}
-                              >
-                                {ratio.name}
-                              </option>
-                            ))}
-                          </select>
-                          <select
-                            value={imageSize}
-                            onChange={(e) => setImageSize(e.target.value)}
-                            className="w-40 bg-white/5 border border-white/10 rounded-full px-3 py-1.5 text-xs focus:outline-none focus:ring-1 focus:ring-primary/50"
-                          >
-                            {IMAGE_SIZES.map((size) => (
-                              <option
-                                key={size.id}
-                                value={size.id}
-                                className="bg-[hsl(40,30%,10%)]"
-                                disabled={!currentModelCapabilities.imageSizes.includes(size.id)}
-                              >
-                                {size.name}
-                              </option>
-                            ))}
-                          </select>
-                        </div>
-
-                        {/* Температура */}
-                        <div className="flex items-center gap-2">
-                          <label className="text-[11px] text-muted-foreground/60 w-20 flex-shrink-0">
-                            T: {temperature.toFixed(1)}
-                          </label>
-                          <input
-                            type="range"
-                            min="0"
-                            max="2"
-                            step="0.1"
-                            value={temperature}
-                            onChange={(e) => setTemperature(parseFloat(e.target.value))}
-                            className="flex-1 accent-primary h-1"
-                          />
-                          <div className="flex text-[10px] text-muted-foreground/40 gap-2 w-28 justify-between">
-                            <span>Строгий</span>
-                            <span>Креативный</span>
-                          </div>
-                        </div>
-
-                        {/* Уровень размышления */}
-                        {currentModelCapabilities.supportsThinkingLevel && (
-                          <div className="flex items-center gap-2">
-                            <label className="text-[11px] text-muted-foreground/60 w-20 flex-shrink-0">Thinking</label>
-                            <div className="flex gap-1.5">
-                              {THINKING_LEVELS.map((level) => (
-                                <button
-                                  key={level.id}
-                                  onClick={() => setThinkingLevel(level.id)}
-                                  className={`px-3 py-1 rounded-full text-xs transition-colors ${
-                                    thinkingLevel === level.id
-                                      ? 'bg-primary/20 text-primary border border-primary/30'
-                                      : 'bg-white/5 text-muted-foreground/60 border border-white/10 hover:bg-white/10'
-                                  }`}
-                                >
-                                  {level.name}
-                                </button>
-                              ))}
-                            </div>
-                          </div>
-                        )}
+                            <span>{model.name.split(' (')[0]}</span>
+                            {selectedModel === model.id && <Check className="w-3 h-3 text-primary" />}
+                          </button>
+                        ))}
                       </div>
                     </motion.div>
                   )}
                 </AnimatePresence>
               </div>
+
+              {/* Чип формата */}
+              <div className="relative">
+                <button
+                  onClick={() => setOpenDropdown(openDropdown === 'ratio' ? null : 'ratio')}
+                  className={`flex items-center gap-1.5 rounded-full px-3.5 py-2 text-[13px] font-medium transition-colors ${openDropdown === 'ratio' ? 'text-primary' : 'text-foreground/80'}`}
+                  style={{ background: openDropdown === 'ratio' ? 'var(--chip-active-bg)' : 'var(--chip-bg)', border: `1px solid ${openDropdown === 'ratio' ? 'var(--chip-active-border)' : 'var(--chip-border)'}` }}
+                >
+                  <span>{aspectRatio}</span>
+                  <ChevronDown className="w-3 h-3" />
+                </button>
+                <AnimatePresence>
+                  {openDropdown === 'ratio' && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 6 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 6 }}
+                      className="absolute bottom-full left-0 mb-2 z-50 w-[220px] rounded-[18px] border border-[rgba(255,204,51,0.13)] p-[14px_18px] space-y-2.5 shadow-[0_-6px_32px_rgba(0,0,0,0.38)]"
+                      style={{ background: 'var(--dropdown-bg)' }}
+                    >
+                      <div className="flex items-center gap-2">
+                        <Ratio className="w-3.5 h-3.5 text-primary" />
+                        <span className="text-xs font-semibold text-foreground">Формат</span>
+                      </div>
+                      <div className="space-y-1">
+                        {ASPECT_RATIOS.map((ratio) => (
+                          <button
+                            key={ratio.id}
+                            onClick={() => { setAspectRatio(ratio.id); setOpenDropdown(null) }}
+                            disabled={!currentModelCapabilities.aspectRatios.includes(ratio.id)}
+                            className={`w-full flex items-center justify-between rounded-[10px] px-3.5 py-2.5 text-xs font-medium transition-colors disabled:opacity-40 ${aspectRatio === ratio.id ? 'dropdown-opt-active text-primary' : 'dropdown-opt text-foreground'}`}
+                          >
+                            <span>{ratio.id} — {ratio.name.split(' (')[0]}</span>
+                            {aspectRatio === ratio.id && <Check className="w-3 h-3 text-primary" />}
+                          </button>
+                        ))}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+
+              {/* Чип разрешения */}
+              <div className="relative">
+                <button
+                  onClick={() => setOpenDropdown(openDropdown === 'size' ? null : 'size')}
+                  className={`flex items-center gap-1.5 rounded-full px-3.5 py-2 text-[13px] font-medium transition-colors ${openDropdown === 'size' ? 'text-primary' : 'text-foreground/80'}`}
+                  style={{ background: openDropdown === 'size' ? 'var(--chip-active-bg)' : 'var(--chip-bg)', border: `1px solid ${openDropdown === 'size' ? 'var(--chip-active-border)' : 'var(--chip-border)'}` }}
+                >
+                  <span>{imageSize}</span>
+                  <ChevronDown className="w-3 h-3" />
+                </button>
+                <AnimatePresence>
+                  {openDropdown === 'size' && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 6 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 6 }}
+                      className="absolute bottom-full left-0 mb-2 z-50 w-[220px] rounded-[18px] border border-[rgba(255,204,51,0.13)] p-[14px_18px] space-y-2.5 shadow-[0_-6px_32px_rgba(0,0,0,0.38)]"
+                      style={{ background: 'var(--dropdown-bg)' }}
+                    >
+                      <div className="flex items-center gap-2">
+                        <Maximize className="w-3.5 h-3.5 text-primary" />
+                        <span className="text-xs font-semibold text-foreground">Разрешение</span>
+                      </div>
+                      <div className="space-y-1">
+                        {IMAGE_SIZES.map((size) => {
+                          const resMap: Record<string, string> = { '1K': '1024×1024', '2K': '2048×2048', '4K': '4096×4096' }
+                          return (
+                            <button
+                              key={size.id}
+                              onClick={() => { setImageSize(size.id); setOpenDropdown(null) }}
+                              disabled={!currentModelCapabilities.imageSizes.includes(size.id)}
+                              className={`w-full flex items-center justify-between rounded-[10px] px-3.5 py-2.5 text-xs font-medium transition-colors disabled:opacity-40 ${imageSize === size.id ? 'dropdown-opt-active text-primary' : 'dropdown-opt text-foreground'}`}
+                            >
+                              <div className="flex items-center gap-2">
+                                <span className="font-semibold">{size.id}</span>
+                                <span className="text-muted-foreground font-mono text-[10px]">{resMap[size.id]}</span>
+                              </div>
+                              {imageSize === size.id && <Check className="w-3 h-3 text-primary" />}
+                            </button>
+                          )
+                        })}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+
+              {/* Чип температуры */}
+              <div className="relative">
+                <button
+                  onClick={() => setOpenDropdown(openDropdown === 'temp' ? null : 'temp')}
+                  className="flex items-center gap-1.5 rounded-full px-3.5 py-2 text-[13px] font-medium text-primary transition-colors"
+                  style={{ background: 'var(--chip-active-bg)', border: '1px solid var(--chip-active-border)' }}
+                >
+                  <Thermometer className="w-3 h-3" />
+                  <span>{temperature.toFixed(1)}</span>
+                </button>
+                <AnimatePresence>
+                  {openDropdown === 'temp' && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 6 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 6 }}
+                      className="absolute bottom-full left-0 mb-2 z-50 w-[260px] rounded-[18px] border border-[rgba(255,204,51,0.13)] p-[14px_18px] space-y-3.5 shadow-[0_-6px_32px_rgba(0,0,0,0.38)]"
+                      style={{ background: 'var(--dropdown-bg)' }}
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <Thermometer className="w-3.5 h-3.5 text-primary" />
+                          <span className="text-xs font-semibold text-foreground">Температура</span>
+                        </div>
+                        <span className="text-sm font-semibold text-primary font-mono">{temperature.toFixed(1)}</span>
+                      </div>
+                      <input
+                        type="range"
+                        min="0"
+                        max="2"
+                        step="0.1"
+                        value={temperature}
+                        onChange={(e) => setTemperature(parseFloat(e.target.value))}
+                        className="w-full accent-primary h-1.5"
+                      />
+                      <div className="flex gap-1.5">
+                        {[0.5, 1.0, 1.5, 2.0].map((val) => (
+                          <button
+                            key={val}
+                            onClick={() => setTemperature(val)}
+                            className={`flex-1 text-center rounded-[10px] py-2 text-[11px] font-medium font-mono transition-colors ${temperature === val ? 'dropdown-opt-active text-primary' : 'dropdown-opt text-foreground/60'}`}
+                          >
+                            {val.toFixed(1)}
+                          </button>
+                        ))}
+                      </div>
+                      <p className="text-[11px] text-muted-foreground">Больше = креативнее, меньше = точнее</p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+
+              {/* Уровень размышления */}
+              {currentModelCapabilities.supportsThinkingLevel && (
+                <button
+                  onClick={() => setThinkingLevel(thinkingLevel === 'minimal' ? 'high' : 'minimal')}
+                  className={`flex items-center gap-1.5 rounded-full px-3.5 py-2 text-[13px] font-medium transition-colors ${thinkingLevel === 'high' ? 'text-primary' : 'text-foreground/80'}`}
+                  style={{ background: thinkingLevel === 'high' ? 'var(--chip-active-bg)' : 'var(--chip-bg)', border: `1px solid ${thinkingLevel === 'high' ? 'var(--chip-active-border)' : 'var(--chip-border)'}` }}
+                >
+                  {thinkingLevel === 'minimal' ? 'Fast' : 'Think'}
+                </button>
+              )}
             </div>
 
-            {/* Подпись */}
-            <p className="text-center text-[10px] text-muted-foreground/30 mt-2">
-              Nano Banana (Gemini) via OpenRouter &middot; ВИДЕНИЕ v1.4.0
-            </p>
+
+            {/* Ряд ввода — как в макете */}
+            <div className="flex items-end gap-3">
+              <input
+                type="file"
+                ref={fileInputRef}
+                onChange={handleFileSelect}
+                accept="image/*"
+                multiple
+                className="hidden"
+              />
+              <button
+                onClick={() => fileInputRef.current?.click()}
+                disabled={sourceImages.length >= 4}
+                className="w-11 h-11 rounded-[16px] attach-btn hover:brightness-110 flex items-center justify-center transition-colors flex-shrink-0 disabled:opacity-30"
+                title="Прикрепить изображение"
+              >
+                <Paperclip className="w-5 h-5 text-muted-foreground" />
+              </button>
+              <textarea
+                ref={textareaRef}
+                value={prompt}
+                onChange={(e) => setPrompt(e.target.value)}
+                onKeyDown={handleKeyDown}
+                placeholder="Опишите изображение, которое хотите создать..."
+                className="flex-1 bottom-input rounded-[18px] text-foreground placeholder:text-muted-foreground/50 focus:outline-none resize-none text-[15px] max-h-32 py-3.5 px-5 leading-relaxed"
+                rows={1}
+              />
+              <button
+                onClick={generateImage}
+                disabled={isGenerating || !prompt.trim()}
+                className="h-11 rounded-[16px] bg-gradient-to-r from-[#FFCC33] via-[#D4A825] to-[#C47A0A] hover:brightness-110 flex items-center justify-center gap-2 transition-all flex-shrink-0 shadow-[0_2px_12px_rgba(212,168,37,0.25)] px-6"
+                title="Сгенерировать"
+              >
+                {isGenerating ? (
+                  <LoaderCircle className="w-5 h-5 animate-spin text-[#110E06]" />
+                ) : (
+                  <>
+                    <SendHorizontal className="w-5 h-5 text-[#110E06]" />
+                    <span className="text-[15px] font-bold text-[#110E06] hidden sm:inline">Сгенерировать</span>
+                  </>
+                )}
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -1002,7 +1126,8 @@ function App() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[60] flex items-center justify-center p-4"
+            className="fixed inset-0 backdrop-blur-sm z-[60] flex items-center justify-center p-4"
+            style={{ background: theme === 'dark' ? 'rgba(0,0,0,0.6)' : 'rgba(0,0,0,0.3)' }}
             onClick={() => setShowSettingsModal(false)}
           >
             <motion.div
@@ -1010,16 +1135,16 @@ function App() {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
-              className="glass-strong rounded-3xl p-6 max-w-md w-full"
+              className="rounded-3xl p-6 max-w-md w-full" style={{ background: 'var(--dropdown-bg)', border: '1px solid var(--card-border)' }}
             >
               <div className="flex items-center justify-between mb-5">
-                <h2 className="text-lg font-semibold flex items-center gap-2">
+                <h2 className="text-lg font-semibold flex items-center gap-2 text-foreground">
                   <KeyRound className="w-5 h-5" />
                   API ключ OpenRouter
                 </h2>
                 <button
                   onClick={() => setShowSettingsModal(false)}
-                  className="p-1.5 hover:bg-white/10 rounded-full transition-colors"
+                  className="p-1.5 rounded-full transition-colors" style={{ background: 'var(--chip-bg)' }}
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -1032,9 +1157,9 @@ function App() {
                     value={tempApiKey}
                     onChange={(e) => setTempApiKey(e.target.value)}
                     placeholder="sk-or-v1-..."
-                    className="w-full bg-black/30 border border-white/15 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary/50 font-mono text-sm"
+                    className="w-full bottom-input rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary/50 font-mono text-sm text-foreground"
                   />
-                  <p className="text-[11px] text-muted-foreground/50 mt-2">
+                  <p className="text-[11px] text-muted-foreground mt-2">
                     Ключ хранится локально в вашем браузере. Получить ключ:{' '}
                     <a
                       href="https://openrouter.ai/settings/keys"
@@ -1050,13 +1175,14 @@ function App() {
                 <div className="flex gap-2">
                   <button
                     onClick={handleSaveApiKey}
-                    className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground font-medium py-2.5 px-6 rounded-full transition-colors text-sm"
+                    className="flex-1 hover:brightness-110 font-semibold py-2.5 px-6 rounded-full transition-all text-sm"
+                    style={{ background: `linear-gradient(to right, var(--btn-from), var(--btn-via), var(--btn-to))`, color: 'var(--btn-text)', boxShadow: `0 2px 12px var(--btn-shadow)` }}
                   >
                     Сохранить
                   </button>
                   <button
                     onClick={handleClearKey}
-                    className="px-4 py-2.5 bg-white/5 hover:bg-white/10 rounded-full transition-colors text-sm"
+                    className="px-4 py-2.5 rounded-full transition-colors text-sm text-foreground/80" style={{ background: 'var(--chip-bg)', border: '1px solid var(--chip-border)' }}
                   >
                     Очистить
                   </button>
@@ -1074,7 +1200,8 @@ function App() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/90 backdrop-blur-sm z-[70] flex items-center justify-center p-4"
+            className="fixed inset-0 backdrop-blur-sm z-[70] flex items-center justify-center p-4"
+            style={{ background: theme === 'dark' ? 'rgba(0,0,0,0.9)' : 'rgba(0,0,0,0.5)' }}
             onClick={() => setSelectedImage(null)}
           >
             <motion.div
@@ -1086,7 +1213,8 @@ function App() {
             >
               <button
                 onClick={() => setSelectedImage(null)}
-                className="absolute -top-12 right-0 p-2 bg-white/10 hover:bg-white/20 rounded-full transition-colors"
+                className="absolute -top-12 right-0 p-2 rounded-full transition-colors"
+                style={{ background: 'var(--chip-bg)', border: '1px solid var(--chip-border)' }}
                 title="Закрыть"
               >
                 <X className="w-5 h-5 md:w-6 md:h-6" />
@@ -1096,31 +1224,31 @@ function App() {
                 alt={selectedImage.prompt}
                 className="max-w-full max-h-[60vh] md:max-h-[75vh] object-contain rounded-3xl mx-auto"
               />
-              <div className="mt-3 glass-strong rounded-3xl p-5">
+              <div className="mt-3 rounded-3xl p-5" style={{ background: 'var(--dropdown-bg)', border: '1px solid var(--card-border)' }}>
                 <p className="text-sm text-foreground/90 mb-3 line-clamp-3 leading-relaxed">
                   {selectedImage.prompt}
                 </p>
                 <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
                   <div className="flex flex-wrap items-center gap-2 text-xs">
                     {selectedImage.model && (
-                      <span className="text-muted-foreground/60">
+                      <span className="text-muted-foreground">
                         {MODELS.find(m => m.id === selectedImage.model)?.name || selectedImage.model}
                       </span>
                     )}
                     {selectedImage.aspectRatio && (
-                      <span className="bg-white/5 px-2 py-0.5 rounded-full text-muted-foreground/50">{selectedImage.aspectRatio}</span>
+                      <span className="px-2 py-0.5 rounded-full text-muted-foreground" style={{ background: 'var(--chip-bg)' }}>{selectedImage.aspectRatio}</span>
                     )}
                     {selectedImage.imageSize && (
-                      <span className="bg-white/5 px-2 py-0.5 rounded-full text-muted-foreground/50">{selectedImage.imageSize}</span>
+                      <span className="px-2 py-0.5 rounded-full text-muted-foreground" style={{ background: 'var(--chip-bg)' }}>{selectedImage.imageSize}</span>
                     )}
                     {selectedImage.temperature !== undefined && selectedImage.temperature !== null && (
-                      <span className="bg-white/5 px-2 py-0.5 rounded-full text-muted-foreground/50">T:{selectedImage.temperature.toFixed(1)}</span>
+                      <span className="px-2 py-0.5 rounded-full text-muted-foreground" style={{ background: 'var(--chip-bg)' }}>T:{selectedImage.temperature.toFixed(1)}</span>
                     )}
                     {selectedImage.cost !== undefined && selectedImage.cost !== null && (
-                      <span className="text-muted-foreground/60">${selectedImage.cost.toFixed(4)}</span>
+                      <span className="text-muted-foreground">${selectedImage.cost.toFixed(4)}</span>
                     )}
                     {selectedImage.tokens && (
-                      <span className="text-muted-foreground/60">Tokens: {selectedImage.tokens.total}</span>
+                      <span className="text-muted-foreground">Tokens: {selectedImage.tokens.total}</span>
                     )}
                   </div>
                   <div className="flex gap-2 w-full md:w-auto">
@@ -1129,7 +1257,7 @@ function App() {
                         handleDeleteImage(selectedImage)
                         setSelectedImage(null)
                       }}
-                      className="flex items-center justify-center gap-2 bg-destructive/20 hover:bg-destructive/30 text-destructive px-5 py-2 rounded-full transition-colors text-sm flex-1 md:flex-none"
+                      className="flex items-center justify-center gap-2 text-destructive px-5 py-2 rounded-full transition-colors text-sm flex-1 md:flex-none" style={{ background: 'var(--clear-bg)', border: '1px solid var(--clear-border)' }}
                     >
                       <Trash2 className="w-4 h-4" />
                       <span>Удалить</span>
@@ -1139,7 +1267,8 @@ function App() {
                         downloadImage(selectedImage.url, `lumigen-${selectedImage.id}.jpg`)
                         setSelectedImage(null)
                       }}
-                      className="flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground px-5 py-2 rounded-full transition-colors text-sm flex-1 md:flex-none"
+                      className="flex items-center justify-center gap-2 hover:brightness-110 font-semibold px-5 py-2 rounded-full transition-all text-sm flex-1 md:flex-none"
+                      style={{ background: `linear-gradient(to right, var(--btn-from), var(--btn-via), var(--btn-to))`, color: 'var(--btn-text)', boxShadow: `0 2px 12px var(--btn-shadow)` }}
                     >
                       <ArrowDownToLine className="w-4 h-4" />
                       <span>Скачать</span>
@@ -1150,7 +1279,7 @@ function App() {
                         setSelectedImage(null)
                       }}
                       disabled={sourceImages.length >= 4}
-                      className="flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 px-5 py-2 rounded-full transition-colors text-sm disabled:opacity-50 flex-1 md:flex-none"
+                      className="flex items-center justify-center gap-2 px-5 py-2 rounded-full transition-colors text-sm disabled:opacity-50 flex-1 md:flex-none text-foreground/80" style={{ background: 'var(--chip-bg)', border: '1px solid var(--chip-border)' }}
                     >
                       <ImagePlus className="w-4 h-4" />
                       <span>Добавить</span>

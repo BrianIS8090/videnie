@@ -21,51 +21,126 @@
 }
 
 @layer base {
-  :root {
-    /* Warm Golden Theme */
-    --background: 40 30% 8%;
-    --foreground: 40 20% 95%;
-    --card: 40 25% 12%;
-    --card-foreground: 40 20% 95%;
-    --popover: 40 25% 10%;
-    --popover-foreground: 40 20% 95%;
-    
-    /* Primary: Warm Amber */
-    --primary: 40 90% 55%;
-    --primary-foreground: 40 20% 98%;
-    
-    /* Secondary: Soft Cream */
-    --secondary: 40 20% 20%;
-    --secondary-foreground: 40 20% 95%;
-    
-    /* Muted: Warm Gray */
-    --muted: 40 15% 18%;
-    --muted-foreground: 40 10% 55%;
-    
-    /* Accent: Golden Glow */
-    --accent: 45 95% 60%;
-    --accent-foreground: 40 20% 10%;
-    
-    /* Destructive: Warm Red */
+  :root, [data-theme="dark"] {
+    /* Warm Golden Theme — тёмная палитра */
+    --background: 40 35% 4%;
+    --foreground: 40 50% 94%;
+    --card: 40 30% 8%;
+    --card-foreground: 40 50% 94%;
+    --popover: 40 30% 6%;
+    --popover-foreground: 40 50% 94%;
+    --primary: 44 75% 49%;
+    --primary-foreground: 40 35% 4%;
+    --secondary: 40 22% 16%;
+    --secondary-foreground: 40 50% 94%;
+    --muted: 40 18% 14%;
+    --muted-foreground: 36 20% 40%;
+    --accent: 47 100% 60%;
+    --accent-foreground: 40 35% 4%;
     --destructive: 10 70% 55%;
     --destructive-foreground: 40 20% 98%;
-    
-    /* Borders & Inputs */
-    --border: 40 20% 25%;
-    --input: 40 20% 25%;
-    --ring: 40 90% 55%;
+    --border: 47 50% 20%;
+    --input: 40 22% 16%;
+    --ring: 44 75% 49%;
     --radius: 1.5rem;
-    
-    /* Custom Properties */
-    --glow-soft: 40 100% 70%;
-    --glow-strong: 45 100% 80%;
+    --glow-soft: 44 100% 60%;
+    --glow-strong: 47 100% 70%;
+
+    /* Кастомные токены для компонентов */
+    --panel-bg: #110E06;
+    --dropdown-bg: #1C1709;
+    --chip-bg: rgba(255,255,255,0.04);
+    --chip-border: rgba(255,255,255,0.04);
+    --chip-active-bg: rgba(212,168,37,0.09);
+    --chip-active-border: rgba(212,168,37,0.19);
+    --card-border: rgba(255,204,51,0.12);
+    --card-border-hover: rgba(255,204,51,0.25);
+    --card-shadow: 0 4px 20px rgba(0,0,0,0.25);
+    --input-bg: rgba(255,255,255,0.05);
+    --input-border: rgba(255,255,255,0.08);
+    --header-bg: rgba(255,255,255,0.03);
+    --header-border: rgba(255,204,51,0.1);
+    --panel-border: rgba(255,204,51,0.1);
+    --option-bg: rgba(255,255,255,0.03);
+    --option-hover: rgba(255,255,255,0.06);
+    --badge-cost-bg: rgba(212,168,37,0.07);
+    --badge-cost-border: rgba(212,168,37,0.19);
+    --logo-from: #C47A0A;
+    --logo-via: #FFCC33;
+    --logo-to: #D4A825;
+    --title-from: #FFCC33;
+    --title-to: #D4A825;
+    --btn-from: #FFCC33;
+    --btn-via: #D4A825;
+    --btn-to: #C47A0A;
+    --btn-text: #110E06;
+    --btn-shadow: rgba(212,168,37,0.25);
+    --clear-bg: rgba(212,74,74,0.07);
+    --clear-border: rgba(212,74,74,0.13);
+    --temp-text: hsl(44 75% 49%);
+    --grain-opacity: 0.03;
+  }
+
+  [data-theme="light"] {
+    /* Светлая тёплая палитра */
+    --background: 38 30% 95%;
+    --foreground: 30 30% 15%;
+    --card: 0 0% 100%;
+    --card-foreground: 30 30% 15%;
+    --popover: 38 25% 93%;
+    --popover-foreground: 30 30% 15%;
+    --primary: 33 85% 41%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 38 15% 88%;
+    --secondary-foreground: 30 30% 15%;
+    --muted: 38 15% 90%;
+    --muted-foreground: 30 15% 45%;
+    --accent: 33 85% 41%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 10 70% 55%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 33 20% 80%;
+    --input: 38 15% 88%;
+    --ring: 33 85% 41%;
+    --glow-soft: 33 60% 50%;
+    --glow-strong: 33 70% 55%;
+
+    --panel-bg: #F8F4EC;
+    --dropdown-bg: #FFFFFF;
+    --chip-bg: rgba(0,0,0,0.04);
+    --chip-border: rgba(0,0,0,0.06);
+    --chip-active-bg: rgba(200,134,10,0.1);
+    --chip-active-border: rgba(200,134,10,0.25);
+    --card-border: rgba(139,107,21,0.09);
+    --card-border-hover: rgba(139,107,21,0.2);
+    --card-shadow: 0 4px 16px rgba(139,107,21,0.06);
+    --input-bg: rgba(240,235,224,0.6);
+    --input-border: rgba(139,107,21,0.09);
+    --header-bg: rgba(255,255,255,0.7);
+    --header-border: rgba(139,107,21,0.09);
+    --panel-border: rgba(139,107,21,0.09);
+    --option-bg: rgba(0,0,0,0.03);
+    --option-hover: rgba(0,0,0,0.06);
+    --badge-cost-bg: rgba(200,134,10,0.08);
+    --badge-cost-border: rgba(200,134,10,0.2);
+    --logo-from: #8B5D01;
+    --logo-via: #C8860A;
+    --logo-to: #A06E08;
+    --title-from: #A06E08;
+    --title-to: #C8860A;
+    --btn-from: #FFCC33;
+    --btn-via: #D4A825;
+    --btn-to: #C47A0A;
+    --btn-text: #110E06;
+    --btn-shadow: rgba(200,134,10,0.2);
+    --clear-bg: rgba(212,74,74,0.08);
+    --clear-border: rgba(212,74,74,0.15);
+    --temp-text: hsl(33 85% 41%);
+    --grain-opacity: 0.015;
   }
 }
 
 @layer base {
-  * {
-    @apply border-border;
-  }
   
   body {
     @apply bg-background text-foreground antialiased;
@@ -79,29 +154,35 @@
   }
 }
 
-/* Glassmorphism с warm tones */
+/* Glassmorphism */
 .glass {
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--header-bg);
   backdrop-filter: blur(48px);
   -webkit-backdrop-filter: blur(48px);
-  border: 1px solid rgba(255, 220, 150, 0.08);
+  border: 1px solid var(--header-border);
 }
 
 .glass-strong {
-  background: rgba(255, 245, 230, 0.06);
-  backdrop-filter: blur(32px);
-  -webkit-backdrop-filter: blur(32px);
-  border: 1px solid rgba(255, 220, 150, 0.08);
-  box-shadow: 0 8px 32px rgba(255, 180, 50, 0.06);
+  background: var(--header-bg);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  border: 1px solid var(--header-border);
 }
 
 /* Warm Gradient Mesh */
 .gradient-mesh {
-  background: 
-    radial-gradient(at 15% 50%, hsla(40, 100%, 60%, 0.12) 0px, transparent 60%),
-    radial-gradient(at 85% 30%, hsla(45, 100%, 70%, 0.08) 0px, transparent 50%),
-    radial-gradient(at 50% 90%, hsla(35, 100%, 50%, 0.1) 0px, transparent 55%),
-    radial-gradient(at 80% 80%, hsla(30, 90%, 40%, 0.06) 0px, transparent 40%);
+  background:
+    radial-gradient(ellipse 700px 600px at 10% 40%, hsla(var(--glow-soft), 0.13) 0px, transparent 70%),
+    radial-gradient(ellipse 600px 500px at 85% 25%, hsla(var(--glow-strong), 0.09) 0px, transparent 60%),
+    radial-gradient(ellipse 600px 400px at 40% 85%, hsla(30, 80%, 40%, 0.07) 0px, transparent 55%),
+    radial-gradient(ellipse 500px 400px at 70% 70%, hsla(35, 90%, 45%, 0.05) 0px, transparent 45%);
+}
+
+[data-theme="light"] .gradient-mesh {
+  background:
+    radial-gradient(ellipse 700px 600px at 10% 40%, hsla(33, 80%, 49%, 0.08) 0px, transparent 70%),
+    radial-gradient(ellipse 600px 500px at 85% 25%, hsla(47, 100%, 60%, 0.05) 0px, transparent 60%),
+    radial-gradient(ellipse 600px 400px at 40% 85%, hsla(30, 80%, 40%, 0.04) 0px, transparent 55%);
 }
 
 /* Grain Texture Overlay */
@@ -113,24 +194,23 @@
   height: 100%;
   pointer-events: none;
   z-index: 9999;
-  opacity: 0.03;
+  opacity: var(--grain-opacity, 0.03);
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' /%3E%3C/svg%3E");
 }
 
-/* Warm Glow Effects */
+/* Warm Glow Effects — усиленные */
 .glow-soft {
-  box-shadow: 0 0 40px rgba(255, 180, 50, 0.15);
+  box-shadow: 0 0 40px rgba(212, 168, 37, 0.2);
 }
 
 .glow-strong {
-  box-shadow: 0 0 60px rgba(255, 200, 80, 0.25);
+  box-shadow: 0 0 60px rgba(212, 168, 37, 0.3);
 }
 
-/* Warm Focus Ring */
+/* Focus Ring — убран для textarea */
 *:focus-visible {
-  outline: 2px solid hsl(var(--ring));
-  outline-offset: 2px;
-  box-shadow: 0 0 20px rgba(255, 180, 50, 0.2);
+  outline: none;
+  box-shadow: none;
 }
 
 /* Custom Scrollbar с warm tones */
@@ -320,19 +400,48 @@ input[type="range"]::-moz-range-thumb:hover {
   animation: pulse-glow 2s ease-in-out infinite;
 }
 
+/* Dropdown option стили */
+.dropdown-opt {
+  background: var(--option-bg);
+}
+.dropdown-opt:hover {
+  background: var(--option-hover);
+}
+.dropdown-opt-active {
+  background: var(--chip-active-bg) !important;
+  border: 1px solid var(--chip-active-border);
+}
+
+/* Инпут в нижней панели */
+.bottom-input {
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+}
+.bottom-input:focus {
+  border-color: var(--input-border);
+}
+
+/* Кнопка аттача */
+.attach-btn {
+  background: var(--chip-bg);
+  border: 1px solid var(--chip-border);
+}
+
 /* Custom Selection */
 ::selection {
   background: hsl(var(--primary) / 0.3);
   color: hsl(var(--foreground));
 }
 
-/* Smooth Transitions для всех интерактивных элементов */
+/* Smooth Transitions для интерактивных элементов */
 button,
 a,
 input,
-select,
-textarea {
+select {
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+textarea {
+  transition: color 0.2s, background 0.2s;
 }
 
 /* Improve Text Rendering */
