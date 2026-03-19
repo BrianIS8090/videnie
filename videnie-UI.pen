@@ -260,12 +260,20 @@
                       "type": "ref",
                       "ref": "3IUoR",
                       "name": "settingsBtn",
+                      "width": "fit_content",
+                      "height": "fit_content",
+                      "x": 232,
+                      "y": 0,
                       "descendants": {
                         "Q2NBr": {
-                          "iconFontName": "settings"
+                          "iconFontName": "settings",
+                          "x": 22,
+                          "y": 10
                         },
                         "iBc2U": {
-                          "content": "Настройки"
+                          "content": "Настройки",
+                          "x": 48,
+                          "y": 10.5
                         }
                       }
                     }
@@ -377,6 +385,9 @@
                       "ref": "v5zfN",
                       "width": "fill_container",
                       "name": "c1",
+                      "height": "fit_content",
+                      "x": 0,
+                      "y": 0,
                       "descendants": {
                         "oW0x2": {
                           "fill": {
@@ -384,16 +395,64 @@
                             "enabled": true,
                             "url": "./images/generated-1773741426978.png",
                             "mode": "fill"
-                          }
+                          },
+                          "width": "fill_container"
+                        },
+                        "SMJKF": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "y": 300
                         },
                         "6v5Hu": {
-                          "content": "Designer lamp with black body, two glowing rings in gold color"
+                          "content": "Designer lamp with black body, two glowing rings in gold color",
+                          "width": "fill_container",
+                          "x": 16,
+                          "y": 14
+                        },
+                        "wZZl3": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 56
+                        },
+                        "p0Umx": {
+                          "width": "fit_content",
+                          "height": "fit_content"
+                        },
+                        "u6fU4": {
+                          "x": 6,
+                          "y": 2
+                        },
+                        "4bFV2": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 35
+                        },
+                        "HrZAZ": {
+                          "x": 6,
+                          "y": 2
+                        },
+                        "5Lq9B": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 64
+                        },
+                        "fWswE": {
+                          "x": 6,
+                          "y": 2
+                        },
+                        "ZHSq2": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 80
                         },
                         "8z4ZB": {
                           "content": "Nano Banana Pro"
                         },
                         "RsK2O": {
-                          "content": "$0.012"
+                          "content": "$0.012",
+                          "x": 240
                         }
                       }
                     },
@@ -403,6 +462,9 @@
                       "ref": "v5zfN",
                       "width": "fill_container",
                       "name": "c2",
+                      "height": "fit_content",
+                      "x": 340,
+                      "y": 0,
                       "descendants": {
                         "oW0x2": {
                           "fill": {
@@ -410,22 +472,66 @@
                             "enabled": true,
                             "url": "./images/generated-1773741477845.png",
                             "mode": "fill"
-                          }
+                          },
+                          "width": "fill_container"
+                        },
+                        "SMJKF": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "y": 300
                         },
                         "6v5Hu": {
-                          "content": "Professional portrait of a woman, soft studio lighting"
+                          "content": "Professional portrait of a woman, soft studio lighting",
+                          "width": "fill_container",
+                          "x": 16,
+                          "y": 14
+                        },
+                        "wZZl3": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 56
+                        },
+                        "p0Umx": {
+                          "width": "fit_content",
+                          "height": "fit_content"
                         },
                         "u6fU4": {
-                          "content": "16:9"
+                          "content": "16:9",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "4bFV2": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 40
+                        },
+                        "HrZAZ": {
+                          "x": 6,
+                          "y": 2
+                        },
+                        "5Lq9B": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 69
                         },
                         "fWswE": {
-                          "content": "T:1.2"
+                          "content": "T:1.2",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "ZHSq2": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 80
                         },
                         "8z4ZB": {
                           "content": "Nano Banana 2"
                         },
                         "RsK2O": {
-                          "content": "$0.008"
+                          "content": "$0.008",
+                          "x": 240
                         }
                       }
                     },
@@ -435,6 +541,9 @@
                       "ref": "v5zfN",
                       "width": "fill_container",
                       "name": "c3",
+                      "height": "fit_content",
+                      "x": 680,
+                      "y": 0,
                       "descendants": {
                         "oW0x2": {
                           "fill": {
@@ -442,25 +551,67 @@
                             "enabled": true,
                             "url": "./images/generated-1773741573224.png",
                             "mode": "fill"
-                          }
+                          },
+                          "width": "fill_container"
+                        },
+                        "SMJKF": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "y": 300
                         },
                         "6v5Hu": {
-                          "content": "Mystical forest with glowing mushrooms, bioluminescent"
+                          "content": "Mystical forest with glowing mushrooms, bioluminescent",
+                          "width": "fill_container",
+                          "x": 16,
+                          "y": 14
+                        },
+                        "wZZl3": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 56
+                        },
+                        "p0Umx": {
+                          "width": "fit_content",
+                          "height": "fit_content"
                         },
                         "u6fU4": {
-                          "content": "9:16"
+                          "content": "9:16",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "4bFV2": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 40
                         },
                         "HrZAZ": {
-                          "content": "2K"
+                          "content": "2K",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "5Lq9B": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 69
                         },
                         "fWswE": {
-                          "content": "T:1.6"
+                          "content": "T:1.6",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "ZHSq2": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 80
                         },
                         "8z4ZB": {
                           "content": "Nano Banana Pro"
                         },
                         "RsK2O": {
-                          "content": "$0.015"
+                          "content": "$0.015",
+                          "x": 240
                         }
                       }
                     },
@@ -470,6 +621,9 @@
                       "ref": "v5zfN",
                       "width": "fill_container",
                       "name": "c4",
+                      "height": "fit_content",
+                      "x": 1020,
+                      "y": 0,
                       "descendants": {
                         "oW0x2": {
                           "fill": {
@@ -477,25 +631,67 @@
                             "enabled": true,
                             "url": "./images/generated-1773741611258.png",
                             "mode": "fill"
-                          }
+                          },
+                          "width": "fill_container"
+                        },
+                        "SMJKF": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "y": 300
                         },
                         "6v5Hu": {
-                          "content": "Modern headphones on gradient background, commercial"
+                          "content": "Modern headphones on gradient background, commercial",
+                          "width": "fill_container",
+                          "x": 16,
+                          "y": 14
+                        },
+                        "wZZl3": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 56
+                        },
+                        "p0Umx": {
+                          "width": "fit_content",
+                          "height": "fit_content"
                         },
                         "u6fU4": {
-                          "content": "4:3"
+                          "content": "4:3",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "4bFV2": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 35
                         },
                         "HrZAZ": {
-                          "content": "512"
+                          "content": "512",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "5Lq9B": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 70
                         },
                         "fWswE": {
-                          "content": "T:0.8"
+                          "content": "T:0.8",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "ZHSq2": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 80
                         },
                         "8z4ZB": {
                           "content": "Nano Banana Legacy"
                         },
                         "RsK2O": {
-                          "content": "$0.007"
+                          "content": "$0.007",
+                          "x": 240
                         }
                       }
                     }
@@ -539,12 +735,20 @@
                       "type": "ref",
                       "ref": "gxmSv",
                       "name": "chipModel",
+                      "width": "fit_content",
+                      "height": "fit_content",
+                      "x": 0,
+                      "y": 0.5,
                       "descendants": {
                         "kA1N6": {
-                          "content": "Nano Banana Pro"
+                          "content": "Nano Banana Pro",
+                          "x": 16,
+                          "y": 8
                         },
                         "xi8gY": {
-                          "iconFontName": "chevron-down"
+                          "iconFontName": "chevron-down",
+                          "x": 121,
+                          "y": 9
                         }
                       }
                     },
@@ -553,9 +757,19 @@
                       "type": "ref",
                       "ref": "gxmSv",
                       "name": "chipRatio",
+                      "width": "fit_content",
+                      "height": "fit_content",
+                      "x": 161,
+                      "y": 0.5,
                       "descendants": {
                         "kA1N6": {
-                          "content": "1:1"
+                          "content": "1:1",
+                          "x": 16,
+                          "y": 8
+                        },
+                        "xi8gY": {
+                          "x": 35,
+                          "y": 9
                         }
                       }
                     },
@@ -564,9 +778,19 @@
                       "type": "ref",
                       "ref": "gxmSv",
                       "name": "chipSize",
+                      "width": "fit_content",
+                      "height": "fit_content",
+                      "x": 236,
+                      "y": 0.5,
                       "descendants": {
                         "kA1N6": {
-                          "content": "1K"
+                          "content": "1K",
+                          "x": 16,
+                          "y": 8
+                        },
+                        "xi8gY": {
+                          "x": 35,
+                          "y": 9
                         }
                       }
                     },
@@ -682,12 +906,20 @@
                       "type": "ref",
                       "ref": "96LeL",
                       "name": "sendBtn",
+                      "width": "fit_content",
+                      "height": "fit_content",
+                      "x": 1142,
+                      "y": 1,
                       "descendants": {
                         "Y0e23": {
-                          "iconFontName": "send-horizontal"
+                          "iconFontName": "send-horizontal",
+                          "x": 28,
+                          "y": 14
                         },
                         "5YxCW": {
-                          "content": "Сгенерировать"
+                          "content": "Сгенерировать",
+                          "x": 56,
+                          "y": 15
                         }
                       }
                     }
@@ -986,6 +1218,9 @@
                       "ref": "v5zfN",
                       "width": "fill_container",
                       "name": "m1",
+                      "height": "fit_content",
+                      "x": 0,
+                      "y": 0,
                       "descendants": {
                         "oW0x2": {
                           "height": 180,
@@ -994,16 +1229,64 @@
                             "enabled": true,
                             "url": "./images/generated-1773741679131.png",
                             "mode": "fill"
-                          }
+                          },
+                          "width": "fill_container"
+                        },
+                        "SMJKF": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "y": 180
                         },
                         "6v5Hu": {
-                          "content": "Designer lamp with gold rings"
+                          "content": "Designer lamp with gold rings",
+                          "width": "fill_container",
+                          "x": 16,
+                          "y": 14
+                        },
+                        "wZZl3": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 56
+                        },
+                        "p0Umx": {
+                          "width": "fit_content",
+                          "height": "fit_content"
+                        },
+                        "u6fU4": {
+                          "x": 6,
+                          "y": 2
+                        },
+                        "4bFV2": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 35
+                        },
+                        "HrZAZ": {
+                          "x": 6,
+                          "y": 2
+                        },
+                        "5Lq9B": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 64
+                        },
+                        "fWswE": {
+                          "x": 6,
+                          "y": 2
+                        },
+                        "ZHSq2": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 80
                         },
                         "8z4ZB": {
                           "content": "Nano Pro"
                         },
                         "RsK2O": {
-                          "content": "$0.012"
+                          "content": "$0.012",
+                          "x": 94
                         }
                       }
                     },
@@ -1013,6 +1296,9 @@
                       "ref": "v5zfN",
                       "width": "fill_container",
                       "name": "m2",
+                      "height": "fit_content",
+                      "x": 184,
+                      "y": 0,
                       "descendants": {
                         "oW0x2": {
                           "height": 180,
@@ -1021,22 +1307,66 @@
                             "enabled": true,
                             "url": "./images/generated-1773741707358.png",
                             "mode": "fill"
-                          }
+                          },
+                          "width": "fill_container"
+                        },
+                        "SMJKF": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "y": 180
                         },
                         "6v5Hu": {
-                          "content": "Portrait, soft lighting"
+                          "content": "Portrait, soft lighting",
+                          "width": "fill_container",
+                          "x": 16,
+                          "y": 14
+                        },
+                        "wZZl3": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 56
+                        },
+                        "p0Umx": {
+                          "width": "fit_content",
+                          "height": "fit_content"
                         },
                         "u6fU4": {
-                          "content": "16:9"
+                          "content": "16:9",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "4bFV2": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 40
+                        },
+                        "HrZAZ": {
+                          "x": 6,
+                          "y": 2
+                        },
+                        "5Lq9B": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 69
                         },
                         "fWswE": {
-                          "content": "T:1.2"
+                          "content": "T:1.2",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "ZHSq2": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 80
                         },
                         "8z4ZB": {
                           "content": "Nano 2"
                         },
                         "RsK2O": {
-                          "content": "$0.008"
+                          "content": "$0.008",
+                          "x": 94
                         }
                       }
                     }
@@ -1055,6 +1385,9 @@
                       "ref": "v5zfN",
                       "width": "fill_container",
                       "name": "m3",
+                      "height": "fit_content",
+                      "x": 0,
+                      "y": 0,
                       "descendants": {
                         "oW0x2": {
                           "height": 180,
@@ -1063,25 +1396,67 @@
                             "enabled": true,
                             "url": "./images/generated-1773741750617.png",
                             "mode": "fill"
-                          }
+                          },
+                          "width": "fill_container"
+                        },
+                        "SMJKF": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "y": 180
                         },
                         "6v5Hu": {
-                          "content": "Mystical forest, glowing"
+                          "content": "Mystical forest, glowing",
+                          "width": "fill_container",
+                          "x": 16,
+                          "y": 14
+                        },
+                        "wZZl3": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 56
+                        },
+                        "p0Umx": {
+                          "width": "fit_content",
+                          "height": "fit_content"
                         },
                         "u6fU4": {
-                          "content": "9:16"
+                          "content": "9:16",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "4bFV2": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 40
                         },
                         "HrZAZ": {
-                          "content": "2K"
+                          "content": "2K",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "5Lq9B": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 69
                         },
                         "fWswE": {
-                          "content": "T:1.6"
+                          "content": "T:1.6",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "ZHSq2": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 80
                         },
                         "8z4ZB": {
                           "content": "Nano Pro"
                         },
                         "RsK2O": {
-                          "content": "$0.015"
+                          "content": "$0.015",
+                          "x": 94
                         }
                       }
                     },
@@ -1091,6 +1466,9 @@
                       "ref": "v5zfN",
                       "width": "fill_container",
                       "name": "m4",
+                      "height": "fit_content",
+                      "x": 184,
+                      "y": 0,
                       "descendants": {
                         "oW0x2": {
                           "height": 180,
@@ -1099,25 +1477,67 @@
                             "enabled": true,
                             "url": "./images/generated-1773741802981.png",
                             "mode": "fill"
-                          }
+                          },
+                          "width": "fill_container"
+                        },
+                        "SMJKF": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "y": 180
                         },
                         "6v5Hu": {
-                          "content": "Headphones, product shot"
+                          "content": "Headphones, product shot",
+                          "width": "fill_container",
+                          "x": 16,
+                          "y": 14
+                        },
+                        "wZZl3": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 56
+                        },
+                        "p0Umx": {
+                          "width": "fit_content",
+                          "height": "fit_content"
                         },
                         "u6fU4": {
-                          "content": "4:3"
+                          "content": "4:3",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "4bFV2": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 35
                         },
                         "HrZAZ": {
-                          "content": "512"
+                          "content": "512",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "5Lq9B": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 70
                         },
                         "fWswE": {
-                          "content": "T:0.8"
+                          "content": "T:0.8",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "ZHSq2": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 80
                         },
                         "8z4ZB": {
                           "content": "Legacy"
                         },
                         "RsK2O": {
-                          "content": "$0.007"
+                          "content": "$0.007",
+                          "x": 94
                         }
                       }
                     }
@@ -1161,14 +1581,22 @@
                       "type": "ref",
                       "ref": "gxmSv",
                       "name": "mChip1",
+                      "width": "fit_content",
+                      "height": "fit_content",
+                      "x": 0,
+                      "y": 0,
                       "descendants": {
                         "kA1N6": {
                           "content": "Nano Pro",
-                          "fontSize": 11
+                          "fontSize": 11,
+                          "x": 16,
+                          "y": 8
                         },
                         "xi8gY": {
                           "width": 10,
-                          "height": 10
+                          "height": 10,
+                          "x": 67,
+                          "y": 9.5
                         }
                       }
                     },
@@ -1177,14 +1605,22 @@
                       "type": "ref",
                       "ref": "gxmSv",
                       "name": "mChip2",
+                      "width": "fit_content",
+                      "height": "fit_content",
+                      "x": 101,
+                      "y": 0,
                       "descendants": {
                         "kA1N6": {
                           "content": "1:1",
-                          "fontSize": 11
+                          "fontSize": 11,
+                          "x": 16,
+                          "y": 8
                         },
                         "xi8gY": {
                           "width": 10,
-                          "height": 10
+                          "height": 10,
+                          "x": 33,
+                          "y": 9.5
                         }
                       }
                     },
@@ -1193,14 +1629,22 @@
                       "type": "ref",
                       "ref": "gxmSv",
                       "name": "mChip3",
+                      "width": "fit_content",
+                      "height": "fit_content",
+                      "x": 168,
+                      "y": 0,
                       "descendants": {
                         "kA1N6": {
                           "content": "1K",
-                          "fontSize": 11
+                          "fontSize": 11,
+                          "x": 16,
+                          "y": 8
                         },
                         "xi8gY": {
                           "width": 10,
-                          "height": 10
+                          "height": 10,
+                          "x": 33,
+                          "y": 9.5
                         }
                       }
                     }
@@ -2034,12 +2478,20 @@
                       "type": "ref",
                       "ref": "3IUoR",
                       "name": "settingsBtn",
+                      "width": "fit_content",
+                      "height": "fit_content",
+                      "x": 215,
+                      "y": 0,
                       "descendants": {
                         "Q2NBr": {
-                          "iconFontName": "settings"
+                          "iconFontName": "settings",
+                          "x": 22,
+                          "y": 10
                         },
                         "iBc2U": {
-                          "content": "Настройки"
+                          "content": "Настройки",
+                          "x": 48,
+                          "y": 10.5
                         }
                       }
                     }
@@ -2129,6 +2581,9 @@
                       "ref": "v5zfN",
                       "width": "fill_container",
                       "name": "c1",
+                      "height": "fit_content",
+                      "x": 0,
+                      "y": 0,
                       "descendants": {
                         "oW0x2": {
                           "fill": {
@@ -2136,25 +2591,67 @@
                             "enabled": true,
                             "url": "./images/generated-1773742015853.png",
                             "mode": "fill"
-                          }
+                          },
+                          "width": "fill_container"
+                        },
+                        "SMJKF": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "y": 300
                         },
                         "6v5Hu": {
-                          "content": "Designer lamp with black body, two glowing rings"
+                          "content": "Designer lamp with black body, two glowing rings",
+                          "width": "fill_container",
+                          "x": 16,
+                          "y": 14
+                        },
+                        "wZZl3": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 56
+                        },
+                        "p0Umx": {
+                          "width": "fit_content",
+                          "height": "fit_content"
                         },
                         "u6fU4": {
-                          "content": "1:1"
+                          "content": "1:1",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "4bFV2": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 35
                         },
                         "HrZAZ": {
-                          "content": "1K"
+                          "content": "1K",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "5Lq9B": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 64
                         },
                         "fWswE": {
-                          "content": "T:0.8"
+                          "content": "T:0.8",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "ZHSq2": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 80
                         },
                         "8z4ZB": {
                           "content": "Nano Banana Pro"
                         },
                         "RsK2O": {
-                          "content": "$0.012"
+                          "content": "$0.012",
+                          "x": 245
                         }
                       }
                     },
@@ -2164,6 +2661,9 @@
                       "ref": "v5zfN",
                       "width": "fill_container",
                       "name": "c2",
+                      "height": "fit_content",
+                      "x": 341,
+                      "y": 0,
                       "descendants": {
                         "oW0x2": {
                           "fill": {
@@ -2171,25 +2671,67 @@
                             "enabled": true,
                             "url": "./images/generated-1773742054717.png",
                             "mode": "fill"
-                          }
+                          },
+                          "width": "fill_container"
+                        },
+                        "SMJKF": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "y": 300
                         },
                         "6v5Hu": {
-                          "content": "Professional portrait of a woman, soft studio lighting"
+                          "content": "Professional portrait of a woman, soft studio lighting",
+                          "width": "fill_container",
+                          "x": 16,
+                          "y": 14
+                        },
+                        "wZZl3": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 56
+                        },
+                        "p0Umx": {
+                          "width": "fit_content",
+                          "height": "fit_content"
                         },
                         "u6fU4": {
-                          "content": "16:9"
+                          "content": "16:9",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "4bFV2": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 40
                         },
                         "HrZAZ": {
-                          "content": "1K"
+                          "content": "1K",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "5Lq9B": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 69
                         },
                         "fWswE": {
-                          "content": "T:1.2"
+                          "content": "T:1.2",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "ZHSq2": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 80
                         },
                         "8z4ZB": {
                           "content": "Phantasma 2"
                         },
                         "RsK2O": {
-                          "content": "$0.006"
+                          "content": "$0.006",
+                          "x": 245
                         }
                       }
                     },
@@ -2199,6 +2741,9 @@
                       "ref": "v5zfN",
                       "width": "fill_container",
                       "name": "c3",
+                      "height": "fit_content",
+                      "x": 682,
+                      "y": 0,
                       "descendants": {
                         "oW0x2": {
                           "fill": {
@@ -2206,25 +2751,67 @@
                             "enabled": true,
                             "url": "./images/generated-1773742069293.png",
                             "mode": "fill"
-                          }
+                          },
+                          "width": "fill_container"
+                        },
+                        "SMJKF": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "y": 300
                         },
                         "6v5Hu": {
-                          "content": "Mystical forest with glowing mushrooms, bioluminescent"
+                          "content": "Mystical forest with glowing mushrooms, bioluminescent",
+                          "width": "fill_container",
+                          "x": 16,
+                          "y": 14
+                        },
+                        "wZZl3": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 56
+                        },
+                        "p0Umx": {
+                          "width": "fit_content",
+                          "height": "fit_content"
                         },
                         "u6fU4": {
-                          "content": "1:1"
+                          "content": "1:1",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "4bFV2": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 35
                         },
                         "HrZAZ": {
-                          "content": "2K"
+                          "content": "2K",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "5Lq9B": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 64
                         },
                         "fWswE": {
-                          "content": "T:1.6"
+                          "content": "T:1.6",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "ZHSq2": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 80
                         },
                         "8z4ZB": {
                           "content": "Nano Banana Pro"
                         },
                         "RsK2O": {
-                          "content": "$0.015"
+                          "content": "$0.015",
+                          "x": 245
                         }
                       }
                     },
@@ -2234,6 +2821,9 @@
                       "ref": "v5zfN",
                       "width": "fill_container",
                       "name": "c4",
+                      "height": "fit_content",
+                      "x": 1023,
+                      "y": 0,
                       "descendants": {
                         "oW0x2": {
                           "fill": {
@@ -2241,25 +2831,67 @@
                             "enabled": true,
                             "url": "./images/generated-1773742095357.png",
                             "mode": "fill"
-                          }
+                          },
+                          "width": "fill_container"
+                        },
+                        "SMJKF": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "y": 300
                         },
                         "6v5Hu": {
-                          "content": "Modern headphones on gradient background, product shot"
+                          "content": "Modern headphones on gradient background, product shot",
+                          "width": "fill_container",
+                          "x": 16,
+                          "y": 14
+                        },
+                        "wZZl3": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 56
+                        },
+                        "p0Umx": {
+                          "width": "fit_content",
+                          "height": "fit_content"
                         },
                         "u6fU4": {
-                          "content": "3:2"
+                          "content": "3:2",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "4bFV2": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 35
                         },
                         "HrZAZ": {
-                          "content": "1K"
+                          "content": "1K",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "5Lq9B": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 64
                         },
                         "fWswE": {
-                          "content": "T:0.6"
+                          "content": "T:0.6",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "ZHSq2": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 80
                         },
                         "8z4ZB": {
                           "content": "Legacy"
                         },
                         "RsK2O": {
-                          "content": "$0.007"
+                          "content": "$0.007",
+                          "x": 245
                         }
                       }
                     }
@@ -2304,12 +2936,20 @@
                         "thickness": 1,
                         "fill": "#E6A61A40"
                       },
+                      "width": "fit_content",
+                      "height": "fit_content",
+                      "x": 0,
+                      "y": 0,
                       "descendants": {
                         "kA1N6": {
-                          "content": "Nano Banana Pro"
+                          "content": "Nano Banana Pro",
+                          "x": 16,
+                          "y": 8
                         },
                         "xi8gY": {
-                          "iconFontName": "chevron-down"
+                          "iconFontName": "chevron-down",
+                          "x": 121,
+                          "y": 9
                         }
                       }
                     },
@@ -2318,9 +2958,19 @@
                       "type": "ref",
                       "ref": "gxmSv",
                       "name": "chipRatio",
+                      "width": "fit_content",
+                      "height": "fit_content",
+                      "x": 159,
+                      "y": 0,
                       "descendants": {
                         "kA1N6": {
-                          "content": "1:1"
+                          "content": "1:1",
+                          "x": 16,
+                          "y": 8
+                        },
+                        "xi8gY": {
+                          "x": 35,
+                          "y": 9
                         }
                       }
                     },
@@ -2329,9 +2979,19 @@
                       "type": "ref",
                       "ref": "gxmSv",
                       "name": "chipSize",
+                      "width": "fit_content",
+                      "height": "fit_content",
+                      "x": 232,
+                      "y": 0,
                       "descendants": {
                         "kA1N6": {
-                          "content": "1K"
+                          "content": "1K",
+                          "x": 16,
+                          "y": 8
+                        },
+                        "xi8gY": {
+                          "x": 35,
+                          "y": 9
                         }
                       }
                     },
@@ -2447,12 +3107,19 @@
                       "type": "ref",
                       "ref": "96LeL",
                       "name": "sendBtn",
+                      "width": "fit_content",
+                      "height": "fit_content",
+                      "x": 1142,
                       "descendants": {
                         "Y0e23": {
-                          "iconFontName": "send-horizontal"
+                          "iconFontName": "send-horizontal",
+                          "x": 28,
+                          "y": 14
                         },
                         "5YxCW": {
-                          "content": "Сгенерировать"
+                          "content": "Сгенерировать",
+                          "x": 56,
+                          "y": 15
                         }
                       }
                     }
@@ -2883,12 +3550,20 @@
                       "type": "ref",
                       "ref": "3IUoR",
                       "name": "settingsBtn",
+                      "width": "fit_content",
+                      "height": "fit_content",
+                      "x": 215,
+                      "y": 0,
                       "descendants": {
                         "Q2NBr": {
-                          "iconFontName": "settings"
+                          "iconFontName": "settings",
+                          "x": 22,
+                          "y": 10
                         },
                         "iBc2U": {
-                          "content": "Настройки"
+                          "content": "Настройки",
+                          "x": 48,
+                          "y": 10.5
                         }
                       }
                     }
@@ -2978,6 +3653,9 @@
                       "ref": "v5zfN",
                       "width": "fill_container",
                       "name": "r1",
+                      "height": "fit_content",
+                      "x": 0,
+                      "y": 0,
                       "descendants": {
                         "oW0x2": {
                           "fill": {
@@ -2985,25 +3663,67 @@
                             "enabled": true,
                             "url": "./images/generated-1773742136733.png",
                             "mode": "fill"
-                          }
+                          },
+                          "width": "fill_container"
+                        },
+                        "SMJKF": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "y": 300
                         },
                         "6v5Hu": {
-                          "content": "Designer lamp with black body, two glowing rings"
+                          "content": "Designer lamp with black body, two glowing rings",
+                          "width": "fill_container",
+                          "x": 16,
+                          "y": 14
+                        },
+                        "wZZl3": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 56
+                        },
+                        "p0Umx": {
+                          "width": "fit_content",
+                          "height": "fit_content"
                         },
                         "u6fU4": {
-                          "content": "1:1"
+                          "content": "1:1",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "4bFV2": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 35
                         },
                         "HrZAZ": {
-                          "content": "1K"
+                          "content": "1K",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "5Lq9B": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 64
                         },
                         "fWswE": {
-                          "content": "T:0.8"
+                          "content": "T:0.8",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "ZHSq2": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 80
                         },
                         "8z4ZB": {
                           "content": "Nano Banana Pro"
                         },
                         "RsK2O": {
-                          "content": "$0.012"
+                          "content": "$0.012",
+                          "x": 245
                         }
                       }
                     },
@@ -3013,6 +3733,9 @@
                       "ref": "v5zfN",
                       "width": "fill_container",
                       "name": "r2",
+                      "height": "fit_content",
+                      "x": 341,
+                      "y": 0,
                       "descendants": {
                         "oW0x2": {
                           "fill": {
@@ -3020,25 +3743,67 @@
                             "enabled": true,
                             "url": "./images/generated-1773742180674.png",
                             "mode": "fill"
-                          }
+                          },
+                          "width": "fill_container"
+                        },
+                        "SMJKF": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "y": 300
                         },
                         "6v5Hu": {
-                          "content": "Professional portrait of a woman, soft studio lighting"
+                          "content": "Professional portrait of a woman, soft studio lighting",
+                          "width": "fill_container",
+                          "x": 16,
+                          "y": 14
+                        },
+                        "wZZl3": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 56
+                        },
+                        "p0Umx": {
+                          "width": "fit_content",
+                          "height": "fit_content"
                         },
                         "u6fU4": {
-                          "content": "16:9"
+                          "content": "16:9",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "4bFV2": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 40
                         },
                         "HrZAZ": {
-                          "content": "1K"
+                          "content": "1K",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "5Lq9B": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 69
                         },
                         "fWswE": {
-                          "content": "T:1.2"
+                          "content": "T:1.2",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "ZHSq2": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 80
                         },
                         "8z4ZB": {
                           "content": "Phantasma 2"
                         },
                         "RsK2O": {
-                          "content": "$0.006"
+                          "content": "$0.006",
+                          "x": 245
                         }
                       }
                     },
@@ -3048,6 +3813,9 @@
                       "ref": "v5zfN",
                       "width": "fill_container",
                       "name": "r3",
+                      "height": "fit_content",
+                      "x": 682,
+                      "y": 0,
                       "descendants": {
                         "oW0x2": {
                           "fill": {
@@ -3055,25 +3823,67 @@
                             "enabled": true,
                             "url": "https://images.unsplash.com/photo-1661783607607-b46303af7c61?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NzM3NDIyMDd8&ixlib=rb-4.1.0&q=80&w=1080",
                             "mode": "fill"
-                          }
+                          },
+                          "width": "fill_container"
+                        },
+                        "SMJKF": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "y": 300
                         },
                         "6v5Hu": {
-                          "content": "Mystical forest with glowing mushrooms, bioluminescent"
+                          "content": "Mystical forest with glowing mushrooms, bioluminescent",
+                          "width": "fill_container",
+                          "x": 16,
+                          "y": 14
+                        },
+                        "wZZl3": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 56
+                        },
+                        "p0Umx": {
+                          "width": "fit_content",
+                          "height": "fit_content"
                         },
                         "u6fU4": {
-                          "content": "1:1"
+                          "content": "1:1",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "4bFV2": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 35
                         },
                         "HrZAZ": {
-                          "content": "2K"
+                          "content": "2K",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "5Lq9B": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 64
                         },
                         "fWswE": {
-                          "content": "T:1.6"
+                          "content": "T:1.6",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "ZHSq2": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 80
                         },
                         "8z4ZB": {
                           "content": "Nano Banana Pro"
                         },
                         "RsK2O": {
-                          "content": "$0.015"
+                          "content": "$0.015",
+                          "x": 245
                         }
                       }
                     },
@@ -3083,6 +3893,9 @@
                       "ref": "v5zfN",
                       "width": "fill_container",
                       "name": "r4",
+                      "height": "fit_content",
+                      "x": 1023,
+                      "y": 0,
                       "descendants": {
                         "oW0x2": {
                           "fill": {
@@ -3090,25 +3903,67 @@
                             "enabled": true,
                             "url": "https://images.unsplash.com/photo-1649030616613-199ed9e32d84?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NzM3NDIyNDh8&ixlib=rb-4.1.0&q=80&w=1080",
                             "mode": "fill"
-                          }
+                          },
+                          "width": "fill_container"
+                        },
+                        "SMJKF": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "y": 300
                         },
                         "6v5Hu": {
-                          "content": "Modern headphones on gradient background, product shot"
+                          "content": "Modern headphones on gradient background, product shot",
+                          "width": "fill_container",
+                          "x": 16,
+                          "y": 14
+                        },
+                        "wZZl3": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 56
+                        },
+                        "p0Umx": {
+                          "width": "fit_content",
+                          "height": "fit_content"
                         },
                         "u6fU4": {
-                          "content": "3:2"
+                          "content": "3:2",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "4bFV2": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 35
                         },
                         "HrZAZ": {
-                          "content": "1K"
+                          "content": "1K",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "5Lq9B": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 64
                         },
                         "fWswE": {
-                          "content": "T:0.6"
+                          "content": "T:0.6",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "ZHSq2": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 80
                         },
                         "8z4ZB": {
                           "content": "Legacy"
                         },
                         "RsK2O": {
-                          "content": "$0.007"
+                          "content": "$0.007",
+                          "x": 245
                         }
                       }
                     }
@@ -3153,12 +4008,20 @@
                         "thickness": 1,
                         "fill": "#E6A61A40"
                       },
+                      "width": "fit_content",
+                      "height": "fit_content",
+                      "x": 0,
+                      "y": 0,
                       "descendants": {
                         "kA1N6": {
-                          "content": "Nano Banana Pro"
+                          "content": "Nano Banana Pro",
+                          "x": 16,
+                          "y": 8
                         },
                         "xi8gY": {
-                          "iconFontName": "chevron-down"
+                          "iconFontName": "chevron-down",
+                          "x": 121,
+                          "y": 9
                         }
                       }
                     },
@@ -3172,9 +4035,19 @@
                         "thickness": 1,
                         "fill": "#E6A61A40"
                       },
+                      "width": "fit_content",
+                      "height": "fit_content",
+                      "x": 159,
+                      "y": 0,
                       "descendants": {
                         "kA1N6": {
-                          "content": "1:1"
+                          "content": "1:1",
+                          "x": 16,
+                          "y": 8
+                        },
+                        "xi8gY": {
+                          "x": 35,
+                          "y": 9
                         }
                       }
                     },
@@ -3183,9 +4056,19 @@
                       "type": "ref",
                       "ref": "gxmSv",
                       "name": "chipSize",
+                      "width": "fit_content",
+                      "height": "fit_content",
+                      "x": 232,
+                      "y": 0,
                       "descendants": {
                         "kA1N6": {
-                          "content": "1K"
+                          "content": "1K",
+                          "x": 16,
+                          "y": 8
+                        },
+                        "xi8gY": {
+                          "x": 35,
+                          "y": 9
                         }
                       }
                     },
@@ -3301,12 +4184,19 @@
                       "type": "ref",
                       "ref": "96LeL",
                       "name": "sendBtn",
+                      "width": "fit_content",
+                      "height": "fit_content",
+                      "x": 1142,
                       "descendants": {
                         "Y0e23": {
-                          "iconFontName": "send-horizontal"
+                          "iconFontName": "send-horizontal",
+                          "x": 28,
+                          "y": 14
                         },
                         "5YxCW": {
-                          "content": "Сгенерировать"
+                          "content": "Сгенерировать",
+                          "x": 56,
+                          "y": 15
                         }
                       }
                     }
@@ -3777,12 +4667,20 @@
                       "type": "ref",
                       "ref": "3IUoR",
                       "name": "settingsBtn",
+                      "width": "fit_content",
+                      "height": "fit_content",
+                      "x": 215,
+                      "y": 0,
                       "descendants": {
                         "Q2NBr": {
-                          "iconFontName": "settings"
+                          "iconFontName": "settings",
+                          "x": 22,
+                          "y": 10
                         },
                         "iBc2U": {
-                          "content": "Настройки"
+                          "content": "Настройки",
+                          "x": 48,
+                          "y": 10.5
                         }
                       }
                     }
@@ -3872,6 +4770,9 @@
                       "ref": "v5zfN",
                       "width": "fill_container",
                       "name": "s1",
+                      "height": "fit_content",
+                      "x": 0,
+                      "y": 0,
                       "descendants": {
                         "oW0x2": {
                           "fill": {
@@ -3879,25 +4780,67 @@
                             "enabled": true,
                             "url": "https://images.unsplash.com/photo-1576004089771-ef03578a6d43?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NzM3NDIyOTF8&ixlib=rb-4.1.0&q=80&w=1080",
                             "mode": "fill"
-                          }
+                          },
+                          "width": "fill_container"
+                        },
+                        "SMJKF": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "y": 300
                         },
                         "6v5Hu": {
-                          "content": "Designer lamp with black body, two glowing rings"
+                          "content": "Designer lamp with black body, two glowing rings",
+                          "width": "fill_container",
+                          "x": 16,
+                          "y": 14
+                        },
+                        "wZZl3": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 56
+                        },
+                        "p0Umx": {
+                          "width": "fit_content",
+                          "height": "fit_content"
                         },
                         "u6fU4": {
-                          "content": "1:1"
+                          "content": "1:1",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "4bFV2": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 35
                         },
                         "HrZAZ": {
-                          "content": "1K"
+                          "content": "1K",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "5Lq9B": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 64
                         },
                         "fWswE": {
-                          "content": "T:0.8"
+                          "content": "T:0.8",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "ZHSq2": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 80
                         },
                         "8z4ZB": {
                           "content": "Nano Banana Pro"
                         },
                         "RsK2O": {
-                          "content": "$0.012"
+                          "content": "$0.012",
+                          "x": 245
                         }
                       }
                     },
@@ -3907,6 +4850,9 @@
                       "ref": "v5zfN",
                       "width": "fill_container",
                       "name": "s2",
+                      "height": "fit_content",
+                      "x": 341,
+                      "y": 0,
                       "descendants": {
                         "oW0x2": {
                           "fill": {
@@ -3914,25 +4860,67 @@
                             "enabled": true,
                             "url": "https://images.unsplash.com/photo-1660681432127-7c5810a40fa6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NzM3NDIyOTd8&ixlib=rb-4.1.0&q=80&w=1080",
                             "mode": "fill"
-                          }
+                          },
+                          "width": "fill_container"
+                        },
+                        "SMJKF": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "y": 300
                         },
                         "6v5Hu": {
-                          "content": "Professional portrait of a woman, soft studio lighting"
+                          "content": "Professional portrait of a woman, soft studio lighting",
+                          "width": "fill_container",
+                          "x": 16,
+                          "y": 14
+                        },
+                        "wZZl3": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 56
+                        },
+                        "p0Umx": {
+                          "width": "fit_content",
+                          "height": "fit_content"
                         },
                         "u6fU4": {
-                          "content": "16:9"
+                          "content": "16:9",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "4bFV2": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 40
                         },
                         "HrZAZ": {
-                          "content": "1K"
+                          "content": "1K",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "5Lq9B": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 69
                         },
                         "fWswE": {
-                          "content": "T:1.2"
+                          "content": "T:1.2",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "ZHSq2": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 80
                         },
                         "8z4ZB": {
                           "content": "Phantasma 2"
                         },
                         "RsK2O": {
-                          "content": "$0.006"
+                          "content": "$0.006",
+                          "x": 245
                         }
                       }
                     },
@@ -3942,6 +4930,9 @@
                       "ref": "v5zfN",
                       "width": "fill_container",
                       "name": "s3",
+                      "height": "fit_content",
+                      "x": 682,
+                      "y": 0,
                       "descendants": {
                         "oW0x2": {
                           "fill": {
@@ -3949,25 +4940,67 @@
                             "enabled": true,
                             "url": "https://images.unsplash.com/photo-1571590900195-9b7c3c289824?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NzM3NDIzMDZ8&ixlib=rb-4.1.0&q=80&w=1080",
                             "mode": "fill"
-                          }
+                          },
+                          "width": "fill_container"
+                        },
+                        "SMJKF": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "y": 300
                         },
                         "6v5Hu": {
-                          "content": "Mystical forest with glowing mushrooms, bioluminescent"
+                          "content": "Mystical forest with glowing mushrooms, bioluminescent",
+                          "width": "fill_container",
+                          "x": 16,
+                          "y": 14
+                        },
+                        "wZZl3": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 56
+                        },
+                        "p0Umx": {
+                          "width": "fit_content",
+                          "height": "fit_content"
                         },
                         "u6fU4": {
-                          "content": "1:1"
+                          "content": "1:1",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "4bFV2": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 35
                         },
                         "HrZAZ": {
-                          "content": "2K"
+                          "content": "2K",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "5Lq9B": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 64
                         },
                         "fWswE": {
-                          "content": "T:1.6"
+                          "content": "T:1.6",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "ZHSq2": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 80
                         },
                         "8z4ZB": {
                           "content": "Nano Banana Pro"
                         },
                         "RsK2O": {
-                          "content": "$0.015"
+                          "content": "$0.015",
+                          "x": 245
                         }
                       }
                     },
@@ -3977,6 +5010,9 @@
                       "ref": "v5zfN",
                       "width": "fill_container",
                       "name": "s4",
+                      "height": "fit_content",
+                      "x": 1023,
+                      "y": 0,
                       "descendants": {
                         "oW0x2": {
                           "fill": {
@@ -3984,25 +5020,67 @@
                             "enabled": true,
                             "url": "https://images.unsplash.com/photo-1755719401538-79bea384b393?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NzM3NDIzMTh8&ixlib=rb-4.1.0&q=80&w=1080",
                             "mode": "fill"
-                          }
+                          },
+                          "width": "fill_container"
+                        },
+                        "SMJKF": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "y": 300
                         },
                         "6v5Hu": {
-                          "content": "Modern headphones on gradient background, product shot"
+                          "content": "Modern headphones on gradient background, product shot",
+                          "width": "fill_container",
+                          "x": 16,
+                          "y": 14
+                        },
+                        "wZZl3": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 56
+                        },
+                        "p0Umx": {
+                          "width": "fit_content",
+                          "height": "fit_content"
                         },
                         "u6fU4": {
-                          "content": "3:2"
+                          "content": "3:2",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "4bFV2": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 35
                         },
                         "HrZAZ": {
-                          "content": "1K"
+                          "content": "1K",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "5Lq9B": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 64
                         },
                         "fWswE": {
-                          "content": "T:0.6"
+                          "content": "T:0.6",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "ZHSq2": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 80
                         },
                         "8z4ZB": {
                           "content": "Legacy"
                         },
                         "RsK2O": {
-                          "content": "$0.007"
+                          "content": "$0.007",
+                          "x": 245
                         }
                       }
                     }
@@ -4042,12 +5120,20 @@
                       "type": "ref",
                       "ref": "gxmSv",
                       "name": "chipModel",
+                      "width": "fit_content",
+                      "height": "fit_content",
+                      "x": 0,
+                      "y": 0,
                       "descendants": {
                         "kA1N6": {
-                          "content": "Nano Banana Pro"
+                          "content": "Nano Banana Pro",
+                          "x": 16,
+                          "y": 8
                         },
                         "xi8gY": {
-                          "iconFontName": "chevron-down"
+                          "iconFontName": "chevron-down",
+                          "x": 121,
+                          "y": 9
                         }
                       }
                     },
@@ -4056,9 +5142,19 @@
                       "type": "ref",
                       "ref": "gxmSv",
                       "name": "chipRatio",
+                      "width": "fit_content",
+                      "height": "fit_content",
+                      "x": 159,
+                      "y": 0,
                       "descendants": {
                         "kA1N6": {
-                          "content": "1:1"
+                          "content": "1:1",
+                          "x": 16,
+                          "y": 8
+                        },
+                        "xi8gY": {
+                          "x": 35,
+                          "y": 9
                         }
                       }
                     },
@@ -4072,9 +5168,19 @@
                         "thickness": 1,
                         "fill": "#E6A61A40"
                       },
+                      "width": "fit_content",
+                      "height": "fit_content",
+                      "x": 232,
+                      "y": 0,
                       "descendants": {
                         "kA1N6": {
-                          "content": "1K"
+                          "content": "1K",
+                          "x": 16,
+                          "y": 8
+                        },
+                        "xi8gY": {
+                          "x": 35,
+                          "y": 9
                         }
                       }
                     },
@@ -4190,12 +5296,19 @@
                       "type": "ref",
                       "ref": "96LeL",
                       "name": "sendBtn",
+                      "width": "fit_content",
+                      "height": "fit_content",
+                      "x": 1142,
                       "descendants": {
                         "Y0e23": {
-                          "iconFontName": "send-horizontal"
+                          "iconFontName": "send-horizontal",
+                          "x": 28,
+                          "y": 14
                         },
                         "5YxCW": {
-                          "content": "Сгенерировать"
+                          "content": "Сгенерировать",
+                          "x": 56,
+                          "y": 15
                         }
                       }
                     }
@@ -4657,12 +5770,20 @@
                       "type": "ref",
                       "ref": "3IUoR",
                       "name": "settingsBtn",
+                      "width": "fit_content",
+                      "height": "fit_content",
+                      "x": 215,
+                      "y": 0,
                       "descendants": {
                         "Q2NBr": {
-                          "iconFontName": "settings"
+                          "iconFontName": "settings",
+                          "x": 22,
+                          "y": 10
                         },
                         "iBc2U": {
-                          "content": "Настройки"
+                          "content": "Настройки",
+                          "x": 48,
+                          "y": 10.5
                         }
                       }
                     }
@@ -4752,6 +5873,9 @@
                       "ref": "v5zfN",
                       "width": "fill_container",
                       "name": "t1",
+                      "height": "fit_content",
+                      "x": 0,
+                      "y": 0,
                       "descendants": {
                         "oW0x2": {
                           "fill": {
@@ -4759,25 +5883,67 @@
                             "enabled": true,
                             "url": "https://images.unsplash.com/photo-1769001713570-d342ada440fa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NzM3NDIzNjJ8&ixlib=rb-4.1.0&q=80&w=1080",
                             "mode": "fill"
-                          }
+                          },
+                          "width": "fill_container"
+                        },
+                        "SMJKF": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "y": 300
                         },
                         "6v5Hu": {
-                          "content": "Designer lamp with black body, two glowing rings"
+                          "content": "Designer lamp with black body, two glowing rings",
+                          "width": "fill_container",
+                          "x": 16,
+                          "y": 14
+                        },
+                        "wZZl3": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 56
+                        },
+                        "p0Umx": {
+                          "width": "fit_content",
+                          "height": "fit_content"
                         },
                         "u6fU4": {
-                          "content": "1:1"
+                          "content": "1:1",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "4bFV2": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 35
                         },
                         "HrZAZ": {
-                          "content": "1K"
+                          "content": "1K",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "5Lq9B": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 64
                         },
                         "fWswE": {
-                          "content": "T:0.8"
+                          "content": "T:0.8",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "ZHSq2": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 80
                         },
                         "8z4ZB": {
                           "content": "Nano Banana Pro"
                         },
                         "RsK2O": {
-                          "content": "$0.012"
+                          "content": "$0.012",
+                          "x": 245
                         }
                       }
                     },
@@ -4787,6 +5953,9 @@
                       "ref": "v5zfN",
                       "width": "fill_container",
                       "name": "t2",
+                      "height": "fit_content",
+                      "x": 341,
+                      "y": 0,
                       "descendants": {
                         "oW0x2": {
                           "fill": {
@@ -4794,25 +5963,67 @@
                             "enabled": true,
                             "url": "https://images.unsplash.com/photo-1619276323764-64acac48b698?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NzM3NDIzNjd8&ixlib=rb-4.1.0&q=80&w=1080",
                             "mode": "fill"
-                          }
+                          },
+                          "width": "fill_container"
+                        },
+                        "SMJKF": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "y": 300
                         },
                         "6v5Hu": {
-                          "content": "Professional portrait of a woman, soft studio lighting"
+                          "content": "Professional portrait of a woman, soft studio lighting",
+                          "width": "fill_container",
+                          "x": 16,
+                          "y": 14
+                        },
+                        "wZZl3": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 56
+                        },
+                        "p0Umx": {
+                          "width": "fit_content",
+                          "height": "fit_content"
                         },
                         "u6fU4": {
-                          "content": "16:9"
+                          "content": "16:9",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "4bFV2": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 40
                         },
                         "HrZAZ": {
-                          "content": "1K"
+                          "content": "1K",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "5Lq9B": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 69
                         },
                         "fWswE": {
-                          "content": "T:1.2"
+                          "content": "T:1.2",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "ZHSq2": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 80
                         },
                         "8z4ZB": {
                           "content": "Phantasma 2"
                         },
                         "RsK2O": {
-                          "content": "$0.006"
+                          "content": "$0.006",
+                          "x": 245
                         }
                       }
                     },
@@ -4822,6 +6033,9 @@
                       "ref": "v5zfN",
                       "width": "fill_container",
                       "name": "t3",
+                      "height": "fit_content",
+                      "x": 682,
+                      "y": 0,
                       "descendants": {
                         "oW0x2": {
                           "fill": {
@@ -4829,25 +6043,67 @@
                             "enabled": true,
                             "url": "https://images.unsplash.com/photo-1662068831759-f077431d18a9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NzM3NDIzNzF8&ixlib=rb-4.1.0&q=80&w=1080",
                             "mode": "fill"
-                          }
+                          },
+                          "width": "fill_container"
+                        },
+                        "SMJKF": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "y": 300
                         },
                         "6v5Hu": {
-                          "content": "Mystical forest with glowing mushrooms, bioluminescent"
+                          "content": "Mystical forest with glowing mushrooms, bioluminescent",
+                          "width": "fill_container",
+                          "x": 16,
+                          "y": 14
+                        },
+                        "wZZl3": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 56
+                        },
+                        "p0Umx": {
+                          "width": "fit_content",
+                          "height": "fit_content"
                         },
                         "u6fU4": {
-                          "content": "1:1"
+                          "content": "1:1",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "4bFV2": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 35
                         },
                         "HrZAZ": {
-                          "content": "2K"
+                          "content": "2K",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "5Lq9B": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 64
                         },
                         "fWswE": {
-                          "content": "T:1.6"
+                          "content": "T:1.6",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "ZHSq2": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 80
                         },
                         "8z4ZB": {
                           "content": "Nano Banana Pro"
                         },
                         "RsK2O": {
-                          "content": "$0.015"
+                          "content": "$0.015",
+                          "x": 245
                         }
                       }
                     },
@@ -4857,6 +6113,9 @@
                       "ref": "v5zfN",
                       "width": "fill_container",
                       "name": "t4",
+                      "height": "fit_content",
+                      "x": 1023,
+                      "y": 0,
                       "descendants": {
                         "oW0x2": {
                           "fill": {
@@ -4864,25 +6123,67 @@
                             "enabled": true,
                             "url": "https://images.unsplash.com/photo-1585772516992-6b81fe6b0da0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NzM3NDIzNzV8&ixlib=rb-4.1.0&q=80&w=1080",
                             "mode": "fill"
-                          }
+                          },
+                          "width": "fill_container"
+                        },
+                        "SMJKF": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "y": 300
                         },
                         "6v5Hu": {
-                          "content": "Modern headphones on gradient background, product shot"
+                          "content": "Modern headphones on gradient background, product shot",
+                          "width": "fill_container",
+                          "x": 16,
+                          "y": 14
+                        },
+                        "wZZl3": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 56
+                        },
+                        "p0Umx": {
+                          "width": "fit_content",
+                          "height": "fit_content"
                         },
                         "u6fU4": {
-                          "content": "3:2"
+                          "content": "3:2",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "4bFV2": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 35
                         },
                         "HrZAZ": {
-                          "content": "1K"
+                          "content": "1K",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "5Lq9B": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 64
                         },
                         "fWswE": {
-                          "content": "T:0.6"
+                          "content": "T:0.6",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "ZHSq2": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 80
                         },
                         "8z4ZB": {
                           "content": "Legacy"
                         },
                         "RsK2O": {
-                          "content": "$0.007"
+                          "content": "$0.007",
+                          "x": 245
                         }
                       }
                     }
@@ -4922,12 +6223,20 @@
                       "type": "ref",
                       "ref": "gxmSv",
                       "name": "chipModel",
+                      "width": "fit_content",
+                      "height": "fit_content",
+                      "x": 0,
+                      "y": 0,
                       "descendants": {
                         "kA1N6": {
-                          "content": "Nano Banana Pro"
+                          "content": "Nano Banana Pro",
+                          "x": 16,
+                          "y": 8
                         },
                         "xi8gY": {
-                          "iconFontName": "chevron-down"
+                          "iconFontName": "chevron-down",
+                          "x": 121,
+                          "y": 9
                         }
                       }
                     },
@@ -4936,9 +6245,19 @@
                       "type": "ref",
                       "ref": "gxmSv",
                       "name": "chipRatio",
+                      "width": "fit_content",
+                      "height": "fit_content",
+                      "x": 159,
+                      "y": 0,
                       "descendants": {
                         "kA1N6": {
-                          "content": "1:1"
+                          "content": "1:1",
+                          "x": 16,
+                          "y": 8
+                        },
+                        "xi8gY": {
+                          "x": 35,
+                          "y": 9
                         }
                       }
                     },
@@ -4947,9 +6266,19 @@
                       "type": "ref",
                       "ref": "gxmSv",
                       "name": "chipSize",
+                      "width": "fit_content",
+                      "height": "fit_content",
+                      "x": 232,
+                      "y": 0,
                       "descendants": {
                         "kA1N6": {
-                          "content": "1K"
+                          "content": "1K",
+                          "x": 16,
+                          "y": 8
+                        },
+                        "xi8gY": {
+                          "x": 35,
+                          "y": 9
                         }
                       }
                     },
@@ -5065,12 +6394,19 @@
                       "type": "ref",
                       "ref": "96LeL",
                       "name": "sendBtn",
+                      "width": "fit_content",
+                      "height": "fit_content",
+                      "x": 1142,
                       "descendants": {
                         "Y0e23": {
-                          "iconFontName": "send-horizontal"
+                          "iconFontName": "send-horizontal",
+                          "x": 28,
+                          "y": 14
                         },
                         "5YxCW": {
-                          "content": "Сгенерировать"
+                          "content": "Сгенерировать",
+                          "x": 56,
+                          "y": 15
                         }
                       }
                     }
@@ -5595,6 +6931,9 @@
                       "ref": "v5zfN",
                       "name": "m1",
                       "width": "fill_container",
+                      "height": "fit_content",
+                      "x": 0,
+                      "y": 0,
                       "descendants": {
                         "oW0x2": {
                           "height": 180,
@@ -5603,16 +6942,64 @@
                             "enabled": true,
                             "url": "./images/generated-1773742256778.png",
                             "mode": "fill"
-                          }
+                          },
+                          "width": "fill_container"
+                        },
+                        "SMJKF": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "y": 180
                         },
                         "6v5Hu": {
-                          "content": "Designer lamp with gold rings"
+                          "content": "Designer lamp with gold rings",
+                          "width": "fill_container",
+                          "x": 16,
+                          "y": 14
+                        },
+                        "wZZl3": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 56
+                        },
+                        "p0Umx": {
+                          "width": "fit_content",
+                          "height": "fit_content"
+                        },
+                        "u6fU4": {
+                          "x": 6,
+                          "y": 2
+                        },
+                        "4bFV2": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 35
+                        },
+                        "HrZAZ": {
+                          "x": 6,
+                          "y": 2
+                        },
+                        "5Lq9B": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 64
+                        },
+                        "fWswE": {
+                          "x": 6,
+                          "y": 2
+                        },
+                        "ZHSq2": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 80
                         },
                         "8z4ZB": {
                           "content": "Nano Pro"
                         },
                         "RsK2O": {
-                          "content": "$0.012"
+                          "content": "$0.012",
+                          "x": 97
                         }
                       }
                     },
@@ -5622,6 +7009,9 @@
                       "ref": "v5zfN",
                       "name": "m2",
                       "width": "fill_container",
+                      "height": "fit_content",
+                      "x": 185,
+                      "y": 0,
                       "descendants": {
                         "oW0x2": {
                           "height": 180,
@@ -5630,16 +7020,64 @@
                             "enabled": true,
                             "url": "https://images.unsplash.com/photo-1714462396046-29272a3cb549?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NzM3NDIzNDR8&ixlib=rb-4.1.0&q=80&w=1080",
                             "mode": "fill"
-                          }
+                          },
+                          "width": "fill_container"
+                        },
+                        "SMJKF": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "y": 180
                         },
                         "6v5Hu": {
-                          "content": "Portrait, soft lighting"
+                          "content": "Portrait, soft lighting",
+                          "width": "fill_container",
+                          "x": 16,
+                          "y": 14
+                        },
+                        "wZZl3": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 56
+                        },
+                        "p0Umx": {
+                          "width": "fit_content",
+                          "height": "fit_content"
+                        },
+                        "u6fU4": {
+                          "x": 6,
+                          "y": 2
+                        },
+                        "4bFV2": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 35
+                        },
+                        "HrZAZ": {
+                          "x": 6,
+                          "y": 2
+                        },
+                        "5Lq9B": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 64
+                        },
+                        "fWswE": {
+                          "x": 6,
+                          "y": 2
+                        },
+                        "ZHSq2": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 80
                         },
                         "8z4ZB": {
                           "content": "Nano 2"
                         },
                         "RsK2O": {
-                          "content": "$0.008"
+                          "content": "$0.008",
+                          "x": 97
                         }
                       }
                     }
@@ -5658,6 +7096,9 @@
                       "ref": "v5zfN",
                       "name": "m3",
                       "width": "fill_container",
+                      "height": "fit_content",
+                      "x": 0,
+                      "y": 0,
                       "descendants": {
                         "oW0x2": {
                           "height": 180,
@@ -5666,16 +7107,64 @@
                             "enabled": true,
                             "url": "./images/generated-1773742313682.png",
                             "mode": "fill"
-                          }
+                          },
+                          "width": "fill_container"
+                        },
+                        "SMJKF": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "y": 180
                         },
                         "6v5Hu": {
-                          "content": "Mystical forest, glowing"
+                          "content": "Mystical forest, glowing",
+                          "width": "fill_container",
+                          "x": 16,
+                          "y": 14
+                        },
+                        "wZZl3": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 56
+                        },
+                        "p0Umx": {
+                          "width": "fit_content",
+                          "height": "fit_content"
+                        },
+                        "u6fU4": {
+                          "x": 6,
+                          "y": 2
+                        },
+                        "4bFV2": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 35
+                        },
+                        "HrZAZ": {
+                          "x": 6,
+                          "y": 2
+                        },
+                        "5Lq9B": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 64
+                        },
+                        "fWswE": {
+                          "x": 6,
+                          "y": 2
+                        },
+                        "ZHSq2": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 80
                         },
                         "8z4ZB": {
                           "content": "Nano Pro"
                         },
                         "RsK2O": {
-                          "content": "$0.015"
+                          "content": "$0.015",
+                          "x": 97
                         }
                       }
                     },
@@ -5685,6 +7174,9 @@
                       "ref": "v5zfN",
                       "name": "m4",
                       "width": "fill_container",
+                      "height": "fit_content",
+                      "x": 185,
+                      "y": 0,
                       "descendants": {
                         "oW0x2": {
                           "height": 180,
@@ -5693,16 +7185,64 @@
                             "enabled": true,
                             "url": "https://images.unsplash.com/photo-1758179761755-2246343bf536?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NzM3NDIzMzh8&ixlib=rb-4.1.0&q=80&w=1080",
                             "mode": "fill"
-                          }
+                          },
+                          "width": "fill_container"
+                        },
+                        "SMJKF": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "y": 180
                         },
                         "6v5Hu": {
-                          "content": "Headphones, product shot"
+                          "content": "Headphones, product shot",
+                          "width": "fill_container",
+                          "x": 16,
+                          "y": 14
+                        },
+                        "wZZl3": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 56
+                        },
+                        "p0Umx": {
+                          "width": "fit_content",
+                          "height": "fit_content"
+                        },
+                        "u6fU4": {
+                          "x": 6,
+                          "y": 2
+                        },
+                        "4bFV2": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 35
+                        },
+                        "HrZAZ": {
+                          "x": 6,
+                          "y": 2
+                        },
+                        "5Lq9B": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 64
+                        },
+                        "fWswE": {
+                          "x": 6,
+                          "y": 2
+                        },
+                        "ZHSq2": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 80
                         },
                         "8z4ZB": {
                           "content": "Legacy"
                         },
                         "RsK2O": {
-                          "content": "$0.007"
+                          "content": "$0.007",
+                          "x": 97
                         }
                       }
                     }
@@ -5742,14 +7282,22 @@
                       "type": "ref",
                       "ref": "gxmSv",
                       "name": "mChip1",
+                      "width": "fit_content",
+                      "height": "fit_content",
+                      "x": 0,
+                      "y": 0,
                       "descendants": {
                         "kA1N6": {
                           "content": "Nano Pro",
-                          "fontSize": 11
+                          "fontSize": 11,
+                          "x": 16,
+                          "y": 8
                         },
                         "xi8gY": {
                           "width": 10,
-                          "height": 10
+                          "height": 10,
+                          "x": 67,
+                          "y": 9.5
                         }
                       }
                     },
@@ -5758,14 +7306,22 @@
                       "type": "ref",
                       "ref": "gxmSv",
                       "name": "mChip2",
+                      "width": "fit_content",
+                      "height": "fit_content",
+                      "x": 99,
+                      "y": 0,
                       "descendants": {
                         "kA1N6": {
                           "content": "1:1",
-                          "fontSize": 11
+                          "fontSize": 11,
+                          "x": 16,
+                          "y": 8
                         },
                         "xi8gY": {
                           "width": 10,
-                          "height": 10
+                          "height": 10,
+                          "x": 33,
+                          "y": 9.5
                         }
                       }
                     },
@@ -5774,14 +7330,22 @@
                       "type": "ref",
                       "ref": "gxmSv",
                       "name": "mChip3",
+                      "width": "fit_content",
+                      "height": "fit_content",
+                      "x": 164,
+                      "y": 0,
                       "descendants": {
                         "kA1N6": {
                           "content": "1K",
-                          "fontSize": 11
+                          "fontSize": 11,
+                          "x": 16,
+                          "y": 8
                         },
                         "xi8gY": {
                           "width": 10,
-                          "height": 10
+                          "height": 10,
+                          "x": 33,
+                          "y": 9.5
                         }
                       }
                     }
@@ -6189,12 +7753,20 @@
                       "type": "ref",
                       "ref": "3IUoR",
                       "name": "settingsBtn",
+                      "width": "fit_content",
+                      "height": "fit_content",
+                      "x": 215,
+                      "y": 0,
                       "descendants": {
                         "Q2NBr": {
-                          "iconFontName": "settings"
+                          "iconFontName": "settings",
+                          "x": 22,
+                          "y": 10
                         },
                         "iBc2U": {
-                          "content": "Настройки"
+                          "content": "Настройки",
+                          "x": 48,
+                          "y": 10.5
                         }
                       }
                     }
@@ -6284,6 +7856,9 @@
                       "ref": "v5zfN",
                       "width": "fill_container",
                       "name": "c1",
+                      "height": "fit_content",
+                      "x": 0,
+                      "y": 0,
                       "descendants": {
                         "oW0x2": {
                           "fill": {
@@ -6291,16 +7866,64 @@
                             "enabled": true,
                             "url": "./images/generated-1773741426978.png",
                             "mode": "fill"
-                          }
+                          },
+                          "width": "fill_container"
+                        },
+                        "SMJKF": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "y": 300
                         },
                         "6v5Hu": {
-                          "content": "Designer lamp with black body, two glowing rings in gold color"
+                          "content": "Designer lamp with black body, two glowing rings in gold color",
+                          "width": "fill_container",
+                          "x": 16,
+                          "y": 14
+                        },
+                        "wZZl3": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 56
+                        },
+                        "p0Umx": {
+                          "width": "fit_content",
+                          "height": "fit_content"
+                        },
+                        "u6fU4": {
+                          "x": 6,
+                          "y": 2
+                        },
+                        "4bFV2": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 35
+                        },
+                        "HrZAZ": {
+                          "x": 6,
+                          "y": 2
+                        },
+                        "5Lq9B": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 64
+                        },
+                        "fWswE": {
+                          "x": 6,
+                          "y": 2
+                        },
+                        "ZHSq2": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 80
                         },
                         "8z4ZB": {
                           "content": "Nano Banana Pro"
                         },
                         "RsK2O": {
-                          "content": "$0.012"
+                          "content": "$0.012",
+                          "x": 245
                         }
                       }
                     },
@@ -6310,6 +7933,9 @@
                       "ref": "v5zfN",
                       "width": "fill_container",
                       "name": "c2",
+                      "height": "fit_content",
+                      "x": 341,
+                      "y": 0,
                       "descendants": {
                         "oW0x2": {
                           "fill": {
@@ -6317,22 +7943,66 @@
                             "enabled": true,
                             "url": "./images/generated-1773741477845.png",
                             "mode": "fill"
-                          }
+                          },
+                          "width": "fill_container"
+                        },
+                        "SMJKF": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "y": 300
                         },
                         "6v5Hu": {
-                          "content": "Professional portrait of a woman, soft studio lighting"
+                          "content": "Professional portrait of a woman, soft studio lighting",
+                          "width": "fill_container",
+                          "x": 16,
+                          "y": 14
+                        },
+                        "wZZl3": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 56
+                        },
+                        "p0Umx": {
+                          "width": "fit_content",
+                          "height": "fit_content"
                         },
                         "u6fU4": {
-                          "content": "16:9"
+                          "content": "16:9",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "4bFV2": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 40
+                        },
+                        "HrZAZ": {
+                          "x": 6,
+                          "y": 2
+                        },
+                        "5Lq9B": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 69
                         },
                         "fWswE": {
-                          "content": "T:1.2"
+                          "content": "T:1.2",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "ZHSq2": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 80
                         },
                         "8z4ZB": {
                           "content": "Nano Banana 2"
                         },
                         "RsK2O": {
-                          "content": "$0.008"
+                          "content": "$0.008",
+                          "x": 245
                         }
                       }
                     },
@@ -6342,6 +8012,9 @@
                       "ref": "v5zfN",
                       "width": "fill_container",
                       "name": "c3",
+                      "height": "fit_content",
+                      "x": 682,
+                      "y": 0,
                       "descendants": {
                         "oW0x2": {
                           "fill": {
@@ -6349,25 +8022,67 @@
                             "enabled": true,
                             "url": "./images/generated-1773741573224.png",
                             "mode": "fill"
-                          }
+                          },
+                          "width": "fill_container"
+                        },
+                        "SMJKF": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "y": 300
                         },
                         "6v5Hu": {
-                          "content": "Mystical forest with glowing mushrooms, bioluminescent"
+                          "content": "Mystical forest with glowing mushrooms, bioluminescent",
+                          "width": "fill_container",
+                          "x": 16,
+                          "y": 14
+                        },
+                        "wZZl3": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 56
+                        },
+                        "p0Umx": {
+                          "width": "fit_content",
+                          "height": "fit_content"
                         },
                         "u6fU4": {
-                          "content": "9:16"
+                          "content": "9:16",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "4bFV2": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 40
                         },
                         "HrZAZ": {
-                          "content": "2K"
+                          "content": "2K",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "5Lq9B": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 69
                         },
                         "fWswE": {
-                          "content": "T:1.6"
+                          "content": "T:1.6",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "ZHSq2": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 80
                         },
                         "8z4ZB": {
                           "content": "Nano Banana Pro"
                         },
                         "RsK2O": {
-                          "content": "$0.015"
+                          "content": "$0.015",
+                          "x": 245
                         }
                       }
                     },
@@ -6377,6 +8092,9 @@
                       "ref": "v5zfN",
                       "width": "fill_container",
                       "name": "c4",
+                      "height": "fit_content",
+                      "x": 1023,
+                      "y": 0,
                       "descendants": {
                         "oW0x2": {
                           "fill": {
@@ -6384,25 +8102,67 @@
                             "enabled": true,
                             "url": "./images/generated-1773741611258.png",
                             "mode": "fill"
-                          }
+                          },
+                          "width": "fill_container"
+                        },
+                        "SMJKF": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "y": 300
                         },
                         "6v5Hu": {
-                          "content": "Modern headphones on gradient background, commercial"
+                          "content": "Modern headphones on gradient background, commercial",
+                          "width": "fill_container",
+                          "x": 16,
+                          "y": 14
+                        },
+                        "wZZl3": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 56
+                        },
+                        "p0Umx": {
+                          "width": "fit_content",
+                          "height": "fit_content"
                         },
                         "u6fU4": {
-                          "content": "4:3"
+                          "content": "4:3",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "4bFV2": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 35
                         },
                         "HrZAZ": {
-                          "content": "512"
+                          "content": "512",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "5Lq9B": {
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 70
                         },
                         "fWswE": {
-                          "content": "T:0.8"
+                          "content": "T:0.8",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "ZHSq2": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 80
                         },
                         "8z4ZB": {
                           "content": "Nano Banana Legacy"
                         },
                         "RsK2O": {
-                          "content": "$0.007"
+                          "content": "$0.007",
+                          "x": 245
                         }
                       }
                     }
@@ -6442,12 +8202,20 @@
                       "type": "ref",
                       "ref": "gxmSv",
                       "name": "chipModel",
+                      "width": "fit_content",
+                      "height": "fit_content",
+                      "x": 0,
+                      "y": 0,
                       "descendants": {
                         "kA1N6": {
-                          "content": "Nano Banana Pro"
+                          "content": "Nano Banana Pro",
+                          "x": 16,
+                          "y": 8
                         },
                         "xi8gY": {
-                          "iconFontName": "chevron-down"
+                          "iconFontName": "chevron-down",
+                          "x": 121,
+                          "y": 9
                         }
                       }
                     },
@@ -6456,9 +8224,19 @@
                       "type": "ref",
                       "ref": "gxmSv",
                       "name": "chipRatio",
+                      "width": "fit_content",
+                      "height": "fit_content",
+                      "x": 159,
+                      "y": 0,
                       "descendants": {
                         "kA1N6": {
-                          "content": "1:1"
+                          "content": "1:1",
+                          "x": 16,
+                          "y": 8
+                        },
+                        "xi8gY": {
+                          "x": 35,
+                          "y": 9
                         }
                       }
                     },
@@ -6467,9 +8245,19 @@
                       "type": "ref",
                       "ref": "gxmSv",
                       "name": "chipSize",
+                      "width": "fit_content",
+                      "height": "fit_content",
+                      "x": 232,
+                      "y": 0,
                       "descendants": {
                         "kA1N6": {
-                          "content": "1K"
+                          "content": "1K",
+                          "x": 16,
+                          "y": 8
+                        },
+                        "xi8gY": {
+                          "x": 35,
+                          "y": 9
                         }
                       }
                     },
@@ -6638,12 +8426,19 @@
                       "type": "ref",
                       "ref": "96LeL",
                       "name": "sendBtn",
+                      "width": "fit_content",
+                      "height": "fit_content",
+                      "x": 1142,
                       "descendants": {
                         "Y0e23": {
-                          "iconFontName": "send-horizontal"
+                          "iconFontName": "send-horizontal",
+                          "x": 28,
+                          "y": 14
                         },
                         "5YxCW": {
-                          "content": "Сгенерировать"
+                          "content": "Сгенерировать",
+                          "x": 56,
+                          "y": 15
                         }
                       }
                     }
@@ -6919,13 +8714,21 @@
                         "thickness": 1,
                         "fill": "#8B6B1520"
                       },
+                      "width": "fit_content",
+                      "height": "fit_content",
+                      "x": 232,
+                      "y": 0,
                       "descendants": {
                         "Q2NBr": {
-                          "fill": "#5C4A2A"
+                          "fill": "#5C4A2A",
+                          "x": 22,
+                          "y": 10
                         },
                         "iBc2U": {
                           "content": "Настройки",
-                          "fill": "#5C4A2A"
+                          "fill": "#5C4A2A",
+                          "x": 48,
+                          "y": 10.5
                         }
                       }
                     }
@@ -7052,6 +8855,9 @@
                         },
                         "blur": 16
                       },
+                      "height": "fit_content",
+                      "x": 0,
+                      "y": 0,
                       "descendants": {
                         "oW0x2": {
                           "fill": {
@@ -7059,32 +8865,67 @@
                             "enabled": true,
                             "url": "./images/generated-1773741426978.png",
                             "mode": "fill"
-                          }
+                          },
+                          "width": "fill_container"
+                        },
+                        "SMJKF": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "y": 300
                         },
                         "6v5Hu": {
                           "content": "Designer lamp with black body, two glowing rings in gold color",
-                          "fill": "#5C4A2A"
+                          "fill": "#5C4A2A",
+                          "width": "fill_container",
+                          "x": 16,
+                          "y": 14
+                        },
+                        "wZZl3": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 56
                         },
                         "p0Umx": {
-                          "fill": "#00000008"
+                          "fill": "#00000008",
+                          "width": "fit_content",
+                          "height": "fit_content"
                         },
                         "u6fU4": {
                           "content": "1:1",
-                          "fill": "#A08060"
+                          "fill": "#A08060",
+                          "x": 6,
+                          "y": 2
                         },
                         "4bFV2": {
-                          "fill": "#00000008"
+                          "fill": "#00000008",
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 35
                         },
                         "HrZAZ": {
                           "content": "1K",
-                          "fill": "#A08060"
+                          "fill": "#A08060",
+                          "x": 6,
+                          "y": 2
                         },
                         "5Lq9B": {
-                          "fill": "#00000008"
+                          "fill": "#00000008",
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 64
                         },
                         "fWswE": {
                           "content": "T:1.0",
-                          "fill": "#A08060"
+                          "fill": "#A08060",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "ZHSq2": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 80
                         },
                         "8z4ZB": {
                           "content": "Nano Banana Pro",
@@ -7092,7 +8933,8 @@
                         },
                         "RsK2O": {
                           "content": "$0.012",
-                          "fill": "#C8860A"
+                          "fill": "#C8860A",
+                          "x": 240
                         }
                       }
                     },
@@ -7117,6 +8959,9 @@
                         },
                         "blur": 16
                       },
+                      "height": "fit_content",
+                      "x": 340,
+                      "y": 0,
                       "descendants": {
                         "oW0x2": {
                           "fill": {
@@ -7124,28 +8969,65 @@
                             "enabled": true,
                             "url": "./images/generated-1773741477845.png",
                             "mode": "fill"
-                          }
+                          },
+                          "width": "fill_container"
+                        },
+                        "SMJKF": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "y": 300
                         },
                         "6v5Hu": {
                           "content": "Professional portrait of a woman, soft studio lighting",
-                          "fill": "#5C4A2A"
+                          "fill": "#5C4A2A",
+                          "width": "fill_container",
+                          "x": 16,
+                          "y": 14
+                        },
+                        "wZZl3": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 56
                         },
                         "p0Umx": {
-                          "fill": "#00000008"
+                          "fill": "#00000008",
+                          "width": "fit_content",
+                          "height": "fit_content"
                         },
                         "u6fU4": {
                           "content": "16:9",
-                          "fill": "#A08060"
+                          "fill": "#A08060",
+                          "x": 6,
+                          "y": 2
                         },
                         "4bFV2": {
-                          "fill": "#00000008"
+                          "fill": "#00000008",
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 40
+                        },
+                        "HrZAZ": {
+                          "x": 6,
+                          "y": 2
                         },
                         "5Lq9B": {
-                          "fill": "#00000008"
+                          "fill": "#00000008",
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 69
                         },
                         "fWswE": {
                           "content": "T:1.2",
-                          "fill": "#A08060"
+                          "fill": "#A08060",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "ZHSq2": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 80
                         },
                         "8z4ZB": {
                           "content": "Nano Banana 2",
@@ -7153,7 +9035,8 @@
                         },
                         "RsK2O": {
                           "content": "$0.008",
-                          "fill": "#C8860A"
+                          "fill": "#C8860A",
+                          "x": 240
                         }
                       }
                     },
@@ -7178,6 +9061,9 @@
                         },
                         "blur": 16
                       },
+                      "height": "fit_content",
+                      "x": 680,
+                      "y": 0,
                       "descendants": {
                         "oW0x2": {
                           "fill": {
@@ -7185,32 +9071,67 @@
                             "enabled": true,
                             "url": "./images/generated-1773741573224.png",
                             "mode": "fill"
-                          }
+                          },
+                          "width": "fill_container"
+                        },
+                        "SMJKF": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "y": 300
                         },
                         "6v5Hu": {
                           "content": "Mystical forest with glowing mushrooms, bioluminescent",
-                          "fill": "#5C4A2A"
+                          "fill": "#5C4A2A",
+                          "width": "fill_container",
+                          "x": 16,
+                          "y": 14
+                        },
+                        "wZZl3": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 56
                         },
                         "p0Umx": {
-                          "fill": "#00000008"
+                          "fill": "#00000008",
+                          "width": "fit_content",
+                          "height": "fit_content"
                         },
                         "u6fU4": {
                           "content": "9:16",
-                          "fill": "#A08060"
+                          "fill": "#A08060",
+                          "x": 6,
+                          "y": 2
                         },
                         "4bFV2": {
-                          "fill": "#00000008"
+                          "fill": "#00000008",
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 40
                         },
                         "HrZAZ": {
                           "content": "2K",
-                          "fill": "#A08060"
+                          "fill": "#A08060",
+                          "x": 6,
+                          "y": 2
                         },
                         "5Lq9B": {
-                          "fill": "#00000008"
+                          "fill": "#00000008",
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 69
                         },
                         "fWswE": {
                           "content": "T:1.6",
-                          "fill": "#A08060"
+                          "fill": "#A08060",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "ZHSq2": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 80
                         },
                         "8z4ZB": {
                           "content": "Nano Banana Pro",
@@ -7218,7 +9139,8 @@
                         },
                         "RsK2O": {
                           "content": "$0.015",
-                          "fill": "#C8860A"
+                          "fill": "#C8860A",
+                          "x": 240
                         }
                       }
                     },
@@ -7243,6 +9165,9 @@
                         },
                         "blur": 16
                       },
+                      "height": "fit_content",
+                      "x": 1020,
+                      "y": 0,
                       "descendants": {
                         "oW0x2": {
                           "fill": {
@@ -7250,32 +9175,67 @@
                             "enabled": true,
                             "url": "./images/generated-1773741611258.png",
                             "mode": "fill"
-                          }
+                          },
+                          "width": "fill_container"
+                        },
+                        "SMJKF": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "y": 300
                         },
                         "6v5Hu": {
                           "content": "Modern headphones on gradient background, commercial",
-                          "fill": "#5C4A2A"
+                          "fill": "#5C4A2A",
+                          "width": "fill_container",
+                          "x": 16,
+                          "y": 14
+                        },
+                        "wZZl3": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 56
                         },
                         "p0Umx": {
-                          "fill": "#00000008"
+                          "fill": "#00000008",
+                          "width": "fit_content",
+                          "height": "fit_content"
                         },
                         "u6fU4": {
                           "content": "4:3",
-                          "fill": "#A08060"
+                          "fill": "#A08060",
+                          "x": 6,
+                          "y": 2
                         },
                         "4bFV2": {
-                          "fill": "#00000008"
+                          "fill": "#00000008",
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 35
                         },
                         "HrZAZ": {
                           "content": "512",
-                          "fill": "#A08060"
+                          "fill": "#A08060",
+                          "x": 6,
+                          "y": 2
                         },
                         "5Lq9B": {
-                          "fill": "#00000008"
+                          "fill": "#00000008",
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 70
                         },
                         "fWswE": {
                           "content": "T:0.8",
-                          "fill": "#A08060"
+                          "fill": "#A08060",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "ZHSq2": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 80
                         },
                         "8z4ZB": {
                           "content": "Nano Banana Legacy",
@@ -7283,7 +9243,8 @@
                         },
                         "RsK2O": {
                           "content": "$0.007",
-                          "fill": "#C8860A"
+                          "fill": "#C8860A",
+                          "x": 240
                         }
                       }
                     }
@@ -7328,13 +9289,21 @@
                         "thickness": 1,
                         "fill": "#8B6B1520"
                       },
+                      "width": "fit_content",
+                      "height": "fit_content",
+                      "x": 0,
+                      "y": 0,
                       "descendants": {
                         "kA1N6": {
                           "content": "Nano Banana Pro",
-                          "fill": "#5C4A2A"
+                          "fill": "#5C4A2A",
+                          "x": 16,
+                          "y": 8
                         },
                         "xi8gY": {
-                          "fill": "#A08060"
+                          "fill": "#A08060",
+                          "x": 121,
+                          "y": 9
                         }
                       }
                     },
@@ -7348,13 +9317,21 @@
                         "thickness": 1,
                         "fill": "#8B6B1520"
                       },
+                      "width": "fit_content",
+                      "height": "fit_content",
+                      "x": 161,
+                      "y": 0,
                       "descendants": {
                         "kA1N6": {
                           "content": "1:1",
-                          "fill": "#5C4A2A"
+                          "fill": "#5C4A2A",
+                          "x": 16,
+                          "y": 8
                         },
                         "xi8gY": {
-                          "fill": "#A08060"
+                          "fill": "#A08060",
+                          "x": 35,
+                          "y": 9
                         }
                       }
                     },
@@ -7368,13 +9345,21 @@
                         "thickness": 1,
                         "fill": "#8B6B1520"
                       },
+                      "width": "fit_content",
+                      "height": "fit_content",
+                      "x": 236,
+                      "y": 0,
                       "descendants": {
                         "kA1N6": {
                           "content": "1K",
-                          "fill": "#5C4A2A"
+                          "fill": "#5C4A2A",
+                          "x": 16,
+                          "y": 8
                         },
                         "xi8gY": {
-                          "fill": "#A08060"
+                          "fill": "#A08060",
+                          "x": 35,
+                          "y": 9
                         }
                       }
                     },
@@ -7490,12 +9475,20 @@
                       "type": "ref",
                       "ref": "96LeL",
                       "name": "sendBtn",
+                      "width": "fit_content",
+                      "height": "fit_content",
+                      "x": 1142,
+                      "y": 1,
                       "descendants": {
                         "Y0e23": {
-                          "iconFontName": "send-horizontal"
+                          "iconFontName": "send-horizontal",
+                          "x": 28,
+                          "y": 14
                         },
                         "5YxCW": {
-                          "content": "Сгенерировать"
+                          "content": "Сгенерировать",
+                          "x": 56,
+                          "y": 15
                         }
                       }
                     }
@@ -7751,6 +9744,9 @@
                         },
                         "blur": 12
                       },
+                      "height": "fit_content",
+                      "x": 0,
+                      "y": 0,
                       "descendants": {
                         "oW0x2": {
                           "fill": {
@@ -7759,29 +9755,64 @@
                             "url": "./images/generated-1773741679131.png",
                             "mode": "fill"
                           },
-                          "height": 180
+                          "height": 180,
+                          "width": "fill_container"
+                        },
+                        "SMJKF": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "y": 180
                         },
                         "6v5Hu": {
                           "content": "Designer lamp with gold rings",
-                          "fill": "#5C4A2A"
+                          "fill": "#5C4A2A",
+                          "width": "fill_container",
+                          "x": 16,
+                          "y": 14
+                        },
+                        "wZZl3": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 56
                         },
                         "p0Umx": {
-                          "fill": "#00000008"
+                          "fill": "#00000008",
+                          "width": "fit_content",
+                          "height": "fit_content"
                         },
                         "u6fU4": {
-                          "fill": "#A08060"
+                          "fill": "#A08060",
+                          "x": 6,
+                          "y": 2
                         },
                         "4bFV2": {
-                          "fill": "#00000008"
+                          "fill": "#00000008",
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 35
                         },
                         "HrZAZ": {
-                          "fill": "#A08060"
+                          "fill": "#A08060",
+                          "x": 6,
+                          "y": 2
                         },
                         "5Lq9B": {
-                          "fill": "#00000008"
+                          "fill": "#00000008",
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 64
                         },
                         "fWswE": {
-                          "fill": "#A08060"
+                          "fill": "#A08060",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "ZHSq2": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 80
                         },
                         "8z4ZB": {
                           "content": "Nano Pro",
@@ -7789,7 +9820,8 @@
                         },
                         "RsK2O": {
                           "content": "$0.012",
-                          "fill": "#C8860A"
+                          "fill": "#C8860A",
+                          "x": 94
                         }
                       }
                     },
@@ -7814,6 +9846,9 @@
                         },
                         "blur": 12
                       },
+                      "height": "fit_content",
+                      "x": 184,
+                      "y": 0,
                       "descendants": {
                         "oW0x2": {
                           "fill": {
@@ -7822,31 +9857,66 @@
                             "url": "./images/generated-1773741707358.png",
                             "mode": "fill"
                           },
-                          "height": 180
+                          "height": 180,
+                          "width": "fill_container"
+                        },
+                        "SMJKF": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "y": 180
                         },
                         "6v5Hu": {
                           "content": "Portrait, soft lighting",
-                          "fill": "#5C4A2A"
+                          "fill": "#5C4A2A",
+                          "width": "fill_container",
+                          "x": 16,
+                          "y": 14
+                        },
+                        "wZZl3": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 56
                         },
                         "p0Umx": {
-                          "fill": "#00000008"
+                          "fill": "#00000008",
+                          "width": "fit_content",
+                          "height": "fit_content"
                         },
                         "u6fU4": {
                           "content": "16:9",
-                          "fill": "#A08060"
+                          "fill": "#A08060",
+                          "x": 6,
+                          "y": 2
                         },
                         "4bFV2": {
-                          "fill": "#00000008"
+                          "fill": "#00000008",
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 40
                         },
                         "HrZAZ": {
-                          "fill": "#A08060"
+                          "fill": "#A08060",
+                          "x": 6,
+                          "y": 2
                         },
                         "5Lq9B": {
-                          "fill": "#00000008"
+                          "fill": "#00000008",
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 69
                         },
                         "fWswE": {
                           "content": "T:1.2",
-                          "fill": "#A08060"
+                          "fill": "#A08060",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "ZHSq2": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 80
                         },
                         "8z4ZB": {
                           "content": "Nano 2",
@@ -7854,7 +9924,8 @@
                         },
                         "RsK2O": {
                           "content": "$0.008",
-                          "fill": "#C8860A"
+                          "fill": "#C8860A",
+                          "x": 94
                         }
                       }
                     }
@@ -7888,6 +9959,9 @@
                         },
                         "blur": 12
                       },
+                      "height": "fit_content",
+                      "x": 0,
+                      "y": 0,
                       "descendants": {
                         "oW0x2": {
                           "fill": {
@@ -7896,32 +9970,67 @@
                             "url": "./images/generated-1773741750617.png",
                             "mode": "fill"
                           },
-                          "height": 180
+                          "height": 180,
+                          "width": "fill_container"
+                        },
+                        "SMJKF": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "y": 180
                         },
                         "6v5Hu": {
                           "content": "Mystical forest, glowing",
-                          "fill": "#5C4A2A"
+                          "fill": "#5C4A2A",
+                          "width": "fill_container",
+                          "x": 16,
+                          "y": 14
+                        },
+                        "wZZl3": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 56
                         },
                         "p0Umx": {
-                          "fill": "#00000008"
+                          "fill": "#00000008",
+                          "width": "fit_content",
+                          "height": "fit_content"
                         },
                         "u6fU4": {
                           "content": "9:16",
-                          "fill": "#A08060"
+                          "fill": "#A08060",
+                          "x": 6,
+                          "y": 2
                         },
                         "4bFV2": {
-                          "fill": "#00000008"
+                          "fill": "#00000008",
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 40
                         },
                         "HrZAZ": {
                           "content": "2K",
-                          "fill": "#A08060"
+                          "fill": "#A08060",
+                          "x": 6,
+                          "y": 2
                         },
                         "5Lq9B": {
-                          "fill": "#00000008"
+                          "fill": "#00000008",
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 69
                         },
                         "fWswE": {
                           "content": "T:1.6",
-                          "fill": "#A08060"
+                          "fill": "#A08060",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "ZHSq2": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 80
                         },
                         "8z4ZB": {
                           "content": "Nano Pro",
@@ -7929,7 +10038,8 @@
                         },
                         "RsK2O": {
                           "content": "$0.015",
-                          "fill": "#C8860A"
+                          "fill": "#C8860A",
+                          "x": 94
                         }
                       }
                     },
@@ -7954,6 +10064,9 @@
                         },
                         "blur": 12
                       },
+                      "height": "fit_content",
+                      "x": 184,
+                      "y": 0,
                       "descendants": {
                         "oW0x2": {
                           "fill": {
@@ -7962,32 +10075,67 @@
                             "url": "./images/generated-1773741802981.png",
                             "mode": "fill"
                           },
-                          "height": 180
+                          "height": 180,
+                          "width": "fill_container"
+                        },
+                        "SMJKF": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "y": 180
                         },
                         "6v5Hu": {
                           "content": "Headphones, product shot",
-                          "fill": "#5C4A2A"
+                          "fill": "#5C4A2A",
+                          "width": "fill_container",
+                          "x": 16,
+                          "y": 14
+                        },
+                        "wZZl3": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 56
                         },
                         "p0Umx": {
-                          "fill": "#00000008"
+                          "fill": "#00000008",
+                          "width": "fit_content",
+                          "height": "fit_content"
                         },
                         "u6fU4": {
                           "content": "4:3",
-                          "fill": "#A08060"
+                          "fill": "#A08060",
+                          "x": 6,
+                          "y": 2
                         },
                         "4bFV2": {
-                          "fill": "#00000008"
+                          "fill": "#00000008",
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 35
                         },
                         "HrZAZ": {
                           "content": "512",
-                          "fill": "#A08060"
+                          "fill": "#A08060",
+                          "x": 6,
+                          "y": 2
                         },
                         "5Lq9B": {
-                          "fill": "#00000008"
+                          "fill": "#00000008",
+                          "width": "fit_content",
+                          "height": "fit_content",
+                          "x": 70
                         },
                         "fWswE": {
                           "content": "T:0.8",
-                          "fill": "#A08060"
+                          "fill": "#A08060",
+                          "x": 6,
+                          "y": 2
+                        },
+                        "ZHSq2": {
+                          "width": "fill_container",
+                          "height": "fit_content",
+                          "x": 16,
+                          "y": 80
                         },
                         "8z4ZB": {
                           "content": "Legacy",
@@ -7995,7 +10143,8 @@
                         },
                         "RsK2O": {
                           "content": "$0.007",
-                          "fill": "#C8860A"
+                          "fill": "#C8860A",
+                          "x": 94
                         }
                       }
                     }
@@ -8040,14 +10189,22 @@
                         "thickness": 1,
                         "fill": "#00000010"
                       },
+                      "width": "fit_content",
+                      "height": "fit_content",
+                      "x": 0,
+                      "y": 0,
                       "descendants": {
                         "kA1N6": {
                           "content": "Nano Pro",
-                          "fontSize": 11
+                          "fontSize": 11,
+                          "x": 16,
+                          "y": 8
                         },
                         "xi8gY": {
                           "height": 10,
-                          "width": 10
+                          "width": 10,
+                          "x": 67,
+                          "y": 9.5
                         }
                       }
                     },
@@ -8061,14 +10218,22 @@
                         "thickness": 1,
                         "fill": "#00000010"
                       },
+                      "width": "fit_content",
+                      "height": "fit_content",
+                      "x": 101,
+                      "y": 0,
                       "descendants": {
                         "kA1N6": {
                           "content": "1:1",
-                          "fontSize": 11
+                          "fontSize": 11,
+                          "x": 16,
+                          "y": 8
                         },
                         "xi8gY": {
                           "height": 10,
-                          "width": 10
+                          "width": 10,
+                          "x": 33,
+                          "y": 9.5
                         }
                       }
                     },
@@ -8082,14 +10247,22 @@
                         "thickness": 1,
                         "fill": "#00000010"
                       },
+                      "width": "fit_content",
+                      "height": "fit_content",
+                      "x": 168,
+                      "y": 0,
                       "descendants": {
                         "kA1N6": {
                           "content": "1K",
-                          "fontSize": 11
+                          "fontSize": 11,
+                          "x": 16,
+                          "y": 8
                         },
                         "xi8gY": {
                           "height": 10,
-                          "width": 10
+                          "width": 10,
+                          "x": 33,
+                          "y": 9.5
                         }
                       }
                     }

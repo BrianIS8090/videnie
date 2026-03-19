@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
-import { ArrowDownToLine, ImagePlus, X, LoaderCircle, KeyRound, SendHorizontal, Paperclip, Trash2, ChevronDown, WandSparkles, Cpu, Ratio, Maximize, Thermometer, Check, Sun, Moon } from 'lucide-react'
+import { ArrowDownToLine, ImagePlus, X, LoaderCircle, KeyRound, SendHorizontal, Paperclip, Trash2, ChevronDown, WandSparkles, Cpu, Ratio, Maximize, Check, Sun, Moon } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { saveImage, getAllImages, clearAllImages, getImagesCount, getTotalCost, deleteImage } from './utils/imageDB'
 import './index.css'
@@ -10,24 +10,39 @@ const MODELS = [
   { id: 'google/gemini-2.5-flash-image', name: 'Nano Banana Legacy' },
 ]
 
-const ASPECT_RATIOS = [
+// Все форматы (14 штук для Flash 3.1)
+const ALL_ASPECT_RATIOS = [
   { id: '1:1', name: 'Квадрат (1:1)' },
   { id: '16:9', name: 'Широкий (16:9)' },
   { id: '9:16', name: 'Вертикальный (9:16)' },
   { id: '4:3', name: 'Классический (4:3)' },
   { id: '3:4', name: 'Портрет (3:4)' },
+  { id: '3:2', name: 'Фото (3:2)' },
+  { id: '2:3', name: 'Книга (2:3)' },
+  { id: '5:4', name: 'Монитор (5:4)' },
+  { id: '4:5', name: 'Соцсети (4:5)' },
   { id: '21:9', name: 'Кинематограф (21:9)' },
+  { id: '1:4', name: 'Узкий (1:4)' },
+  { id: '4:1', name: 'Баннер (4:1)' },
+  { id: '1:8', name: 'Сверхузкий (1:8)' },
+  { id: '8:1', name: 'Сверхширокий (8:1)' },
 ]
 
+// Стандартные 10 форматов (без 1:4, 4:1, 1:8, 8:1)
+const STANDARD_RATIOS = ALL_ASPECT_RATIOS.slice(0, 10).map(r => r.id)
+// 12 форматов для Pro (без 1:8, 8:1)
+const PRO_RATIOS = ALL_ASPECT_RATIOS.filter(r => r.id !== '1:8' && r.id !== '8:1').map(r => r.id)
+// Все 14 для Flash 3.1
+const FLASH_RATIOS = ALL_ASPECT_RATIOS.map(r => r.id)
+
+// Используется для отображения в дропдауне
+const ASPECT_RATIOS = ALL_ASPECT_RATIOS
+
 const IMAGE_SIZES = [
+  { id: '0.5K', name: '0.5K — Быстрый' },
   { id: '1K', name: '1K — Стандарт' },
   { id: '2K', name: '2K — Высокое' },
   { id: '4K', name: '4K — Максимум' },
-]
-
-const THINKING_LEVELS = [
-  { id: 'minimal', name: 'Minimal — Быстро' },
-  { id: 'high', name: 'High — Качество' },
 ]
 
 interface ModelCapabilities {
@@ -37,25 +52,28 @@ interface ModelCapabilities {
 }
 
 const DEFAULT_MODEL_CAPABILITIES: ModelCapabilities = {
-  imageSizes: ['1K', '2K', '4K'],
-  aspectRatios: ASPECT_RATIOS.map((ratio) => ratio.id),
+  imageSizes: ['1K'],
+  aspectRatios: STANDARD_RATIOS,
   supportsThinkingLevel: false,
 }
 
 const MODEL_CAPABILITIES: Record<string, ModelCapabilities> = {
+  // Pro: 1K/2K/4K, 12 форматов, thinking mandatory (не управляем)
   'google/gemini-3-pro-image-preview': {
     imageSizes: ['1K', '2K', '4K'],
-    aspectRatios: ASPECT_RATIOS.map((ratio) => ratio.id),
-    supportsThinkingLevel: true,
+    aspectRatios: PRO_RATIOS,
+    supportsThinkingLevel: false,
   },
+  // Flash 3.1: 512/1K/2K/4K, все 14 форматов, thinking configurable
   'google/gemini-3.1-flash-image-preview': {
-    imageSizes: ['1K', '2K', '4K'],
-    aspectRatios: ASPECT_RATIOS.map((ratio) => ratio.id),
+    imageSizes: ['0.5K', '1K', '2K', '4K'],
+    aspectRatios: FLASH_RATIOS,
     supportsThinkingLevel: true,
   },
+  // Legacy 2.5: только 1K, стандартные 10 форматов, без thinking
   'google/gemini-2.5-flash-image': {
-    imageSizes: ['1K', '2K', '4K'],
-    aspectRatios: ASPECT_RATIOS.map((ratio) => ratio.id),
+    imageSizes: ['1K'],
+    aspectRatios: STANDARD_RATIOS,
     supportsThinkingLevel: false,
   },
 }
@@ -86,6 +104,7 @@ interface GeneratedImage {
   imageSize?: string | null
   temperature?: number | null
   thinkingLevel?: string | null
+  resolution?: string | null
 }
 
 interface SourceImage {
@@ -106,7 +125,6 @@ function App() {
   const [selectedModel, setSelectedModel] = useState(MODELS[0].id)
   const [aspectRatio, setAspectRatio] = useState('1:1')
   const [imageSize, setImageSize] = useState('1K')
-  const [temperature, setTemperature] = useState(1.0)
   const [thinkingLevel, setThinkingLevel] = useState('minimal')
   const [sourceImages, setSourceImages] = useState<SourceImage[]>([])
   const [generatedImages, setGeneratedImages] = useState<GeneratedImage[]>([])
@@ -120,7 +138,7 @@ function App() {
   const [apiKey, setApiKey] = useState('')
   const [tempApiKey, setTempApiKey] = useState('')
   const [showParams, setShowParams] = useState(false)
-  const [openDropdown, setOpenDropdown] = useState<'model' | 'ratio' | 'size' | 'temp' | null>(null)
+  const [openDropdown, setOpenDropdown] = useState<'model' | 'ratio' | 'size' | null>(null)
   const [theme, setTheme] = useState<'dark' | 'light'>(() => {
     return (localStorage.getItem('videnie_theme') as 'dark' | 'light') || 'dark'
   })
@@ -317,6 +335,7 @@ function App() {
     imageSize?: string | null
     temperature?: number | null
     thinkingLevel?: string | null
+    resolution?: string | null
   }) => {
     const newImage: GeneratedImage = {
       id: Math.random().toString(36).substr(2, 9),
@@ -330,7 +349,8 @@ function App() {
       aspectRatio: imageData.aspectRatio,
       imageSize: imageData.imageSize,
       temperature: imageData.temperature,
-      thinkingLevel: imageData.thinkingLevel
+      thinkingLevel: imageData.thinkingLevel,
+      resolution: imageData.resolution
     }
 
     setGeneratedImages(prev => [newImage, ...prev])
@@ -399,6 +419,15 @@ function App() {
     document.body.removeChild(a)
   }
 
+  const getImageResolution = (url: string): Promise<string> => {
+    return new Promise((resolve) => {
+      const img = new Image()
+      img.onload = () => resolve(`${img.naturalWidth}×${img.naturalHeight}`)
+      img.onerror = () => resolve('')
+      img.src = url
+    })
+  }
+
   const fileToDataUrl = (file: File): Promise<string> => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader()
@@ -450,22 +479,6 @@ function App() {
       const resolvedThinkingLevel = currentModelCapabilities.supportsThinkingLevel
         ? thinkingLevel
         : 'minimal'
-      const imageConfig: {
-        aspect_ratio: string
-        image_size: string
-        temperature: number
-        thinking_level?: string
-      } = {
-        aspect_ratio: resolvedAspectRatio,
-        image_size: resolvedImageSize,
-        temperature,
-      }
-
-      if (currentModelCapabilities.supportsThinkingLevel) {
-        imageConfig.thinking_level = resolvedThinkingLevel
-      }
-
-      const enhancedPrompt = `Generate an image: ${prompt}`
 
       if (sourceImages.length > 0) {
         const imageContents: MessageContentPart[] = await Promise.all(
@@ -482,32 +495,39 @@ function App() {
           role: 'user',
           content: [
             ...imageContents,
-            { type: 'text' as const, text: enhancedPrompt }
+            { type: 'text' as const, text: prompt }
           ]
         })
       } else {
         messages.push({
           role: 'user',
-          content: enhancedPrompt
+          content: prompt
         })
       }
 
       const requestImageGeneration = async (requestedImageSize: string) => {
+        const body: Record<string, unknown> = {
+          model: selectedModel,
+          messages,
+          modalities: ['image', 'text'],
+          image_config: {
+            aspect_ratio: resolvedAspectRatio,
+            image_size: requestedImageSize,
+          },
+        }
+
+        // Thinking level только для Flash 3.1 (для Pro — mandatory, управлять нельзя)
+        if (currentModelCapabilities.supportsThinkingLevel) {
+          body.reasoning = { effort: resolvedThinkingLevel }
+        }
+
         const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${apiKey}`
           },
-          body: JSON.stringify({
-            model: selectedModel,
-            messages,
-            modalities: ['image', 'text'],
-            image_config: {
-              ...imageConfig,
-              image_size: requestedImageSize,
-            },
-          })
+          body: JSON.stringify(body)
         })
 
         return await response.json()
@@ -570,36 +590,39 @@ function App() {
         }
       }
 
-      if (data.choices?.[0]?.message?.images?.[0]?.image_url?.url) {
-        const imageUrl = data.choices[0].message.images[0].image_url.url
-        await addGeneratedImage({ url: imageUrl, prompt, cost, generationId, model: selectedModel, tokens, aspectRatio: resolvedAspectRatio, imageSize: effectiveImageSize, temperature, thinkingLevel: resolvedThinkingLevel })
-      } else if (data.choices?.[0]?.message?.images?.[0]) {
-        const imageUrl = data.choices[0].message.images[0]
-        await addGeneratedImage({ url: imageUrl, prompt, cost, generationId, model: selectedModel, tokens, aspectRatio: resolvedAspectRatio, imageSize: effectiveImageSize, temperature, thinkingLevel: resolvedThinkingLevel })
-      } else if (data.choices?.[0]?.message?.content) {
-        const content = data.choices[0].message.content
+      // Хелпер: добавить изображение с определением реального разрешения
+      const addWithResolution = async (url: string) => {
+        const resolution = await getImageResolution(url)
+        await addGeneratedImage({ url, prompt, cost, generationId, model: selectedModel, tokens, aspectRatio: resolvedAspectRatio, imageSize: effectiveImageSize, temperature: null, thinkingLevel: resolvedThinkingLevel, resolution: resolution || null })
+      }
+
+      // Извлекаем URL картинки из разных форматов ответа
+      let extractedImageUrl: string | null = null
+      const msg = data.choices?.[0]?.message
+
+      if (msg?.images?.[0]?.image_url?.url) {
+        extractedImageUrl = msg.images[0].image_url.url
+      } else if (typeof msg?.images?.[0] === 'string') {
+        extractedImageUrl = msg.images[0]
+      } else if (msg?.content) {
+        const content = msg.content
         if (typeof content === 'string' && content.startsWith('data:image')) {
-          await addGeneratedImage({ url: content, prompt, cost, generationId, model: selectedModel, tokens, aspectRatio: resolvedAspectRatio, imageSize: effectiveImageSize, temperature, thinkingLevel: resolvedThinkingLevel })
+          extractedImageUrl = content
         } else if (Array.isArray(content)) {
           for (const item of content) {
             if (item.type === 'image_url' && item.image_url?.url) {
-              const imageUrl = item.image_url.url
-              await addGeneratedImage({ url: imageUrl, prompt, cost, generationId, model: selectedModel, tokens, aspectRatio: resolvedAspectRatio, imageSize: effectiveImageSize, temperature, thinkingLevel: resolvedThinkingLevel })
+              extractedImageUrl = item.image_url.url
               break
             } else if (typeof item === 'string' && item.startsWith('data:image')) {
-              await addGeneratedImage({ url: item, prompt, cost, generationId, model: selectedModel, tokens, aspectRatio: resolvedAspectRatio, imageSize: effectiveImageSize, temperature, thinkingLevel: resolvedThinkingLevel })
+              extractedImageUrl = item
               break
             }
           }
         }
-      } else if (data.choices?.[0]?.native_finish_reason) {
-        const reason = data.choices[0].native_finish_reason
-        const reasonMessages: Record<string, string> = {
-          'IMAGE_PROHIBITED_CONTENT': 'Контент запрещён модерацией. Измените промт и попробуйте снова.',
-          'SAFETY': 'Запрос отклонён фильтром безопасности.',
-          'RECITATION': 'Запрос отклонён из-за авторских прав.',
-        }
-        alert(reasonMessages[reason] || `Генерация не удалась: ${reason}`)
+      }
+
+      if (extractedImageUrl) {
+        await addWithResolution(extractedImageUrl)
       } else if (data.error) {
         console.error('API Error:', data.error)
         const errorMsg = data.error.message || 'Неизвестная ошибка'
@@ -611,12 +634,32 @@ function App() {
           alert(`Ошибка API\n\n${errorMsg}\n\n${errorDetails}`)
         }
       } else {
-        console.error('Unexpected response format:', data)
-        alert('Ошибка генерации: неожиданный формат ответа')
+        // Проверяем native_finish_reason (модерация, безопасность)
+        const finishReason = data.choices?.[0]?.native_finish_reason
+        const reasonMessages: Record<string, string> = {
+          'IMAGE_PROHIBITED_CONTENT': 'Контент запрещён модерацией. Измените промт и попробуйте снова.',
+          'SAFETY': 'Запрос отклонён фильтром безопасности.',
+          'RECITATION': 'Запрос отклонён из-за авторских прав.',
+        }
+
+        if (finishReason && reasonMessages[finishReason]) {
+          alert(reasonMessages[finishReason])
+        } else {
+          // Если модель вернула текст вместо картинки — показываем его
+          const textContent = msg?.content
+          const textMsg = typeof textContent === 'string' ? textContent : ''
+          console.error('Изображение не получено. Ответ:', data)
+          alert(`Модель не вернула изображение.${finishReason ? `\nПричина: ${finishReason}` : ''}${textMsg ? `\n\nОтвет модели: ${textMsg.slice(0, 300)}` : '\n\nПопробуйте изменить промт или переключить модель.'}`)
+        }
       }
     } catch (error) {
       console.error('Generation error:', error)
-      alert('Ошибка при генерации изображения')
+      const isNetworkError = error instanceof TypeError && error.message === 'Failed to fetch'
+      if (isNetworkError) {
+        alert('Ошибка сети: соединение сброшено.\n\nПопробуйте уменьшить разрешение (2K/1K) или формат — большие изображения могут превышать лимиты API.')
+      } else {
+        alert('Ошибка при генерации изображения')
+      }
     } finally {
       setIsGenerating(false)
     }
@@ -656,7 +699,11 @@ function App() {
             </button>
             <button
               onClick={() => setShowSettingsModal(true)}
-              className="text-[13px] text-foreground/60 hover:text-foreground/80 px-4 py-1.5 rounded-xl transition-colors flex items-center gap-2" style={{ background: 'var(--chip-bg)', border: '1px solid var(--chip-border)' }}
+              className={`text-[13px] px-4 py-1.5 rounded-xl transition-colors flex items-center gap-2 ${apiKey ? 'text-green-400 hover:text-green-300' : 'text-foreground/60 hover:text-foreground/80'}`}
+              style={{
+                background: apiKey ? 'rgba(34,197,94,0.1)' : 'var(--chip-bg)',
+                border: apiKey ? '1px solid rgba(34,197,94,0.3)' : '1px solid var(--chip-border)'
+              }}
               title={apiKey ? 'API ключ установлен' : 'Установить API ключ'}
             >
               <KeyRound className="w-4 h-4" />
@@ -764,9 +811,9 @@ function App() {
                               {img.imageSize}
                             </span>
                           )}
-                          {img.temperature !== undefined && img.temperature !== null && (
+                          {img.resolution && (
                             <span className="text-[10px] text-muted-foreground/60 bg-white/[0.06] px-2 py-0.5 rounded-full">
-                              T:{img.temperature.toFixed(1)}
+                              {img.resolution}
                             </span>
                           )}
                           {img.thinkingLevel && (
@@ -985,7 +1032,7 @@ function App() {
                       </div>
                       <div className="space-y-1">
                         {IMAGE_SIZES.map((size) => {
-                          const resMap: Record<string, string> = { '1K': '1024×1024', '2K': '2048×2048', '4K': '4096×4096' }
+                          const resMap: Record<string, string> = { '0.5K': '512×512', '1K': '1024×1024', '2K': '2048×2048', '4K': '4096×4096' }
                           return (
                             <button
                               key={size.id}
@@ -1002,58 +1049,6 @@ function App() {
                           )
                         })}
                       </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-
-              {/* Чип температуры */}
-              <div className="relative">
-                <button
-                  onClick={() => setOpenDropdown(openDropdown === 'temp' ? null : 'temp')}
-                  className="flex items-center gap-1.5 rounded-full px-3.5 py-2 text-[13px] font-medium text-primary transition-colors"
-                  style={{ background: 'var(--chip-active-bg)', border: '1px solid var(--chip-active-border)' }}
-                >
-                  <Thermometer className="w-3 h-3" />
-                  <span>{temperature.toFixed(1)}</span>
-                </button>
-                <AnimatePresence>
-                  {openDropdown === 'temp' && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 6 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 6 }}
-                      className="absolute bottom-full left-0 mb-2 z-50 w-[260px] rounded-[18px] border border-[rgba(255,204,51,0.13)] p-[14px_18px] space-y-3.5 shadow-[0_-6px_32px_rgba(0,0,0,0.38)]"
-                      style={{ background: 'var(--dropdown-bg)' }}
-                    >
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          <Thermometer className="w-3.5 h-3.5 text-primary" />
-                          <span className="text-xs font-semibold text-foreground">Температура</span>
-                        </div>
-                        <span className="text-sm font-semibold text-primary font-mono">{temperature.toFixed(1)}</span>
-                      </div>
-                      <input
-                        type="range"
-                        min="0"
-                        max="2"
-                        step="0.1"
-                        value={temperature}
-                        onChange={(e) => setTemperature(parseFloat(e.target.value))}
-                        className="w-full accent-primary h-1.5"
-                      />
-                      <div className="flex gap-1.5">
-                        {[0.5, 1.0, 1.5, 2.0].map((val) => (
-                          <button
-                            key={val}
-                            onClick={() => setTemperature(val)}
-                            className={`flex-1 text-center rounded-[10px] py-2 text-[11px] font-medium font-mono transition-colors ${temperature === val ? 'dropdown-opt-active text-primary' : 'dropdown-opt text-foreground/60'}`}
-                          >
-                            {val.toFixed(1)}
-                          </button>
-                        ))}
-                      </div>
-                      <p className="text-[11px] text-muted-foreground">Больше = креативнее, меньше = точнее</p>
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -1241,8 +1236,8 @@ function App() {
                     {selectedImage.imageSize && (
                       <span className="px-2 py-0.5 rounded-full text-muted-foreground" style={{ background: 'var(--chip-bg)' }}>{selectedImage.imageSize}</span>
                     )}
-                    {selectedImage.temperature !== undefined && selectedImage.temperature !== null && (
-                      <span className="px-2 py-0.5 rounded-full text-muted-foreground" style={{ background: 'var(--chip-bg)' }}>T:{selectedImage.temperature.toFixed(1)}</span>
+                    {selectedImage.resolution && (
+                      <span className="px-2 py-0.5 rounded-full text-muted-foreground" style={{ background: 'var(--chip-bg)' }}>{selectedImage.resolution}</span>
                     )}
                     {selectedImage.cost !== undefined && selectedImage.cost !== null && (
                       <span className="text-muted-foreground">${selectedImage.cost.toFixed(4)}</span>
