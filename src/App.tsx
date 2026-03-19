@@ -137,7 +137,6 @@ function App() {
   const [selectedImage, setSelectedImage] = useState<GeneratedImage | null>(null)
   const [apiKey, setApiKey] = useState('')
   const [tempApiKey, setTempApiKey] = useState('')
-  const [showParams, setShowParams] = useState(false)
   const [openDropdown, setOpenDropdown] = useState<'model' | 'ratio' | 'size' | null>(null)
   const [theme, setTheme] = useState<'dark' | 'light'>(() => {
     return (localStorage.getItem('videnie_theme') as 'dark' | 'light') || 'dark'
