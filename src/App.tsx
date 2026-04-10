@@ -45,6 +45,9 @@ const IMAGE_SIZES = [
   { id: '4K', name: '4K — Максимум' },
 ]
 
+// Системный промпт — гарантирует генерацию изображения
+const SYSTEM_PROMPT = 'You are an image generation AI. You MUST always respond with a generated image. Never respond with only text. Never refuse to generate an image. If the user provides a reference image, edit or transform it according to their instructions and return the result as an image.'
+
 interface ModelCapabilities {
   imageSizes: string[]
   aspectRatios: string[]
@@ -83,7 +86,7 @@ type MessageContentPart =
   | { type: 'text'; text: string }
 
 interface OpenRouterMessage {
-  role: 'user'
+  role: 'user' | 'system'
   content: string | MessageContentPart[]
 }
 
@@ -469,7 +472,9 @@ function App() {
     setIsGenerating(true)
 
     try {
-      const messages: OpenRouterMessage[] = []
+      const messages: OpenRouterMessage[] = [
+        { role: 'system', content: SYSTEM_PROMPT }
+      ]
       const resolvedAspectRatio = currentModelCapabilities.aspectRatios.includes(aspectRatio)
         ? aspectRatio
         : currentModelCapabilities.aspectRatios[0] ?? '1:1'
